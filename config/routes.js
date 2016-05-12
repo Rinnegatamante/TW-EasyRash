@@ -45,19 +45,16 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
-<<<<<<< HEAD
   'get /paper': {
     view: 'paper_up'
   },
   'post /paper': 'PaperController.upload',
 
-=======
   'post /login': 'UserController.login',
   'post /register': 'UserController.register',
   'post /changepsw': 'UserController.changePassword',
   'post /changemail': 'UserController.changeMail',
   'post /getdata': 'UserController.getData',
   'post /logout': 'UserController.logout',
-  
->>>>>>> 1107afdd778f21e3615b615f5e9d157dfa46b70d
+
 };

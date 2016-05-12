@@ -12,6 +12,7 @@ module.exports = {
       type: 'integer',
       unique: true,
       primaryKey: true,
+      autoIncrement: true,
     },
 
     title:{
