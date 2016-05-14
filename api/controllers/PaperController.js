@@ -1,11 +1,16 @@
 /**
- * FileController
+ * PaperController
  *
  * @description :: Server-side logic for managing files
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
 module.exports = {
+      _config: {
+      actions: false,
+      shortcuts: false,
+      rest: false
+    },
 
     index: function(req, res) {
         return res.views('paper_up');

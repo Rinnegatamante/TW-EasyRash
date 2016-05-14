@@ -15,7 +15,7 @@ module.exports = {
 			}
 		});
 	},
-	
+
 	login: function (req, res) {
 		var rawPassword = req.param('password');
 		var userToken = generateToken();
@@ -37,7 +37,7 @@ module.exports = {
 			}
 		});
 	},
-	
+
 	logout: function (req, res) {
 		User.update({
 			token: req.param('token')
@@ -46,7 +46,7 @@ module.exports = {
 		}).exec(function (){});
 		return res.send(1);
 	},
-	
+
 	getData: function (req, res) {
 		User.find({
 			token: req.param('token')
@@ -59,8 +59,8 @@ module.exports = {
 				return res.send(0);
 			}
 		});
-	},	
-	
+	},
+
 	changePassword: function (req, res) {
 		User.update({
 			token : req.param('token')
@@ -74,7 +74,7 @@ module.exports = {
 			}
 		});
 	},
- 
+
 	changeMail: function (req, res) {
 		User.update({
 			token : req.param('token')
@@ -88,7 +88,7 @@ module.exports = {
 			}
 		});
 	},
- 
+
 };
 
 function generateToken(){
