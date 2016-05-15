@@ -56,5 +56,6 @@ module.exports.routes = {
   'post /changemail': 'UserController.changeMail',
   'post /getdata': 'UserController.getData',
   'post /logout': 'UserController.logout',
+  'post /test': 'UserController.test',
 
 };

@@ -89,7 +89,7 @@ Temporary Items
 
 config/local.js
 config/connections.js
-config/model.js
+config/models.js
 
 
 

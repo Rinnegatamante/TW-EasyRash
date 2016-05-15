@@ -9,9 +9,10 @@ module.exports = {
 			password : hashPassword(req.param('password'))
 		}).exec(function createCB(err, created){
 			if (!err){
-				return res.send(1);
+				console.log(created);
+				return res.json({message:created});
 			}else{
-				return res.send(0);
+				return res.json(400,err);
 			}
 		});
 	},
@@ -19,21 +20,24 @@ module.exports = {
 	login: function (req, res) {
 		var rawPassword = req.param('password');
 		var userToken = generateToken();
-		User.find({
-			email : req.param('email')
-		}).exec(function execLogin(err, records){
-			if (!err){
-				console.log(records);
-				if (bcrypt.compareSync(rawPassword, records[0].password)){
+		User.findOne({
+			email : req.param('email'),
+		}).exec(function execLogin(err, record){
+			if (!err && record){
+				if (bcrypt.compareSync(rawPassword, record.password)){
 					User.update({
-						id : records[0].id
+						id : record.id
 					},{
 						token : userToken
-					}).exec(function (){});
+					}).exec(function (err,s){
+						if (err) return res.json(400,err);
+						return res.json({token:userToken});
+					});
+				}else{
+					return res.json(401,{message:'unauthorized'})
 				}
-				return res.send(userToken);
 			}else{
-				return res.send(0);
+				return res.json(400,err);
 			}
 		});
 	},
@@ -44,7 +48,7 @@ module.exports = {
 		},{
 			token: "NULL"
 		}).exec(function (){});
-		return res.send(1);
+		return res.json({logout:userToken});
 	},
 
 	getData: function (req, res) {
@@ -89,22 +93,27 @@ module.exports = {
 		});
 	},
 
+	test: function (req, res) {
+		return res.json(req.allParams());
+	},
+
 };
 
 function generateToken(){
 	var randomstring = require("randomstring");
-	var unique = false;
-	while (!unique){
-		var token = randomstring.generate();
-		User.count({
-			token : req.param('token')
+	//var unique = false;
+	//while (!unique){
+		var utoken = randomstring.generate();
+		/*User.count({
+			token : utoken,
 		}).exec(function exists(err, records){
+			console.log(unique, records);
 			if (records == 0){
 				unique = true
 			}
 		});
-	}
-	return token;
+	}*/
+	return utoken;
 }
 
 function hashPassword(req){
