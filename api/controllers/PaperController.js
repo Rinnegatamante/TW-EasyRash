@@ -33,8 +33,8 @@ module.exports = {
                 author_id: req.param('author_id'),
                 conference_id: req.param('conference_id'),
                 status: req.param('status'),
-            }).exec(function (error, createdOrFoundRecords) {
-              if (error){console.log(error);}
+            }).exec(function (err, createdOrFoundRecords) {
+              if (err){console.log(err);}
                 var extra_text = '';
                 if (createdOrFoundRecords.rash_link) {
                     const fs = require('fs');
@@ -55,8 +55,8 @@ module.exports = {
                         console.log(err, s);
                 });
 
-                if (error)
-                    console.log(error);
+                if (err)
+                    console.log(err);
 
                 console.log('upload ' + createdOrFoundRecords.title + ' with id: ' + createdOrFoundRecords.id + ' by author_id: ' +
                     createdOrFoundRecords.author_id + ', for conference_id: ' + createdOrFoundRecords.conference_id);

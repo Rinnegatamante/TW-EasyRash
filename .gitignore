@@ -90,7 +90,7 @@ Temporary Items
 config/local.js
 config/connections.js
 config/models.js
-
+node_modules/
 
 
 ################################################

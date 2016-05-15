@@ -15,9 +15,9 @@ module.exports = {
         Paper.findOne({
             id: req.param("paper_id")
         }).exec(function(err, paper) {
-            if (error) {
-                console.error(error);
-                return res.json(error);
+            if (err) {
+                console.error(err);
+                return res.json(err);
             }
             if (paper && !paper.isLocked(req.param("token"))) {
                 Review.create({
@@ -25,9 +25,9 @@ module.exports = {
                     paper_id: req.param("paper_id"),
                     author_id: req.param("author_id")
                 }).exec(function(err, s) {
-                    if (error) {
-                        console.error(error);
-                        return res.json(error);
+                    if (err) {
+                        console.error(err);
+                        return res.json(err);
                     }
                     if (s) return res.json(s);
                 })
@@ -45,18 +45,21 @@ module.exports = {
             author_id: req.param("author_id"),
             token: req.param("token")
         }).exec(function(err, paper) {
-            if (error) {
-                console.error(error);
-                return res.json(error);
+            if (err) {
+                console.error(err);
+                return res.json(err);
             }
             if (paper && !paper.isLocked(req.param("token"))) {
                 Review.update({
+                  paper_id: req.param("paper_id"),
+                  author_id: req.param("author_id"),
+                },{
                     text: req.param("text"),
                     token: NULL,
                 }).exec(function(err, s) {
-                    if (error) {
-                        console.error(error);
-                        return res.json(error);
+                    if (err) {
+                        console.error(err);
+                        return res.json(err);
                     }
                     if (s) return res.json(s);
                 })
@@ -72,8 +75,8 @@ module.exports = {
         Paper.findOne({
             id: req.param("paper_id")
         }).exec(function(err, paper) {
-            if (error) {
-                console.error(error);
+            if (err) {
+                console.error(err);
                 return;
             }
             if (paper) {
@@ -108,17 +111,17 @@ module.exports = {
             author_id: req.param("author_id"),
             token: req.param("token")
         }).exec(function(err, user) {
-            if (error) {
-                console.error(error);
-                return res.json(error);
+            if (err) {
+                console.error(err);
+                return res.json(err);
             }
             if (user) {
                 Review.destroy({
                     id: req.param("paper_id"),
                     author_id: req.param("author_id")
                 }).exec(function(err) {
-                    if (error) {
-                        console.error(error);
+                    if (err) {
+                        console.error(err);
                         return;
                     } else {
                         return res.json({
