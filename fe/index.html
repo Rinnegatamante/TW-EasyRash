@@ -17,7 +17,7 @@
 <script src="js/respond.min.js"></script>
 <![endif]-->
 <script>
-	var _URL = "http://localhost:1337/";
+	var _URL = "http://17490.s.time4vps.eu:1337/";
 </script>
 
 <script src="lumino/js/lumino.glyphs.js"></script>
@@ -78,18 +78,21 @@
 							</fieldset>
 						</form>
 						<script>
-							$('#login-form').ajaxForm({
-								url: _URL+"user/login",
-								success: function(data) { 
-									console.log(data);
-									$('input[name=_csrf]').val(data.token);
-									alertSuccess("Login avvenuto con successo");
-								},
-								error: function(err){
-									console.log(err);
-									alertError("Ricontrollare email o password");
-								}
-							})
+							$('#login-form').submit(function(){
+								$(this).ajaxSubmit({
+									url: _URL+"user/login",
+									success: function(data) { 
+										console.log(data);
+										$('input[name=_csrf]').val(data.token);
+										alertSuccess("Login avvenuto con successo");
+									},
+									error: function(err){
+										console.log(err);
+										alertError("Ricontrollare email o password");
+									}
+								}); 
+								return false;
+							});
 						</script>
 					</div>
 				</div>
@@ -97,7 +100,7 @@
 		</div><!-- /.row -->	
 	</div>
 	
-	<div id="register-page" class="page" style="display:none">
+	<div id="register-page" class="page" style="display:block">
 		<div class="row">
 			<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
 				<div class="register-panel panel panel-default">
@@ -112,23 +115,33 @@
 									<input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="">
 								</div>
 								<div class="form-group">
-									<input class="form-control" placeholder="Password" name="password" type="password" value="">
+									<input class="form-control" placeholder="Password" id="psw_reg" name="password" type="password" value="">
+								</div>
+								<div class="form-group">
+									<input class="form-control" placeholder="Password" id="psw_reg2" name="password2" type="password" value="">
 								</div>
 								<input type="submit" value="Register Now" class="btn btn-primary"/> 
 							</fieldset>
 						</form>
 						<script>
-							$('#register-form').ajaxForm({
-								url: _URL+"user/register",
-								success: function(data) { 
-									console.log(data);
-									alertSuccess("Registrazione avvenuta con successo");
-								},
-								error: function(err){
-									console.log(err);
-									alertError("Errore: completare tutti i campo e riprovare");
+							$('#register-form').submit(function(){
+								if ($('#psw_reg').val() == $('#psw_reg2').val()){
+									$(this).ajaxSubmit({
+										url: _URL+"user/register",
+										success: function(data) { 
+											console.log(data);
+											alertSuccess("Registration completed sucessfully!");
+										},
+										error: function(err){
+											console.log(err);
+											alertError("Error: You must complete all blank datas.");
+										}
+									}); 
+								}else{
+									alertError("Error: Passwords mismatch.");
 								}
-							})
+								return false;
+							});
 						</script>
 					</div>
 				</div>
