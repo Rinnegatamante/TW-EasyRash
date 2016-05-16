@@ -9,7 +9,7 @@ module.exports = {
 			password : hashPassword(req.param('password'))
 		}).exec(function createCB(err, created){
 			if (!err){
-				console.log(created);
+				//console.log(created);
 				return res.json({message:created});
 			}else{
 				return res.json(400,err);
@@ -60,7 +60,7 @@ module.exports = {
 				delete res2[0].password;
 				return res.json(res2[0]);
 			}else{
-				return res.send(0);
+				return res.json(400,err);
 			}
 		});
 	},
@@ -72,9 +72,9 @@ module.exports = {
 			password : hashPassword(req.param('password'))
 		}).exec(function updatePassword(err, records){
 			if (!err){
-				return res.send(1);
+				return res.json({message:'changed'});
 			}else{
-				return res.send(0);
+				return res.json(400,err);
 			}
 		});
 	},
@@ -86,9 +86,9 @@ module.exports = {
 			email : req.param('email')
 		}).exec(function updateMail(err, records){
 			if (!err){
-				return res.send(1);
+				return res.json({message:'changed'});
 			}else{
-				return res.send(0);
+				return res.json(400,err);
 			}
 		});
 	},
