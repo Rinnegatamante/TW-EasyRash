@@ -24,7 +24,7 @@ module.exports = {
 						console.error(err);
 						return res.json(err);
 					}
-					if (rating) return res.json(rating)
+					if (rating) return res.json(rating);
 				})
 			}
 		})

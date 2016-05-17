@@ -8,22 +8,32 @@ module.exports = {
             unique: true,
             primaryKey: true
         },
+
         name: {
             type: 'string',
             required: true,
         },
+
         email: {
             type: 'email',
             unique: true,
             required: true,
         },
+
         password: {
             type: 'string',
             required: true,
         },
+
         token: {
             type: 'string',
             unique: true
+        }
+
+        conferences: {
+          collection: 'conference',
+          via: 'chairs',
+          dominant: true
         }
     },
 };
