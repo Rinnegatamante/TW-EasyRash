@@ -8,7 +8,7 @@
 module.exports = {
 
 	index: function(req, res) {
-		return res.json(/* lista delle conferences di cui sono chair*/);
+		return res.json(''/* lista delle conferences di cui sono chair*/);
 	},
 
 	create: function(req, res) {
