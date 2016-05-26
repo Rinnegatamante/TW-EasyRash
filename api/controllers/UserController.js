@@ -9,10 +9,9 @@ module.exports = {
 			password : hashPassword(req.param('password'))
 		}).exec(function createCB(err, created){
 			if (!err){
-				//console.log(created);
 				return res.json({message:created});
 			}else{
-				return res.json(400,err);
+				return res.json(400,{message:''});
 			}
 		});
 	},
@@ -34,10 +33,10 @@ module.exports = {
 						return res.json({token:userToken});
 					});
 				}else{
-					return res.json(401,{message:'unauthorized'})
+					return res.json(401,{message:''})
 				}
 			}else{
-				return res.json(400,err);
+				return res.json(400,{message:''});
 			}
 		});
 	},
@@ -46,7 +45,7 @@ module.exports = {
 		User.update({
 			token: req.param('token')
 		},{
-			token: "NULL"
+			token: ""
 		}).exec(function (){});
 		return res.json({logout:userToken});
 	},
@@ -60,7 +59,7 @@ module.exports = {
 				delete res2[0].password;
 				return res.json(res2[0]);
 			}else{
-				return res.json(400,err);
+				return res.json(400,{message:''});
 			}
 		});
 	},
@@ -74,7 +73,7 @@ module.exports = {
 			if (!err){
 				return res.json({message:'changed'});
 			}else{
-				return res.json(400,err);
+				return res.json(400,{message:''});
 			}
 		});
 	},
@@ -88,7 +87,7 @@ module.exports = {
 			if (!err){
 				return res.json({message:'changed'});
 			}else{
-				return res.json(400,err);
+				return res.json(400,{message:''});
 			}
 		});
 	},
