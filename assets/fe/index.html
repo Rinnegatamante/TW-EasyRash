@@ -68,12 +68,17 @@
 								<div class="form-group">
 									<input class="form-control" placeholder="Password" name="password" type="password" value="">
 								</div>
-								<a>Forgot password?</a>
 								<div class="checkbox">
 									<label>
 										<input name="remember" type="checkbox" value="Remember Me">Remember Me
 									</label>
 								</div>
+								<a>Forgot password?</a>
+								<br>
+								<a onclick="document.getElementById('register-page').style.display='block';
+								document.getElementById('login-page').style.display='none';
+								return false;">Don't have an account? Register now!</a>
+								<br>
 								 <input type="submit" value="Login" class="btn btn-primary"/> 
 							</fieldset>
 						</form>
@@ -100,7 +105,7 @@
 		</div><!-- /.row -->	
 	</div>
 	
-	<div id="register-page" class="page" style="display:block">
+	<div id="register-page" class="page" style="display:none">
 		<div class="row">
 			<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
 				<div class="register-panel panel panel-default">
@@ -148,7 +153,6 @@
 			</div><!-- /.col-->
 		</div><!-- /.row -->	
 	</div>
-	
 	
 	<div class="alert bg-success" id="alert-success" role="alert">
 		<svg class="glyph stroked checkmark"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-checkmark"></use></svg> <a class="alert-text">Welcome to the admin dashboard panel bootstrap template</a> <a class="pull-right" onclick="alertClose(this)"><span class="glyphicon glyphicon-remove"></span></a>
