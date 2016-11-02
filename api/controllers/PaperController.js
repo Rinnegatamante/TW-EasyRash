@@ -6,68 +6,67 @@
  */
 
 module.exports = {
-      _config: {
-      actions: false,
-      shortcuts: false,
-      rest: false
-    },
+  _config: {
+    actions: false,
+    shortcuts: false,
+    rest: false
+  },
 
-    index: function(req, res) {
-        return res.views('paper_up');
-    },
+  index: function (req, res) {
+    return res.views('paper_up')
+  },
 
-    upload: function(req, res) {
-        req.file('paper').upload({
-            maxBytes: 10000000
-        }, function(err, files) {
-            if (err) {
-                return res.serverError(err);
+  upload: function (req, res) {
+    req.file('paper').upload({
+      maxBytes: 10000000
+    }, function (err, files) {
+      if (err) {
+        return res.serverError(err)
+      }
+      var paper = files[0]
+      Paper.findOrCreate({
+        author_id: req.param('author_id'),
+        conference_id: req.param('conference_id'),
+        title: paper.filename
+      }, {
+        title: paper.filename,
+        author_id: req.param('author_id'),
+        conference_id: req.param('conference_id'),
+        status: req.param('status')
+      }).exec(function (err, createdOrFoundRecords) {
+        if (err) { console.log(err) }
+        var extra_text = ''
+        if (createdOrFoundRecords.rash_link) {
+          const fs = require('fs')
+          extra_text = 'and replaced '
+          var old_link = createdOrFoundRecords.rash_link
+          fs.exists(old_link, function (exists) {
+            if (exists) {
+              fs.unlink(old_link, function () {
+                console.log('replace file "' + old_link + '" with "' + paper.fd + '"')
+              })
             }
-            var paper = files[0];
-            Paper.findOrCreate({
-                author_id: req.param('author_id'),
-                conference_id: req.param('conference_id'),
-                title: paper.filename,
-            }, {
-                title: paper.filename,
-                author_id: req.param('author_id'),
-                conference_id: req.param('conference_id'),
-                status: req.param('status'),
-            }).exec(function (err, createdOrFoundRecords) {
-              if (err){console.log(err);}
-                var extra_text = '';
-                if (createdOrFoundRecords.rash_link) {
-                    const fs = require('fs');
-                    extra_text = 'and replaced ';
-                    var old_link = createdOrFoundRecords.rash_link;
-                    fs.exists(old_link, function(exists) {
-                        if (exists) {
-                            fs.unlink(old_link, function() {
-                                console.log('replace file "' + old_link + '" with "' + paper.fd + '"');
-                            });
-                        }
-                    });
-                }
-                console.log(createdOrFoundRecords.toJSON());
-                createdOrFoundRecords.rash_link = paper.fd;
-                createdOrFoundRecords.save(function(err, s) {
-                    if (err)
-                        console.log(err, s);
-                });
+          })
+        }
+        console.log(createdOrFoundRecords.toJSON())
+        createdOrFoundRecords.rash_link = paper.fd
+        createdOrFoundRecords.save(function (err, s) {
+          if (err)
+                      { console.log(err, s) }
+        })
 
-                if (err)
-                    console.log(err);
+        if (err)
+                  { console.log(err) }
 
-                console.log('upload ' + createdOrFoundRecords.title + ' with id: ' + createdOrFoundRecords.id + ' by author_id: ' +
-                    createdOrFoundRecords.author_id + ', for conference_id: ' + createdOrFoundRecords.conference_id);
-                return res.json({
-                    message: files.length + ' file(s) uploaded ' + extra_text + 'successfully!',
-                    attributes: createdOrFoundRecords.toObject(),
-                    files: files,
-                });
-            });
+        console.log('upload ' + createdOrFoundRecords.title + ' with id: ' + createdOrFoundRecords.id + ' by author_id: ' +
+                    createdOrFoundRecords.author_id + ', for conference_id: ' + createdOrFoundRecords.conference_id)
+        return res.json({
+          message: files.length + ' file(s) uploaded ' + extra_text + 'successfully!',
+          attributes: createdOrFoundRecords.toObject(),
+          files: files
+        })
+      })
+    })
+  }
 
-        });
-    }
-
-};
+}

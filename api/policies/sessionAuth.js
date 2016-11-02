@@ -7,15 +7,28 @@
  * @docs        :: http://sailsjs.org/#!/documentation/concepts/Policies
  *
  */
-module.exports = function(req, res, next) {
+module.exports = function (req, res, next) {
+  // HEADER : 'WWW-Authenticate' , id+token in baste64
+  // User is allowed, proceed to the next policy,
+  // or if this is the last policy, the
+  if (!req.headers['www-authenticate']) return res.forbidden('You are not permitted to perform this action.')
 
-  // User is allowed, proceed to the next policy, 
-  // or if this is the last policy, the controller
-  if (req.session.authenticated) {
-    return next();
-  }
+  var header = req.headers['www-authenticate']
+  var raw_credential = new Buffer(header, 'base64').toString()
 
-  // User is not allowed
-  // (default res.forbidden() behavior can be overridden in `config/403.js`)
-  return res.forbidden('You are not permitted to perform this action.');
-};
+  var credential = raw_credential.split(':') // [id, token]
+  if (credential.length != 2) return res.forbidden('You are not permitted to perform this action.')
+
+  var id = credential[0]
+  var token = credential[1]
+
+  User.findOne({
+    id: id,
+    token: token
+  }).exec(function (err, user) {
+    if (err) return res.forbidden('You are not permitted to perform this action.')
+    if (!user) return res.forbidden('You are not permitted to perform this action.')
+    console.log('#A:- authorized user: ' + user.name + ' - id: ' + user.id)
+    return next()
+  })
+}

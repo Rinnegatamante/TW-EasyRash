@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+
+    <script type="text/javascript">
+      var app = angular.module('app', [])
+
+      app.controller('mainController', ($scope) => {
+        $scope.user = {
+            name: 'matteo',
+            soldi: 8.50,
+            articoli: [
+              { title: 'titolo 1' },
+              { title: 'titolo 2' },
+              { title: 'titolo 3' },
+              { title: 'ciao' },
+              { title: 'titolo 5' },
+            ]
+        }
+
+        $scope.foo = () => {
+          alert('ciao')
+        }
+      })
+
+      app.controller('articleController', ($scope, $http) => {
+        $http.get('/').then(res => {
+          $scope.page = res.data
+        })
+      })
+    </script>
+  </head>
+  <body ng-controller="mainController">
+    soldi: {{ user.soldi | currency }}
+    <button class="btn btn-default" ng-click="foo()">foo</button>
+    <hr>
+    <div ng-repeat="a in user.articoli" ng-controller="articleController" ng-init="article=a">
+      <input type="text" ng-model="a.title" ng-if="a.title=='ciao'">
+      <pre>{{ page }}</pre>
+    </div>
+  </body>
+</html>
