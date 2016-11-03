@@ -17,12 +17,14 @@ module.exports = {
   },
 
   upload: function (req, res) {
+    var u = AuthService.user()
     req.file('paper').upload({
       maxBytes: 10000000
     }, function (err, files) {
       if (err) {
         return res.serverError(err)
       }
+
       var paper = files[0]
       Paper.findOrCreate({
         author_id: req.param('author_id'),

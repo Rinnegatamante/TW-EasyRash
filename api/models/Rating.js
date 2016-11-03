@@ -6,28 +6,25 @@
  */
 
 module.exports = {
-  connection: 'MySQL',
   attributes: {
     id: {
       type: 'integer',
       unique: true,
       autoIncrement: true,
-      primaryKey: true,
+      primaryKey: true
     },
 
-    author_id: {
-      type: 'integer',
-      required: true,
+    author: {
+      model: 'user'
     },
 
-    paper_id: {
-      type: 'integer',
-      required: true,
+    paper: {
+      model: 'paper'
     },
 
     score: {
       type: 'integer',
-      required: true,
-    },
+      required: true
+    }
   }
-};
+}

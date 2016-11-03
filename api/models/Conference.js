@@ -6,39 +6,38 @@
  */
 
 module.exports = {
-  connection: 'MySQL',
   attributes: {
     id: {
       type: 'integer',
       unique: true,
       autoIncrement: true,
-      primaryKey: true,
+      primaryKey: true
     },
 
     status: {
       type: 'integer',
       required: true,
-      defaultsTo: 1,
+      defaultsTo: 1
     },
 
     acronym: {
       type: 'string',
-      required: true,
+      required: true
     },
 
     title: {
       type: 'string',
-      required: true,
+      required: true
     },
 
     chairs: {
       collection: 'user',
-      via: 'conferences',
+      via: 'conferences'
     },
 
     papers: {
       collection: 'paper',
-      via: 'conference_id',
-    },
+      via: 'conference'
+    }
   }
-};
+}

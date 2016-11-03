@@ -7,50 +7,59 @@
 
 module.exports = {
   create: function (req, res) {
+    var u = AuthService.user()
+
     Paper.findOne({
       id: req.param('paper_id')
-    }).exec(function (err, paper) {
-      if (err) {
-        console.error(err)
-        return res.json(err)
-      }
-      if (paper) {
-        Rating.create({
-          score: req.param('score'),
-          paper_id: req.param('paper_id'),
-          author_id: req.param('author_id')
-        }).exec(function (err, rating) {
-          if (err) {
-            console.error(err)
-            return res.json(err)
-          }
-          if (rating) return res.json(rating)
+    }).populate('ratings').exec(function (err, paper) {
+      if (err) return res.json(500, {error: err})
+      if (!paper) return res.json(400, {message: 'Paper not found'})
+
+      Rating.create({
+        score: req.param('score')
+      }).exec(function (err, rating) {
+        if (!rating) return res.json(400, {message: 'Rating not found'})
+
+        paper.ratings.add(rating.id)
+        u.ratings.add(rating.id)
+        u.save()
+        paper.save((err) => {
+          if (err) return res.json(500, {error: err})
+          return res.json({
+            message: '',
+            rating: rating,
+            paper: paper
+          })
         })
-      }
+      })
     })
   },
 
   update: function (req, res) {
+    var u = AuthService.user()
+
     Paper.findOne({
-      id: req.param('paper_id'),
-      author_id: req.param('author_id')
-    }).exec(function (err, paper) {
-      if (err) {
-        console.error(err)
-        return res.json(err)
-      }
-      if (paper) {
-        Rating.update({
-          paper_id: req.param('paper_id'),
-          author_id: req.param('author_id')
-        }).exec(function (err, rating) {
-          if (err) {
-            console.error(err)
-            return res.json(err)
-          }
-          if (rating) return res.json(rating)
+      id: req.param('paper_id')
+    }).populate('ratings').exec(function (err, paper) {
+      if (err) return res.json(500, {error: err})
+      if (!paper) return res.json(400, {message: 'Paper not found'})
+
+      // if not work delete populate
+      console.log(paper.ratings)
+
+      Rating.update({
+        id: req.param('rating_id')
+      }, {
+        score: req.param('score')
+      }).exec(function (err, rating) {
+        if (err) return res.json(500, {error: err})
+        if (!rating) return res.json(400, {message: 'Rating not found'})
+        return res.json({
+          message: '',
+          rating: rating,
+          paper: paper
         })
-      }
+      })
     })
   }
 }

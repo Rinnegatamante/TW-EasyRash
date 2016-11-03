@@ -7,88 +7,82 @@ module.exports = {
       name: req.param('name'),
       email: req.param('email'),
       password: hashPassword(req.param('password'))
-    }).exec(function createCB (err, created) {
-      if (!err) {
-        return res.json({message: created})
-      } else {
-        return res.json(400, {message: ''})
-      }
+    }).exec(function createCB (err, user) {
+      if (err) return res.json(401, {error: err})
+      if (!user) return res.json(400, {message: 'User not found'})
+
+      return res.json({
+        message: '',
+        user: user})
     })
   },
 
   login: function (req, res) {
-    var rawPassword = req.param('password')
-    var userToken = generateToken()
     User.findOne({
       email: req.param('email')
-    }).exec(function execLogin (err, record) {
-      if (!err && record) {
-        if (bcrypt.compareSync(rawPassword, record.password)) {
-          User.update({
-            id: record.id
-          }, {
-            token: userToken
-          }).exec(function (err, s) {
-            if (err) return res.json(400, err)
-            return res.json({token: userToken})
-          })
-        } else {
-          return res.json(401, {message: ''})
-        }
-      } else {
-        return res.json(400, {message: ''})
-      }
+    }).exec(function execLogin (err, user) {
+      if (err) return res.json(401, {error: err})
+      if (!user) return res.json(400, {message: 'User not found'})
+
+      if (!bcrypt.compareSync(rawPassword, record.password)) return res.json(400, {message: 'User not found'})
+
+      user.generateToken()
+
+      user.save(function (err) {
+        if (err) return res.json(400, err)
+        return res.json({
+          user: user,
+          token: user.token
+        })
+      })
     })
   },
 
   logout: function (req, res) {
-    User.update({
-      token: req.param('token')
-    }, {
-      token: ''
-    }).exec(function () {})
-    return res.json({logout: userToken})
+    var u = AuthService.user()
+
+    u.token = ''
+    u.save((err) => {
+      if (err) return res.json(401, {error: err})
+
+      return res.json({
+        message: '',
+        user: user
+      })
+    })
   },
 
   getData: function (req, res) {
-    User.find({
-      token: req.param('token')
-    }).exec(function purgeArray (req, res2) {
-      if (res2[0]) {
-        delete res2[0].token
-        delete res2[0].password
-        return res.json(res2[0])
-      } else {
-        return res.json(400, {message: ''})
-      }
+    var u = AuthService.user()
+
+    return res.json(200, {
+      user: u
     })
   },
 
   changePassword: function (req, res) {
-    User.update({
-      token: req.param('token')
-    }, {
-      password: hashPassword(req.param('password'))
-    }).exec(function updatePassword (err, records) {
-      if (!err) {
-        return res.json({message: 'changed'})
-      } else {
-        return res.json(400, {message: ''})
-      }
+    var u = AuthService.user()
+
+    u.password = u.hashPassword(req.param('password'))
+    u.save(function updatePassword (err) {
+      if (err) return res.json(400, {error: err})
+
+      return res.json({
+        message: 'changed',
+        user: u
+      })
     })
   },
 
   changeMail: function (req, res) {
-    User.update({
-      token: req.param('token')
-    }, {
-      email: req.param('email')
-    }).exec(function updateMail (err, records) {
-      if (!err) {
-        return res.json({message: 'changed'})
-      } else {
-        return res.json(400, {message: ''})
-      }
+    var u = AuthService.user()
+    if (!req.param('email')) return res.json({message: 'email is empty'})
+
+    u.email = req.param('email')
+    u.save(function updateMail (err) {
+      if (err) return res.json(400, {error: err})
+
+      return res.json({message: 'changed'})
     })
   },
 
@@ -96,26 +90,4 @@ module.exports = {
     return res.json(req.allParams())
   }
 
-}
-
-function generateToken () {
-  var randomstring = require('randomstring')
-	// var unique = false;
-	// while (!unique){
-  var utoken = randomstring.generate()
-		/* User.count({
-			token : utoken,
-		}).exec(function exists(err, records){
-			console.log(unique, records);
-			if (records == 0){
-				unique = true
-			}
-		});
-	} */
-  return utoken
-}
-
-function hashPassword (req) {
-  var hashed = bcrypt.hashSync(req, saltRounds)
-  return hashed
 }

@@ -1,6 +1,7 @@
 // User.js
+var hat = require('hat')
+
 module.exports = {
-  connection: 'MySQL',
   attributes: {
     id: {
       type: 'integer',
@@ -32,8 +33,28 @@ module.exports = {
 
     conferences: {
       collection: 'conference',
-      via: 'chairs',
-      dominant: true
+      via: 'chairs'
+    },
+
+    papers: {
+      collection: 'paper',
+      via: 'author'
+    },
+
+    ratings: {
+      collection: 'rating',
+      via: 'author'
+    },
+
+    reviews: {
+      collection: 'review',
+      via: 'author'
+    },
+
+    generateToken: () => {
+      var token = hat()
+      this.token = token
+      return token
     },
 
     toJSON: () => {

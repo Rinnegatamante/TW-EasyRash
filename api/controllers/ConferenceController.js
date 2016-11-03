@@ -8,47 +8,70 @@
 module.exports = {
 
   index: function (req, res) {
-    return res.json('' /* lista delle conferences di cui sono chair */)
+    return res.json('')
   },
 
   create: function (req, res) {
     Conference.create({
       title: req.param('title'),
-      acronym: req.param('acronym'),
-      chairs: req.param('chairs'),
-      papers: req.param('papers')
+      acronym: req.param('acronym')
     }).exec(function (err, conference) {
-      if (err) {
-        console.error(err)
-        return res.json(err)
+      if (err) return res.json(401, {error: err})
+      if (!conference) return res.json(400, {message: 'Conference not create'})
+
+      for (i = 0; req.param('chairs')[i]; i++) {
+        conference.chairs.add(req.param('chairs')[i])
       }
-      if (conference) return res.json(conference)
+      for (i = 0; req.param('papers')[i]; i++) {
+        conference.papers.add(req.param('chairs')[i])
+      }
+
+      return res.json({
+        message: '',
+        conference: conference
+      })
     })
   },
 
-  update: function (req, res) {
+  addPapers: function (req, res) {
+    if (req.param('papers_id')) return res.json(400, {message: 'papers is empty'})
+
     Conference.findOne({
-      id: req.param('conference')
-    }).exec(function (err, found) {
-      if (err) {
-        console.error(err)
-        return res.json(err)
-      }
-      if (found) {
-        Conference.update({
-          status: req.param('status'),
-          title: req.param('title'),
-          acronym: req.param('acronym'),
-          chairs: req.param('chairs'),
-          papers: req.param('papers')
-        }).exec(function (err, conference) {
-          if (err) {
-            console.error(err)
-            return res.json(err)
-          }
-          if (conference) return res.json(conference)
+      id: req.param('conference_id')
+    }).exec(function (err, cpnference) {
+      if (err) return res.json(401, {error: err})
+      if (!conference) return res.json(400, {message: 'Conference not found'})
+
+      conference.papers.add(req.param('papers_id'))
+      conference.save(function (err) {
+        if (err) return res.json(401, {error: err})
+
+        return res.json({
+          message: '',
+          conference: conference
         })
-      }
+      })
+    })
+  },
+
+  addChairs: function (req, res) {
+    if (req.param('chairs_id')) return res.json(400, {message: 'chairs is empty'})
+
+    Conference.findOne({
+      id: req.param('conference_id')
+    }).exec(function (err, cpnference) {
+      if (err) return res.json(401, {error: err})
+      if (!conference) return res.json(400, {message: 'Conference not found'})
+
+      conference.chairs.add(req.param('chairs_id'))
+      conference.save(function (err) {
+        if (err) return res.json(401, {error: err})
+
+        return res.json({
+          message: '',
+          conference: conference
+        })
+      })
     })
   },
 
@@ -56,14 +79,11 @@ module.exports = {
     Conference.destroy({
       id: req.param('conference')
     }).exec(function (err) {
-      if (err) {
-        console.error(err)
-        return res.json(err)
-      } else {
-        return res.json({
-          message: 'Conference deleted'
-        })
-      }
+      if (err) return res.json(401, {error: err})
+
+      return res.json({
+        message: 'Conference deleted'
+      })
     })
   }
 }
