@@ -9,7 +9,7 @@ Query.prototype.cast = function(values) {
   var self = this;
   var _values = _.clone(values);
 
-  _.each(_.keys(values), function(key) {
+  Object.keys(values).forEach(function(key) {
     self.castValue(key, _values[key], _values, self._schema);
   });
 
