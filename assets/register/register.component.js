@@ -1,8 +1,5 @@
-angular
-  .module('easyrashApp')
-  .component('registerPage', {
-    templateUrl: 'register/register.template.html',
-    controller: ($scope, $http) => {
+app.controller('registerController',
+    ($scope, $http) => {
       var digest = () => {}
       /* $http.get('/register').then(res => {
         $scope.page = res.data
@@ -15,4 +12,4 @@ angular
         }
       }
     }
-  })
+  )
