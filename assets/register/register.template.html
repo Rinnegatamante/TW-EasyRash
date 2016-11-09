@@ -3,7 +3,7 @@
     <div class="register-panel panel panel-default">
       <div class="panel-heading">Register</div>
       <div class="panel-body">
-        <form role="form" ng-submit="submit()" method="post">
+        <form role="form" ng-submit="submit()">
           <fieldset>
             <div class="form-group">
               <input type="text" ng-model="user.name" class="form-control" placeholder="Name" required="true">
@@ -22,11 +22,6 @@
         </form>
       </div>
     </div>
-    <code>name = {{user.name}}</code></br>
-    <code>email = {{user.email}}</code></br>
-    <code>password = {{user.password}}</code></br>
-    <code>password2 = {{user.password2}}</code></br>
-    <code>res = {{res}}</code></br>
   </div>
   <!-- /.col-->
 </div>

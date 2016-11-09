@@ -1,13 +1,15 @@
 module.exports = {
   register: function (req, res) {
-    user.encryptPassword()
-    User.create({
+  
+	User.create({
       name: req.param('name'),
-      email: req.param('email')
+      email: req.param('email'),
+	  password: req.param('password')
     }).exec(function createCB (err, user) {
       if (err) return res.json(500, {error: err})
       if (!user) return res.json(400, {message: 'User not found'})
 
+	  user.password = req.param('password')
       user.encryptPassword()
       user.save((err) => {
         if (err) return res.json(500, {error: err})

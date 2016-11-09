@@ -1,14 +1,12 @@
 app.controller('registerController',
     ($scope, $http) => {
-      var digest = () => {}
-      /* $http.get('/register').then(res => {
-        $scope.page = res.data
-      }) */
       $scope.submit = function () {
         if ($scope.user.password === $scope.user.password2) {
-          $scope.res = 'form inviato'
+          $http.post('/user/register',$scope.user).then(res => {
+		     console.log(res)
+	      })
         } else {
-          $scope.res = 'password non coincidono'
+          alertError("Passwords mismatches.")
         }
       }
     }
