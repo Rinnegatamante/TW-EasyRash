@@ -1,5 +1,6 @@
 // User.js
 var hat = require('hat')
+var md5 = require('js-md5')
 
 module.exports = {
   attributes: {
@@ -64,17 +65,17 @@ module.exports = {
       return (digest == md5(ha1 + nonce + ha2) || digest == md5(ha1 + nonce_pre + ha2))
     },
 
-    generateToken: () => {
+    generateToken: function () {
       var token = hat()
       this.token = token
       return token
     },
 
-    toJSON: () => {
-      this.toObject()
-      delete this.password
-      delete this.token
-      return this
+    toJSON: function () {
+      var obj = this.toObject()
+      delete obj.password
+      delete obj.token
+      return obj
     }
   }
 }

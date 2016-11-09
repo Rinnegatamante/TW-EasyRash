@@ -12,7 +12,7 @@ var utils = require('../utils');
 module.exports = {};
 
 
-module.exports.configure = function ( connections ) {
+module.exports.configure = function ( connections, sqlOptions ) {
 
   /**
    * Register a connection (and the collections assigned to it) with the MySQL adapter.
@@ -23,6 +23,14 @@ module.exports.configure = function ( connections ) {
    */
 
   return function registerConnection (connection, collections, cb) {
+
+    // Set the version of the API
+    var version;
+    if(connection.version) {
+      version = connection.version;
+    } else {
+      version = 0;
+    }
 
     // Validate arguments
     if(!connection.identity) {
@@ -45,15 +53,21 @@ module.exports.configure = function ( connections ) {
       // Normalize schema into a sane object and discard all the WL context
       var wlSchema = collection.waterline && collection.waterline.schema && collection.waterline.schema[collection.identity];
       var _schema = {};
-      _schema.attributes = wlSchema.attributes || {};
-      _schema.definition = collection.definition || {};
       _schema.meta = collection.meta || {};
       _schema.tableName = wlSchema.tableName;
       _schema.connection = wlSchema.connection;
 
-      // Set defaults to ensure values are set
-      if(!_schema.attributes) {
-        _schema.attributes = {};
+      // If a newer Adapter API is in use, the definition key is used to build
+      // queries and the attributes property can be ignored.
+      //
+      // In older api versions SELECT statements were not normalized. Because of
+      // this the attributes need to be stored that so SELECTS can be manually
+      // normalized in the adapter before sending to the SQL builder.
+      if(version > 0) {
+        _schema.definition = collection.definition || {};
+      } else {
+        _schema.definition = collection.definition || {};
+        _schema.attributes = wlSchema.attributes || {};
       }
 
       if(!_schema.tableName) {
@@ -82,9 +96,9 @@ module.exports.configure = function ( connections ) {
     // Store the connection
     connections[connection.identity] = {
       config: connection,
-      collections: collections,
       connection: {},
-      schema: schema
+      schema: schema,
+      version: version
     };
 
     var activeConnection = connections[connection.identity];
@@ -98,6 +112,13 @@ module.exports.configure = function ( connections ) {
     // Otherwise, assign some default releaseConnection functionality.
     else {
       activeConnection.connection.releaseConnection = _releaseConnection.poollessly;
+    }
+
+    // if connection's wlNext.caseSensitive is set, pass it on as sqlOptions
+    if (activeConnection.config.wlNext && activeConnection.config.wlNext.caseSensitive) {
+      sqlOptions.caseSensitive = true;
+      !sqlOptions.wlNext && (sqlOptions.wlNext = {});
+      sqlOptions.wlNext.caseSensitive = true;
     }
 
     // Done!  The WLConnection (and all of it's collections) have been loaded.
