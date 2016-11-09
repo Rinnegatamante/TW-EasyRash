@@ -69,7 +69,7 @@ module.exports = {
     })
   },
 
-  lock: function (req, res) {
+  lockPaper: function (req, res) {
     // POLICIES : [paperIsLock]
     var u = AuthService.user()
     var p = AuthService.paper()
@@ -93,6 +93,8 @@ module.exports = {
 
   destroy: function (req, res) {
     // POLICIES : [paperIsLock, isMine]
+    var u = AuthService.user()
+
     u.reviews.remove(req.param('review_id'))
     p.reviews.remove(req.param('review_id'))
 

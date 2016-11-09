@@ -1,19 +1,20 @@
-var bcrypt = require('bcryptjs')
-const saltRounds = 10
-
 module.exports = {
   register: function (req, res) {
+    user.encryptPassword()
     User.create({
       name: req.param('name'),
-      email: req.param('email'),
-      password: hashPassword(req.param('password'))
+      email: req.param('email')
     }).exec(function createCB (err, user) {
-      if (err) return res.json(401, {error: err})
+      if (err) return res.json(500, {error: err})
       if (!user) return res.json(400, {message: 'User not found'})
 
-      return res.json({
-        message: '',
-        user: user})
+      user.encryptPassword()
+      user.save((err) => {
+        if (err) return res.json(500, {error: err})
+        return res.json({
+          message: '',
+          user: user})
+      })
     })
   },
 
@@ -21,10 +22,10 @@ module.exports = {
     User.findOne({
       email: req.param('email')
     }).exec(function execLogin (err, user) {
-      if (err) return res.json(401, {error: err})
+      if (err) return res.json(500, {error: err})
       if (!user) return res.json(400, {message: 'User not found'})
 
-      if (!bcrypt.compareSync(rawPassword, record.password)) return res.json(400, {message: 'User not found'})
+      if (!user.verifyPassword(req.param('digest'))) return res.json(401, {message: 'User not found'})
 
       user.generateToken()
 
@@ -41,9 +42,9 @@ module.exports = {
   logout: function (req, res) {
     var u = AuthService.user()
 
-    u.token = ''
+    user.generateToken() // ??? CHIEDI ???
     u.save((err) => {
-      if (err) return res.json(401, {error: err})
+      if (err) return res.json(500, {error: err})
 
       return res.json({
         message: '',

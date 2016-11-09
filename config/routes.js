@@ -48,15 +48,15 @@ module.exports.routes = {
   'get /paper': {
     view: 'paper_up'
   },
-  'post /paper': 'PaperController.upload',
+  'post /paper/create': 'PaperController.upload',
 
-  'post /login': 'UserController.login',
-  'post /register': 'UserController.register',
-  'post /changepsw': 'UserController.changePassword',
-  'post /changemail': 'UserController.changeMail',
-  'post /getdata': 'UserController.getData',
-  'post /logout': 'UserController.logout',
-  'post /test': 'UserController.test',
-  'post /create': 'RatingController.create',
-  'post /update': 'RatingController.update',
-};
+  'post /user/login': 'UserController.login',
+  'post /user/register': 'UserController.register',
+  'post /user/change/psw': 'UserController.changePassword',
+  'post /user/change/mail': 'UserController.changeMail',
+  'post /user/getdata': 'UserController.getData',
+  'post /user/logout': 'UserController.logout',
+  'post /user/test': 'UserController.test',
+  'post /rating/create': 'RatingController.create',
+  'post /rating/update': 'RatingController.update'
+}

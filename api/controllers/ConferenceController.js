@@ -16,7 +16,7 @@ module.exports = {
       title: req.param('title'),
       acronym: req.param('acronym')
     }).exec(function (err, conference) {
-      if (err) return res.json(401, {error: err})
+      if (err) return res.json(500, {error: err})
       if (!conference) return res.json(400, {message: 'Conference not create'})
 
       for (i = 0; req.param('chairs')[i]; i++) {
@@ -39,12 +39,12 @@ module.exports = {
     Conference.findOne({
       id: req.param('conference_id')
     }).exec(function (err, cpnference) {
-      if (err) return res.json(401, {error: err})
+      if (err) return res.json(500, {error: err})
       if (!conference) return res.json(400, {message: 'Conference not found'})
 
       conference.papers.add(req.param('papers_id'))
       conference.save(function (err) {
-        if (err) return res.json(401, {error: err})
+        if (err) return res.json(500, {error: err})
 
         return res.json({
           message: '',
@@ -60,12 +60,12 @@ module.exports = {
     Conference.findOne({
       id: req.param('conference_id')
     }).exec(function (err, cpnference) {
-      if (err) return res.json(401, {error: err})
+      if (err) return res.json(500, {error: err})
       if (!conference) return res.json(400, {message: 'Conference not found'})
 
       conference.chairs.add(req.param('chairs_id'))
       conference.save(function (err) {
-        if (err) return res.json(401, {error: err})
+        if (err) return res.json(500, {error: err})
 
         return res.json({
           message: '',
@@ -79,7 +79,7 @@ module.exports = {
     Conference.destroy({
       id: req.param('conference')
     }).exec(function (err) {
-      if (err) return res.json(401, {error: err})
+      if (err) return res.json(500, {error: err})
 
       return res.json({
         message: 'Conference deleted'

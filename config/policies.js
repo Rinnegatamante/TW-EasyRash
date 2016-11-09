@@ -16,7 +16,6 @@
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.policies.html
  */
 
-
 module.exports.policies = {
 
   /***************************************************************************
@@ -26,7 +25,7 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  '*': false,
 
   /***************************************************************************
   *                                                                          *
@@ -34,18 +33,34 @@ module.exports.policies = {
   * and its actions                                                          *
   *                                                                          *
   ***************************************************************************/
-	// RabbitController: {
+  UserController: {
+    '*': true,
+    logout: 'sessionAuth',
+    getData: 'sessionAuth',
+    changePassword: 'sessionAuth',
+    changeMail: 'sessionAuth'
+  },
 
-		// Apply the `false` policy as the default for all of RabbitController's actions
-		// (`false` prevents all access, which ensures that nothing bad happens to our rabbits)
-		// '*': false,
+  ConferenceController: {
+    create: 'sessionAuth',
+    addPapers: ['sessionAuth', 'isPaperMine'],
+    addChairs: 'sessionAuth'
+  },
 
-		// For the action `nurture`, apply the 'isRabbitMother' policy
-		// (this overrides `false` above)
-		// nurture	: 'isRabbitMother',
+  PaperController: {
+    upload: 'sessionAuth'
+  },
 
-		// Apply the `isNiceToAnimals` AND `hasRabbitFood` policies
-		// before letting any users feed our rabbits
-		// feed : ['isNiceToAnimals', 'hasRabbitFood']
-	// }
-};
+  ReviewController: {
+    create: 'sessionAuth',
+    update: ['sessionAuth', 'isMine'],
+    lock: ['sessionAuth', 'isMine', 'paperIsLock'],
+    destroy: ['sessionAuth', 'isMine']
+  },
+
+  RatingController: {
+    create: 'sessionAuth',
+    update: ['sessionAuth', 'isMine']
+  }
+
+}

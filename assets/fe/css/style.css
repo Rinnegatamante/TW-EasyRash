@@ -1,6 +1,10 @@
-#login-page{
-	position: absolute;
-	top: 0px;
+body{
+
+}
+.page{
+	display: block;
+	position: absolute;	
+	top: 0;
 	bottom: 0;
 	right: 0;
 	left: 0;
@@ -9,7 +13,7 @@
 	width: 100%;
 	overflow-x: hidden;
 	overflow-y: scroll;
-	background-image: url("../img/logitech_konferenz.png");
+	background-image: url("../images/logitech_konferenz.png");
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -17,22 +21,7 @@
 .login-panel{
 	margin-top: 30%;
 }
-#register-page{
-	position: absolute;
-	top: 0px;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	margin: 0;
-	height: calc(100%-50px);
-	width: 100%;
-	overflow-x: hidden;
-	overflow-y: scroll;
-	background-image: url("../img/logitech_konferenz.png");
-	background-position: center;
-	background-size: cover;
-	background-repeat: no-repeat;
-}
+
 .register-panel{
 	margin-top: 30%;
 }
@@ -44,5 +33,5 @@
 	bottom: 20px;
 	width: 50%;
 	left: 25%;
-	display: none;	
+	display: none;
 }
