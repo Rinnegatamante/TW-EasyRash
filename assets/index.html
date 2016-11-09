@@ -19,7 +19,12 @@
 <script>
 	var _URL = "http://17490.s.time4vps.eu:1337/";
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="node_modules/angular/angular.min.js"></script>
+
+<script src="node_modules/angular-route/angular-route.min.js"></script>
+
+<script src="node_modules/js-md5/build/md5.min.js"></script>
+
 
 <script src="templates/lumino/js/lumino.glyphs.js"></script>
 <script src="templates/lumino/js/jquery-1.11.1.min.js"></script>
@@ -51,7 +56,7 @@
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
 							<li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
-							<li><a href="#"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+							<li><a href="#/login"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Login</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -62,7 +67,7 @@
 
 	<login-page class="page">
 	</login-page>
-	<register-page class="page">
+	<register-page class="page" style="display:none">
 	</register-page>
 
 	<div class="alert bg-success" id="alert-success" role="alert">

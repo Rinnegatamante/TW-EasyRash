@@ -3,30 +3,31 @@
     <div class="login-panel panel panel-default">
       <div class="panel-heading">Log in</div>
       <div class="panel-body">
-        <form role="form" id="login-form" method="post" class="ajax-form">
+        <form role="form" ng-submit="submit()" method="post">
           <fieldset>
             <div class="form-group">
-              <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="">
+              <input type="email" ng-model="user.email" class="form-control" placeholder="E-mail" required="true">
             </div>
             <div class="form-group">
-              <input class="form-control" placeholder="Password" name="password" type="password" value="">
+              <input type="password" ng-model="user.password" class="form-control" placeholder="Password" required="true">
             </div>
             <div class="checkbox">
               <label>
-                <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                <input ng-model="remeber" type="checkbox" value="Remember Me">Remember Me
               </label>
             </div>
-            <a>Forgot password?</a>
+            <a href="#">Forgot password?</a>
             <br>
-            <a onclick="document.getElementById('register-page').style.display='block';
-            document.getElementById('login-page').style.display='none';
-            return false;">Don't have an account? Register now!</a>
+            <a href="#">Don't have an account? Register now!</a>
             <br>
             <input type="submit" value="Login" class="btn btn-primary" />
           </fieldset>
         </form>
       </div>
     </div>
+    <code>email = {{user.email}}</code></br>
+    <code>password = {{user.password}}</code></br>
+    <code>res = {{angular.toJson(res)}}</code></br>
   </div>
   <!-- /.col-->
 </div>

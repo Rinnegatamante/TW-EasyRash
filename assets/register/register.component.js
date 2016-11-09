@@ -3,6 +3,7 @@ angular
   .component('registerPage', {
     templateUrl: 'register/register.template.html',
     controller: ($scope, $http) => {
+      var digest = () => {}
       /* $http.get('/register').then(res => {
         $scope.page = res.data
       }) */
