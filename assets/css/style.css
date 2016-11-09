@@ -3,7 +3,7 @@ body{
 }
 .page{
 	display: block;
-	position: absolute;	
+	position: absolute;
 	top: 0;
 	bottom: 0;
 	right: 0;
@@ -11,8 +11,6 @@ body{
 	margin: 0;
 	height: calc(100%-50px);
 	width: 100%;
-	overflow-x: hidden;
-	overflow-y: scroll;
 	background-image: url("../images/logitech_konferenz.png");
 	background-position: center;
 	background-size: cover;

@@ -9,7 +9,6 @@ app.controller('loginCotroller',
    }
 
    $scope.submit = function () {
-     console.log('aaaaa')
      var data = {
        email: $scope.user.email,
        digest: digest($scope.user.email, $scope.user.password)
