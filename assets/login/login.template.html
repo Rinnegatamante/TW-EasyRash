@@ -13,7 +13,7 @@
             </div>
             <div class="checkbox">
               <label>
-                <input ng-model="remeber" type="checkbox" value="Remember Me">Remember Me
+                <input ng-model="remember" type="checkbox" value="Remember Me">Remember Me
               </label>
             </div>
             <a href="">Forgot password?</a>
@@ -27,6 +27,8 @@
     </div>
     <code>email = {{user.email}}</code></br>
     <code>password = {{user.password}}</code></br>
+    <code>remember = {{remember}}</code></br>
+    <code>token = {{user.token}}</code></br>
     <code>res = {{angular.toJson(res)}}</code></br>
   </div>
   <!-- /.col-->

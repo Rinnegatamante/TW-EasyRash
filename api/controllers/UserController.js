@@ -3,30 +3,25 @@ module.exports = {
     User.create({
       name: req.param('name'),
       email: req.param('email'),
-	    password: req.param('password')
+	    password: User.encryptPassword(req.param('email'), req.param('password'))
     }).exec(function createCB (err, user) {
       if (err) return res.json(500, {error: err})
       if (!user) return res.json(400, {message: 'User not found'})
 
-      user.encryptPassword()
-      user.save((err) => {
-        if (err) return res.json(500, {error: err})
-        return res.json({
-          message: '',
-          user: user
-        })
+      return res.json({
+        message: 'Hello, you have been sign in',
+        user: user
       })
     })
   },
 
   login: function (req, res) {
-    console.log(req.param('digest'))
     User.findOne({
       email: req.param('email')
-    }).exec(function execLogin (err, user) {
+    }).exec(function (err, user) {
       if (err) return res.json(500, {error: err})
       if (!user) return res.json(400, {message: 'User not found'})
-
+      console.log(user)
       if (!user.verifyPassword(req.param('digest'))) return res.json(401, {message: 'User not found'})
 
       user.generateToken()
@@ -34,6 +29,7 @@ module.exports = {
       user.save(function (err) {
         if (err) return res.json(400, err)
         return res.json({
+          message: 'Hi ' + user.name,
           user: user,
           token: user.token
         })
@@ -44,7 +40,7 @@ module.exports = {
   logout: function (req, res) {
     var u = AuthService.user()
 
-    user.generateToken() // ??? CHIEDI ???
+    u.generateToken() // ??? CHIEDI ???
     u.save((err) => {
       if (err) return res.json(500, {error: err})
 

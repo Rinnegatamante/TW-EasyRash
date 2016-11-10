@@ -1,12 +1,12 @@
 app.controller('registerController',
-    ($scope, $http) => {
+    ($scope, $http, $location) => {
       $scope.submit = function () {
         if ($scope.user.password === $scope.user.password2) {
-          $http.post('/user/register',$scope.user).then(res => {
-		     console.log(res)
-	      })
+          $http.post('/user/register', $scope.user).then(res => {
+            $location.path('/login')
+	       })
         } else {
-          alertError("Passwords mismatches.")
+          alertify.error('Passwords mismatches.')
         }
       }
     }

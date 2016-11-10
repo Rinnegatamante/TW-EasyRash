@@ -62,6 +62,10 @@ module.exports = {
       var d = new Date()
       var nonce_pre = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDay(), d.getUTCHours(), d.getUTCMinutes() - 1).toString()
       var nonce = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDay(), d.getUTCHours(), d.getUTCMinutes()).toString()
+      console.log(ha1, ha2, nonce)
+
+      console.log(md5(ha1 + nonce + ha2))
+      console.log('pre', md5(ha1 + nonce_pre + ha2))
       return (digest == md5(ha1 + nonce + ha2) || digest == md5(ha1 + nonce_pre + ha2))
     },
 
@@ -77,5 +81,9 @@ module.exports = {
       delete obj.token
       return obj
     }
+  },
+
+  encryptPassword: function (email, password) {
+    return md5(email + password) // HA1
   }
 }

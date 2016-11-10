@@ -21,8 +21,8 @@
 	var _URL = "http://17490.s.time4vps.eu:1337/";
 </script>
 <script src="node_modules/angular/angular.min.js"></script>
-
 <script src="node_modules/angular-route/angular-route.min.js"></script>
+<script src="node_modules/angular-animate/angular-animate.min.js"></script>
 
 <script src="node_modules/js-md5/build/md5.min.js"></script>
 
@@ -35,6 +35,7 @@
 <script src="app.js"></script>
 <script src="login/login.component.js"></script>
 <script src="register/register.component.js"></script>
+<script src="home/home.controller.js"></script>
 
 </head>
 
@@ -67,15 +68,50 @@
 		</div><!-- /.container-fluid -->
 	</nav>
 
-	<ng-view class="page"></ng-view>
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar collapse in">
+		<form role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Search">
+			</div>
+		</form>
+		<ul class="nav menu">
+			<li ng-if="user"><a href="#home"><svg class="glyph stroked dashboard-dial"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
+			<li><a href="widgets.html"><svg class="glyph stroked calendar"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-calendar"></use></svg> Widgets</a></li>
+			<li><a href="charts.html"><svg class="glyph stroked line-graph"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
+			<li class="parent ">
+				<a href="#">
+					<span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-chevron-down"></use></svg></span> Dropdown
+				</a>
+				<ul class="children collapse" id="sub-item-1">
+					<li>
+						<a class="" href="#">
+							<svg class="glyph stroked chevron-right"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-chevron-right"></use></svg> Sub Item 1
+						</a>
+					</li>
+					<li>
+						<a class="" href="#">
+							<svg class="glyph stroked chevron-right"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-chevron-right"></use></svg> Sub Item 2
+						</a>
+					</li>
+					<li>
+						<a class="" href="#">
+							<svg class="glyph stroked chevron-right"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-chevron-right"></use></svg> Sub Item 3
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li role="presentation" class="divider"></li>
+			<li ng-if="user"><a href="#"><svg class="glyph stroked male-user"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
+			<li ng-if="!user"><a href="#login"><svg class="glyph stroked lock"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-lock"></use></svg> Login Page</a></li>
+			<li ng-if="!user"><a href="#register"><svg class="glyph stroked pencil"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-pencil"></use></svg> Register Page</a></li>
+		</ul>
 
-	<div class="alert bg-success" id="alert-success" role="alert">
-		<svg class="glyph stroked checkmark"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-checkmark"></use></svg> <a class="alert-text">Welcome to the admin dashboard panel bootstrap template</a> <a class="pull-right" onclick="alertClose(this)"><span class="glyphicon glyphicon-remove"></span></a>
 	</div>
 
-	<div class="alert bg-danger" id="alert-error" role="alert">
-		<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg>  <a class="alert-text">Welcome to the admin dashboard panel bootstrap template</a> <a href="#" class="pull-right" onclick="alertClose(this)"><span class="glyphicon glyphicon-remove"></span></a>
-	</div>
+
+	<div ng-view class="slide page"></div>
+
+
 
 
 
