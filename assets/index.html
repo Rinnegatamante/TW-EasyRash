@@ -9,6 +9,7 @@
 <link href="templates/lumino/css/bootstrap.min.css" rel="stylesheet">
 <link href="templates/lumino/css/datepicker3.css" rel="stylesheet">
 <link href="templates/lumino/css/styles.css" rel="stylesheet">
+<link href="js/dependencies/alertify.js-master/dist/css/alertify.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 
 
@@ -28,7 +29,7 @@
 
 <script src="templates/lumino/js/lumino.glyphs.js"></script>
 <script src="templates/lumino/js/jquery-1.11.1.min.js"></script>
-<script src="js/alert.js"></script>
+<script src="js/dependencies/alertify.js-master/dist/js/alertify.js"></script>
 <script src="http://malsup.github.io/min/jquery.form.min.js"></script>
 
 <script src="app.js"></script>
@@ -85,22 +86,6 @@
 	<script src="templates/lumino/js/bootstrap-datepicker.js"></script>
 	<script src="templates/lumino/js/easypiechart-data.js"></script>
 
-
-	<script>
-		!function ($) {
-			$(document).on("click","ul.nav li.parent > a > span.icon", function(){
-				$(this).find('em:first').toggleClass("glyphicon-minus");
-			});
-			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
-		}(window.jQuery);
-
-		$(window).on('resize', function () {
-		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
-		})
-		$(window).on('resize', function () {
-		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
-		})
-	</script>
 </body>
 
 </html>

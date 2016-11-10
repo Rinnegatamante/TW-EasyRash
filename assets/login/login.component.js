@@ -14,8 +14,18 @@ app.controller('loginCotroller',
        digest: digest($scope.user.email, $scope.user.password)
      }
 
+     console.log(data)
+
      $http.post('/user/login', data).then(res => {
+       console.log(res.data)
+       console.log('res')
+       console.log('res', res)
        $scope.res = res.data
+     }, err => {
+       console.log(err.data)
+       console.log('res')
+       console.log('res', err)
+       $scope.res = err.data
      })
    }
  })

@@ -20,6 +20,7 @@ module.exports = {
   },
 
   login: function (req, res) {
+    console.log(req.param('digest'))
     User.findOne({
       email: req.param('email')
     }).exec(function execLogin (err, user) {
