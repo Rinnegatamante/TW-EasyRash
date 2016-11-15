@@ -50,7 +50,7 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
  function ($locationProvider, $routeProvider, $httpProvider) {
    $routeProvider
    .when('/', {
-     templateUrl: 'login/login.template.html'
+     templateUrl: 'welcome/welcome.template.html'
    })
    .when('/login', {
      templateUrl: 'login/login.template.html'
