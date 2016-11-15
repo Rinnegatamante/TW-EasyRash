@@ -1,4 +1,4 @@
-app.controller('loginCotroller',
+app.controller('loginController',
  ($rootScope, $scope, $http, $routeParams, $location) => {
    { var digest = (name, password) => {
      var ha1 = md5(name + '' + password) // digest password
