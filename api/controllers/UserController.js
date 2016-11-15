@@ -1,15 +1,19 @@
 module.exports = {
   register: function (req, res) {
-    User.create({
+	var pass = req.param('password')
+	var mail = req.param('email')
+	if (password.length < 8) return res.json(400, {message: "Password is too weak. Must be at least 8 characters."})
+    if ((mail.indexOf("@") == -1) || (mail.indexOf(".") == -1)) return res.json(400, {message: "Invalid e-mail."})
+	User.create({
       name: req.param('name'),
-      email: req.param('email'),
-	    password: User.encryptPassword(req.param('email'), req.param('password'))
+      email: mail,
+	  password: User.encryptPassword(req.param('email'), pass)
     }).exec(function createCB (err, user) {
       if (err) return res.json(500, {error: err})
-      if (!user) return res.json(400, {message: 'User not found'})
+      if (!user) return res.json(400, {message: 'An error occured during registration.'})
 
       return res.json({
-        message: 'Hello, you have been sign in',
+        message: 'Hello, you have signed in successfully.',
         user: user
       })
     })
