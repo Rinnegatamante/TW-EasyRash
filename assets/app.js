@@ -1,4 +1,4 @@
-var app = angular.module('easyrashApp', ['ngRoute', 'ngAnimate'])
+var app = angular.module('easyrashApp', ['ngRoute', 'ngAnimate', 'angularFileUpload'])
 
 app.run(($http, $rootScope, $location) => {
   if (localStorage.getItem('id') && localStorage.getItem('token')) {
@@ -60,6 +60,15 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
    })
    .when('/home', {
      templateUrl: 'home/home.template.html'
+   })
+   .when('/conferences', {
+     templateUrl: 'conferences/conferences.template.html'
+   })
+   .when('/papers', {
+     templateUrl: 'papers/papers.template.html'
+   })
+   .when('/logout', {
+     templateUrl: 'login/logout.template.html'
    })
 
    $httpProvider.interceptors.push('HttpInterceptorMessage')

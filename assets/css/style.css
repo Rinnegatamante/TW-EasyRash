@@ -5,6 +5,7 @@ body{
 	top: 0;
 	height: 100%;
 	width: 100%;
+	font-family: 'Raleway', sans-serif;
 	background-image: url("../images/logitech_konferenz.png");
 	background-size: cover;
 	background-repeat: no-repeat;

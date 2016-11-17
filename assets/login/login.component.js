@@ -1,12 +1,12 @@
 app.controller('loginController',
- ($rootScope, $scope, $http, $routeParams, $location) => {
-   { var digest = (name, password) => {
+ ($rootScope, $scope, $http, $location) => {
+   var digest = (name, password) => {
      var ha1 = md5(name + '' + password) // digest password
      var ha2 = 'POST' + window.location.origin
      var d = new Date()
      var nonce = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDay(), d.getUTCHours(), d.getUTCMinutes()).toString()
      return (md5(ha1 + nonce + ha2))
-   } }
+   }
 
    $scope.submit = function () {
      var data = {

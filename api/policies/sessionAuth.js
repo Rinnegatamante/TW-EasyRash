@@ -12,13 +12,12 @@ module.exports = function (req, res, next) {
 
   var header = req.headers['www-authenticate']
   var raw_credential = new Buffer(header, 'base64').toString()
-  console.log(raw_credential)
   var credential = raw_credential.split(' ') // [id, token]
   if (credential.length != 2) return res.forbidden('You are not permitted to perform this action.')
 
   var id = credential[0]
   var token = credential[1]
-  console.log(credential)
+  console.log('#A:- auth req: ', credential)
 
   User.findOne({
     id: id,
