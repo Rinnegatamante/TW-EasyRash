@@ -53,6 +53,8 @@ module.exports.routes = {
   'post /user/getdata': 'UserController.getData',
   'post /user/logout': 'UserController.logout',
   'post /user/test': 'UserController.test',
+  'post /user/reset/psw': 'UserController.resetPassword',
+  'post /user/reset/send': 'UserController.sendForgot',
   'post /rating/create': 'RatingController.create',
   'post /rating/update': 'RatingController.update',
   'post /file/create': 'FileController.upload'

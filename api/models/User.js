@@ -41,6 +41,11 @@ module.exports = {
       type: 'string',
       unique: true
     },
+	
+	tempToken: {
+	  type: 'string',
+	  unique: true
+	},
 
     chair_conferences: {
       collection: 'conference',
@@ -76,6 +81,7 @@ module.exports = {
       var ha1 = md5(this.email + this.password) // encrypt to digest password
       this.password = ha1
     },
+	
     verifyPassword: function (digest) {
       ha1 = this.password // digest password
       ha2 = 'POST' + 'http://localhost:1337'
@@ -95,6 +101,12 @@ module.exports = {
       return token
     },
 
+	generateTempToken: function () {
+	  var token = hat()
+	  this.tempToken = token
+	  return token
+	},
+	
     toJSON: function () {
       var obj = this.toObject()
       delete obj.password

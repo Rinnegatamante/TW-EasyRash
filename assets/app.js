@@ -73,6 +73,12 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
    .when('/logout', {
      templateUrl: 'login/logout.template.html'
    })
+   .when('/forgot', {
+     templateUrl: 'login/forgot.template.html'
+   })
+   .when('/reset', {
+     templateUrl: 'login/reset.template.html'
+   })
 
    $httpProvider.interceptors.push('HttpInterceptorMessage')
  }])
