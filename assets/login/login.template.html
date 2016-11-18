@@ -16,20 +16,17 @@
                 <input ng-model="remember" type="checkbox" value="Remember Me">Remember Me
               </label>
             </div>
-            <a href="">Forgot password?</a>
-            <br>
-            <a href="#register">Don't have an account? Register now!</a>
-            <br>
             <input type="submit" value="Login" class="btn btn-primary" />
           </fieldset>
+		  <div class="pull-right">
+            <a href="">Forgot password?</a>
+		  </div><br>
+		  <div class="pull-right">
+            <a href="#register">Don't have an account? Register now!</a>
+          </div>
         </form>
       </div>
     </div>
-    <code>email = {{user.email}}</code></br>
-    <code>password = {{user.password}}</code></br>
-    <code>remember = {{remember}}</code></br>
-    <code>token = {{user.token}}</code></br>
-    <code>res = {{angular.toJson(res)}}</code></br>
   </div>
   <!-- /.col-->
 </div>
