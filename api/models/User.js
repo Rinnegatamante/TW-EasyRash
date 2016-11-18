@@ -11,7 +11,12 @@ module.exports = {
       primaryKey: true
     },
 
-    name: {
+    given_name: {
+      type: 'string',
+      required: true
+    },
+
+    family_name: {
       type: 'string',
       required: true
     },
@@ -27,14 +32,29 @@ module.exports = {
       required: true
     },
 
+    sex: {
+      type: 'string',
+      required: true
+    },
+
     token: {
       type: 'string',
       unique: true
     },
 
-    conferences: {
+    chair_conferences: {
       collection: 'conference',
       via: 'chairs'
+    },
+
+    guest_conferences: {
+      collection: 'conference',
+      via: 'pc_members'
+    },
+
+    files: {
+      collection: 'file',
+      via: 'author'
     },
 
     papers: {
