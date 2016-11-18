@@ -54,5 +54,7 @@ module.exports.routes = {
   'post /user/logout': 'UserController.logout',
   'post /user/test': 'UserController.test',
   'post /rating/create': 'RatingController.create',
-  'post /rating/update': 'RatingController.update'
+  'post /rating/update': 'RatingController.update',
+  'post /file/create': 'FileController.upload'
+
 }

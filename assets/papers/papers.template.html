@@ -13,15 +13,13 @@
 	</div>
 	<div class="row col-sm-10 col-sm-offset-1">
 
-		<h3>Upload queue</h3>
+		<h3>Upload files</h3>
 
-		<div class="well my-drop-zone" nv-file-over="" uploader="uploader">
-			Base drop zone
+		<input type="file" nv-file-select="" uploader="uploader" multiple /><br/>
+		<div class="well my-drop-zone text-center" nv-file-over="" uploader="uploader">
+			<svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg>
+			<h3>Drop your files here</h3>
 		</div>
-
-		<input type="file" nv-file-select="" uploader="uploader" multiple /><br/> Single
-
-		<p>Queue length: {{ uploader.queue.length }}</p>
 
 		<table class="table">
 			<thead>

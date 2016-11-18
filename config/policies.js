@@ -52,6 +52,10 @@ module.exports.policies = {
     upload: 'sessionAuth'
   },
 
+  FileController: {
+    upload: true
+  },
+
   ReviewController: {
     create: 'sessionAuth',
     update: ['sessionAuth', 'isMine'],

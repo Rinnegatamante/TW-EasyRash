@@ -19,6 +19,11 @@ module.exports = {
       size: 255
     },
 
+    mime: {
+      type: 'string',
+      size: 255
+    },
+
     url: {
       type: 'string'
     },
