@@ -5,6 +5,7 @@ module.exports = {
     if (pass.length < 8) return res.json(400, {message: 'Password is too weak. Must be at least 8 characters.'})
     User.create({
       name: req.param('name'),
+      subname: req.param('subname'),
       email: mail,
 	    password: User.encryptPassword(req.param('email'), pass)
     }).exec(function createCB (err, user) {

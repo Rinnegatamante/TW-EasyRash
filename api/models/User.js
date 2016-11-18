@@ -11,12 +11,12 @@ module.exports = {
       primaryKey: true
     },
 
-    given_name: {
+    name: {
       type: 'string',
       required: true
     },
 
-    family_name: {
+    subname: {
       type: 'string',
       required: true
     },
