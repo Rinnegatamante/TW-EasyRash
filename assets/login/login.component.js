@@ -13,12 +13,12 @@ app.controller('loginController',
        email: $scope.user.email,
        digest: digest($scope.user.email, $scope.user.password)
      }
-     console.log($rootScope)
+
      $http.post('/user/login', data).then(res => {
        $rootScope.user = res.data.user
+       $rootScope.user['token'] = res.data.token
 
        $location.path('/home')
-       console.log(res.data.token)
        if ($scope.remember) {
          localStorage.setItem('id', $rootScope.user.id)
          localStorage.setItem('token', res.data.token)

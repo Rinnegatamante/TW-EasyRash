@@ -6,6 +6,7 @@ module.exports = {
     User.create({
       name: req.param('name'),
       subname: req.param('subname'),
+      sex: req.param('sex'),
       email: mail,
 	    password: User.encryptPassword(req.param('email'), pass)
     }).exec(function createCB (err, user) {
@@ -25,7 +26,6 @@ module.exports = {
     }).exec(function (err, user) {
       if (err) return res.json(500, {error: err})
       if (!user) return res.json(400, {message: 'User not found'})
-      console.log(user)
       if (!user.verifyPassword(req.param('digest'))) return res.json(401, {message: 'User not found'})
 
       user.generateToken()
@@ -44,13 +44,12 @@ module.exports = {
   logout: function (req, res) {
     var u = AuthService.user()
 
-    u.generateToken() // ??? CHIEDI ???
+    u.generateToken()
     u.save((err) => {
       if (err) return res.json(500, {error: err})
 
       return res.json({
-        message: '',
-        user: user
+        message: 'Successfully logout'
       })
     })
   },

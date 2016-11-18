@@ -8,15 +8,20 @@ app.run(($http, $rootScope, $location) => {
     })
   }
 })
-app.factory('HttpInterceptorMessage', ['$q', '$location', function ($q, $location) {
+app.factory('HttpInterceptorMessage', ['$q', '$location', '$rootScope', function ($q, $location, $rootScope) {
   return {
     // optional method
     'request': function (config) {
       // do something on success
-      var id = localStorage.getItem('id')
-      var token = localStorage.getItem('token')
+      if ($rootScope.user) {
+        var id = $rootScope.user.id
+        var token = $rootScope.user.token
+      } else {
+        var id = localStorage.getItem('id')
+        var token = localStorage.getItem('token')
+      }
       if (token && id) {
-        console.log(token, id)
+        console.info('found token e id: ', token, id)
         config.headers['www-authenticate'] = window.btoa(id + ' ' + token)
       }
       return config
@@ -24,24 +29,22 @@ app.factory('HttpInterceptorMessage', ['$q', '$location', function ($q, $locatio
     'response': function (response) {
      // do something on success
       if (response.data.message) {
-        alertify.success('<svg class="glyph stroked checkmark"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-checkmark"></use></svg>  \
-        <p>' + response.data.message + '</p>')
+        alertify.success(response.data.message)
       };
       return response
     },
 
-    'responseError': function (rejection) {
+    'responseError': function (response) {
      // do something on error
-      if (rejection.data.message) {
-        alertify.error('<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-checkmark"></use></svg>\
-          <p>' + response.data.message + '</p>')
+
+      if (response.data && response.data.message) {
+        alertify.error(response.data.message)
       }
-      if (rejection.data.error) {
-        alertify.error('<svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-checkmark"></use></svg>\
-          <p>' + rejection.data.error.error + '</p>')
+      if (response.data && response.data.error) {
+        alertify.error(response.data.error.error)
       }
 
-      return $q.reject(rejection)
+      return $q.reject(response)
     }
   }
 }])

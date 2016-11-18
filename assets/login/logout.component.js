@@ -4,6 +4,8 @@ app.controller('logoutController',
      localStorage.removeItem('id')
      localStorage.removeItem('token')
    }
-   $location.path('/login')
-   location.reload()
+   $http.post('/user/logout').then(res => {
+     $location.path('/login')
+     location.reload()
+   })
  })

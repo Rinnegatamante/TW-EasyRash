@@ -28,6 +28,9 @@ body{
 .login-panel{
 	margin-top: 30%;
 }
+.alertify-logs{
+	z-index: 10000;
+}
 
 .register-panel{
 	margin-top: 30%;
