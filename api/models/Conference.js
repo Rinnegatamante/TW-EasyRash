@@ -32,10 +32,15 @@ module.exports = {
 
     chairs: {
       collection: 'user',
-      via: 'conferences'
+      via: 'chair_conferences'
     },
 
-    papers: {
+    pc_members: {
+      collection: 'user',
+      via: 'guest_conferences'
+    },
+
+    submission: {
       collection: 'paper',
       via: 'conference'
     }

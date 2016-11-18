@@ -14,14 +14,8 @@ module.exports = {
       autoIncrement: true
     },
 
-    title: {
-      type: 'string',
-      size: 255
-    },
-
-    description: {
-      type: 'text',
-      size: 1023
+    author: {
+      model: 'user'
     },
 
     rash_link: {
@@ -37,10 +31,6 @@ module.exports = {
 
     token: {
       type: 'text'
-    },
-
-    author: {
-      model: 'user'
     },
 
     conference: {

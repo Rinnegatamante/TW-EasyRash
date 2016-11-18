@@ -16,6 +16,11 @@ module.exports = {
       required: true
     },
 
+    subname: {
+      type: 'string',
+      required: true
+    },
+
     email: {
       type: 'email',
       unique: true,
@@ -27,14 +32,29 @@ module.exports = {
       required: true
     },
 
+    sex: {
+      type: 'string',
+      required: true
+    },
+
     token: {
       type: 'string',
       unique: true
     },
 
-    conferences: {
+    chair_conferences: {
       collection: 'conference',
       via: 'chairs'
+    },
+
+    guest_conferences: {
+      collection: 'conference',
+      via: 'pc_members'
+    },
+
+    files: {
+      collection: 'file',
+      via: 'author'
     },
 
     papers: {
