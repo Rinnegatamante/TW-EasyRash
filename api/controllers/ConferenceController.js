@@ -29,12 +29,27 @@ module.exports = {
   getData: function (req, res) {
     Conference.findOne({
 	  id: req.param('id')
-	}).exec(function (err, conference) {
+	}).populate('chairs').exec(function (err, conference) {
 	  if (err) return res.json(500, {error: err})
 	  if (!conference) return res.json(400, {message: 'Conference not found.'})
 	  
 	  return res.json({conference: conference})
 	  
+	})
+  },
+  
+  deleteChair: function (req, res) {
+	Conference.findOne({
+		id: req.param('id')
+	}).populate('chairs').exec(function (err, conference) {
+		if (err) return res.json(500, {error: err})
+	    if (!conference) return res.json(400, {message: 'Conference not found.'})
+	    if (conference.chairs.length < 2) return res.json(400, {message: 'At least a chair is required for each conference'})
+		conference.chairs.remove(req.param('delete_id'))
+		conference.save((err) => {
+			if (err) return res.json(500, {error: err})
+			return res.json({message: 'Chair removed successfully!', conference: conference})
+	    })
 	})
   },
   
