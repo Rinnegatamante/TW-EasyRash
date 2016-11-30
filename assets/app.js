@@ -4,7 +4,7 @@ app.run(($http, $rootScope, $location) => {
   if (localStorage.getItem('id') && localStorage.getItem('token')) {
     $http.post('/user/getdata').then(res => {
       $rootScope.user = res.data.user
-      $location.path('/home')
+      $rootScope.user['token'] = localStorage.getItem('token')
     })
   }
 })

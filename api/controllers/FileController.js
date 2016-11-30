@@ -19,31 +19,36 @@ module.exports = {
   upload: function (req, res) {
     console.log(req.allParams())
     var u = AuthService.user()
-    res.setTimeout(0)
-    req.file('files').upload({
+    req.file('file').upload({
       maxBytes: 10000000
     }, function (err, files) {
       if (err) {
         return res.serverError(err)
       }
       console.log('FILES', files)
-      for (var i = 0; files[0]; i++) {
+      for (var i = 0; files[i]; i++) {
         File.create({
-          title: files[i].filename
+          title: files[i].filename,
+          mime: files[i].type,
+          url: files[i].fd
         }).exec(function (err, createdFile) {
           if (err) { console.log(err) }
+          u.files.add(createdFile.id)
 
-          createdFile.author.add(u.id)
-          createdFile.title = 'abbbabba'
           console.log(createdFile)
           createdFile.save()
 
-          console.log('upload')
-          return res.json({
-            message: files.length + ' file(s) uploaded successfully!',
-            attributes: createdFile.toObject(),
-            files: files
-          })
+          if (!files[i + 1]) {
+            u.save(function (err) {
+              if (err) { console.log(err) }
+
+              return res.json({
+                message: files.length + ' file(s) uploaded successfully!',
+                attributes: createdFile.toObject(),
+                files: files
+              })
+            })
+          }
         })
       }
     })

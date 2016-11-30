@@ -53,7 +53,7 @@ module.exports.policies = {
   },
 
   FileController: {
-    upload: true
+    upload: 'sessionAuth'
   },
 
   ReviewController: {
