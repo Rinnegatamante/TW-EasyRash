@@ -22,7 +22,12 @@ module.exports = function (req, res, next) {
   User.findOne({
     id: id,
     token: token
-  }).exec(function (err, user) {
+  })
+  .populate('chair_conferences')
+  .populate('guest_conferences')
+  .populate('files')
+  .populate('papers')
+  .exec(function (err, user) {
     if (err) return res.forbidden('You are not permitted to perform this action.')
     if (!user) return res.forbidden('You are not permitted to perform this action.')
     console.log('#A:- authorized user: ' + user.name + ' - id: ' + user.id)
