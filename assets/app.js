@@ -82,10 +82,10 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
    .when('/reset', {
      templateUrl: 'login/reset.template.html'
    })
-   .when('/newConf', {
+   .when('/newconf', {
 	templateUrl: 'conferences/newconf.template.html'
    })
-   .when('/addChairs/:id', {
+   .when('/addchairs/:id', {
     templateUrl: 'conferences/addchairs.template.html'
    })
 
