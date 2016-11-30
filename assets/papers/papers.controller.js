@@ -3,7 +3,7 @@ app.controller('papersController',
    $http.post('/user/getdata').then(res => {
      console.info('PAPER -user:', res.data.user)
      $scope.user = res.data.user
-     $scope.files = res.data.files
+     $scope.files = res.data.user.files
    })
 
    var uploader = $scope.uploader = new FileUploader({
