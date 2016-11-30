@@ -6,11 +6,7 @@
  */
 
 module.exports = {
-
-  index: function (req, res) {
-    return res.json('')
-  },
-
+  
   create: function (req, res) {
     Conference.create({
       title: req.param('title'),
@@ -18,27 +14,36 @@ module.exports = {
     }).exec(function (err, conference) {
       if (err) return res.json(500, {error: err})
       if (!conference) return res.json(400, {message: 'Conference not create'})
-
-      for (i = 0; req.param('chairs')[i]; i++) {
-        conference.chairs.add(req.param('chairs')[i])
-      }
-      for (i = 0; req.param('papers')[i]; i++) {
-        conference.papers.add(req.param('chairs')[i])
-      }
-
-      return res.json({
-        message: '',
-        conference: conference
+	  
+	  conference.chairs.add(AuthService.user().id)
+      conference.save((err) => {
+        if (err) return res.json(500, {error: err})
+		return res.json({
+          message: req.param('title') + ' conference has been created successfully!',
+          conference: conference
+        })
       })
-    })
+	})
   },
 
+  getData: function (req, res) {
+    Conference.findOne({
+	  id: req.param('id')
+	}).exec(function (err, conference) {
+	  if (err) return res.json(500, {error: err})
+	  if (!conference) return res.json(400, {message: 'Conference not found.'})
+	  
+	  return res.json({conference: conference})
+	  
+	})
+  },
+  
   addPapers: function (req, res) {
-    if (req.param('papers_id')) return res.json(400, {message: 'papers is empty'})
-
+    if (req.param('papers_id')) return res.json(400, {message: 'Papers field is empty.'})
+	
     Conference.findOne({
       id: req.param('conference_id')
-    }).exec(function (err, cpnference) {
+    }).exec(function (err, conference) {
       if (err) return res.json(500, {error: err})
       if (!conference) return res.json(400, {message: 'Conference not found'})
 

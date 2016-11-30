@@ -9,6 +9,7 @@ var transporter = nodemailer.createTransport('SMTP', {
 })
 
 module.exports = {
+
   register: function (req, res) {
     var pass = req.param('password')
     var mail = req.param('email')
@@ -28,7 +29,16 @@ module.exports = {
       })
     })
   },
-
+  
+  searchByName: function (req, res) {
+	User.find({
+		name: { 'like' : '%' + req.param('field') + '%'}
+	}).exec(function (err, users){
+	  if (err) return res.json(500, {error: err})
+	  return res.json({users: users})
+	})
+  },
+  
   login: function (req, res) {
     User.findOne({
       email: req.param('email')

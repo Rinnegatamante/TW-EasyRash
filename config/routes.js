@@ -45,7 +45,9 @@ module.exports.routes = {
     view: 'paper_up'
   },
   'post /paper/create': 'PaperController.upload',
-
+  'post /conference/create': 'ConferenceController.create',
+  'post /conference/getData': 'ConferenceController.getData',
+  'post /user/searchByName': 'UserController.searchByName',
   'post /user/login': 'UserController.login',
   'post /user/register': 'UserController.register',
   'post /user/change/psw': 'UserController.changePassword',

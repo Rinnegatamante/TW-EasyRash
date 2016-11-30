@@ -82,6 +82,12 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
    .when('/reset', {
      templateUrl: 'login/reset.template.html'
    })
+   .when('/newConf', {
+	templateUrl: 'conferences/newconf.template.html'
+   })
+   .when('/addChairs/:id', {
+    templateUrl: 'conferences/addchairs.template.html'
+   })
 
    $httpProvider.interceptors.push('HttpInterceptorMessage')
  }])
