@@ -64,6 +64,9 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
    .when('/home', {
      templateUrl: 'home/home.template.html'
    })
+   .when('/profile', {
+     templateUrl: 'profile/profile.template.html'
+   })
    .when('/conferences', {
      templateUrl: 'conferences/conferences.template.html'
    })
