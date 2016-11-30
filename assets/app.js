@@ -73,6 +73,9 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
    .when('/papers', {
      templateUrl: 'papers/papers.template.html'
    })
+   .when('/addpaper/:pid', {
+     templateUrl: 'papers/addpapers.template.html'
+   })
    .when('/logout', {
      templateUrl: 'login/logout.template.html'
    })
@@ -83,10 +86,10 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
      templateUrl: 'login/reset.template.html'
    })
    .when('/newconf', {
-	templateUrl: 'conferences/newconf.template.html'
+     templateUrl: 'conferences/newconf.template.html'
    })
    .when('/addchairs/:id', {
-    templateUrl: 'conferences/addchairs.template.html'
+     templateUrl: 'conferences/addchairs.template.html'
    })
 
    $httpProvider.interceptors.push('HttpInterceptorMessage')

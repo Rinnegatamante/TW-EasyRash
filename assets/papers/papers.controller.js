@@ -1,10 +1,13 @@
 app.controller('papersController',
  ($scope, $http, $rootScope, $location, FileUploader) => {
-   $http.post('/user/getdata').then(res => {
-     console.info('PAPER -user:', res.data.user)
-     $scope.user = res.data.user
-     $scope.files = res.data.user.files
-   })
+   $scope.getdata = () => {
+     $http.post('/user/getdata').then(res => {
+       console.info('PAPER -user:', res.data.user)
+       $scope.user = res.data.user
+       $scope.files = res.data.user.files
+     })
+   }
+   $scope.getdata()
 
    var uploader = $scope.uploader = new FileUploader({
      url: '/file/create/',
@@ -19,4 +22,8 @@ app.controller('papersController',
        return this.queue.length < 10
      }
    })
+
+   uploader.onCompleteItem = function (fileItem, response, status, headers) {
+     $scope.getdata()
+   }
  })
