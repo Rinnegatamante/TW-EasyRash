@@ -1,7 +1,14 @@
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+<div class="row">
+		<ol class="breadcrumb">
+			<li><a href="#/"><svg class="glyph stroked home"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-home"></use></svg></a></li>
+		</ol>
+	</div>
+	<br>
 <div class="row" ng-controller="addchairsController">
-  <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
-    <div class="register-panel panel panel-default">
-      <div class="panel-heading">Manage conference chairs</div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Manage current chairs</div>
       <div class="panel-body">
         <form role="form" ng-submit="submit()">
           <fieldset>
@@ -25,16 +32,38 @@
 				</table>
 			</div>
             <br>
-			<input type="submit" value="Create conference" class="btn btn-primary" />
           </fieldset>
         </form>
-		<br>
-		<form role="form" ng-submit="search()">
+      </div>
+    </div>
+  </div>
+  <!-- /.col-->
+    <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Add new chairs</div>
+      <div class="panel-body">
+        <form role="form" ng-submit="search()">
 			<div class="form-group">
               <input type="text" ng-model="user.field" class="form-control" placeholder="Search..." required="true" />
 			  <br>
 			  <input type="submit" value="Search for an user" class="btn btn-primary" />
             </div>
+			<div class="fixed-table-container">
+				<table data-toggle="table" class="table table-hover">
+					<thead>
+						<tr>
+							<th>User Name</th>
+						    <th>Action</th>
+						</tr>
+				    </thead>
+					<tbody>
+						<tr ng-repeat="user in users">
+							<td>{{user.name}}</td>
+							<td><a href="" ng-click="add(user.id)"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</form>
       </div>
     </div>
@@ -42,3 +71,4 @@
   <!-- /.col-->
 </div>
 <!-- /.row -->
+</div>

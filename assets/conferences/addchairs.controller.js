@@ -15,6 +15,12 @@ app.controller('addchairsController',
           $scope.users = res.data.users
         })  
       }
+	  $scope.add = function (id) {
+		$scope.conf.add_id = id
+		$http.post('/conference/addChair', $scope.conf).then(res => {
+          $scope.conf = res.data.conference
+        }) 
+	  }
 	  $scope.delete = function (id) {
 		$scope.conf.delete_id = id
 		$http.post('/conference/deleteChair', $scope.conf).then(res => {

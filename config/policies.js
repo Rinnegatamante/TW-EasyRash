@@ -45,7 +45,7 @@ module.exports.policies = {
   ConferenceController: {
     create: 'sessionAuth',
     addPapers: ['sessionAuth', 'isPaperMine'],
-    addChairs: 'sessionAuth',
+    addChair: 'sessionAuth',
 	deleteChair: 'sessionAuth',
 	getData: 'sessionAuth'
   },

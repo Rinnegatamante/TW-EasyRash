@@ -32,9 +32,27 @@ module.exports = {
 	}).populate('chairs').exec(function (err, conference) {
 	  if (err) return res.json(500, {error: err})
 	  if (!conference) return res.json(400, {message: 'Conference not found.'})
-	  
 	  return res.json({conference: conference})
-	  
+	})
+  },
+  
+  addChair: function (req, res) {
+	Conference.findOne({
+		id: req.param('id')
+	}).populate('chairs').exec(function (err, conference) {
+		if (err) return res.json(500, {error: err})
+	    if (!conference) return res.json(400, {message: 'Conference not found.'})
+	    conference.chairs.add(req.param('add_id'))
+		conference.save((err) => {
+			if (err) return res.json(500, {error: err})
+			Conference.findOne({
+				id: req.param('id')
+			}).populate('chairs').exec(function (err, conference) {
+				if (err) return res.json(500, {error: err})
+				if (!conference) return res.json(400, {message: 'Conference not found.'})
+				return res.json({message: "Chair added successfully!", conference: conference})
+			})
+		})
 	})
   },
   
@@ -48,8 +66,14 @@ module.exports = {
 		conference.chairs.remove(req.param('delete_id'))
 		conference.save((err) => {
 			if (err) return res.json(500, {error: err})
-			return res.json({message: 'Chair removed successfully!', conference: conference})
-	    })
+			Conference.findOne({
+				id: req.param('id')
+			}).populate('chairs').exec(function (err, conference) {
+				if (err) return res.json(500, {error: err})
+				if (!conference) return res.json(400, {message: 'Conference not found.'})
+				return res.json({message: 'Chair removed successfully!', conference: conference})
+			})
+		})
 	})
   },
   
@@ -63,27 +87,6 @@ module.exports = {
       if (!conference) return res.json(400, {message: 'Conference not found'})
 
       conference.papers.add(req.param('papers_id'))
-      conference.save(function (err) {
-        if (err) return res.json(500, {error: err})
-
-        return res.json({
-          message: '',
-          conference: conference
-        })
-      })
-    })
-  },
-
-  addChairs: function (req, res) {
-    if (req.param('chairs_id')) return res.json(400, {message: 'chairs is empty'})
-
-    Conference.findOne({
-      id: req.param('conference_id')
-    }).exec(function (err, cpnference) {
-      if (err) return res.json(500, {error: err})
-      if (!conference) return res.json(400, {message: 'Conference not found'})
-
-      conference.chairs.add(req.param('chairs_id'))
       conference.save(function (err) {
         if (err) return res.json(500, {error: err})
 
