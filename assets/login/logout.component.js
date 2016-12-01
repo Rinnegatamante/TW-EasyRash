@@ -6,6 +6,6 @@ app.controller('logoutController',
    }
    $http.post('/user/logout').then(res => {
      $location.path('/login')
-     location.reload()
+     $rootScope.user = undefined
    })
  })
