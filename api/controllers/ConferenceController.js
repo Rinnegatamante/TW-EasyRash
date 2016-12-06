@@ -26,6 +26,15 @@ module.exports = {
 	})
   },
 
+  searchConference: function (req, res) {
+	Conference.find({
+	  title: { 'like' : '%' + req.param('field') + '%'}
+	}).exec(function (err, conferences) {
+		if (err) return res.json(500, {error: err})
+		return res.json({conferences: conferences})
+	})
+  },
+  
   getData: function (req, res) {
     Conference.findOne({
 	  id: req.param('id')

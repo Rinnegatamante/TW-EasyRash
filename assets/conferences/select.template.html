@@ -1,0 +1,39 @@
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main" ng-controller="selectconfController">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><svg class="glyph stroked empty message"><use xlink:href="#stroked-empty-message"/></svg> Select a conferences</a></li>
+			</ol>
+		</div><!--/.row-->
+		
+		<br>
+		
+		<div class="row">
+			<div ng-repeat="conference in conferences" class="col-xs-12 col-md-6 col-lg-4">
+				<div class="panel panel-blue panel-widget ">
+					<div class="row no-padding">
+						<div class="col-sm-2 widget-left">
+							<svg class="glyph stroked two messages"><use xlink:href="#stroked-two-messages"/></svg>
+						</div>
+						<div class="col-sm-10">
+							<h4>{{conference.title | limitTo: 20}} ({{ conference.acronym }})</h4>
+							<p><a href="#/addpapers/{{conference.id}}">Send papers to this conference</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<form role="form" ng-submit="search()">
+					<table>
+						<tr>
+						<td><input type="text" ng-model="user.field" class="form-control" placeholder="Search..." required="true" /> </td>
+						<td> <input type="submit" value="Search" class="btn btn-primary" /></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+		<br>
+</div>

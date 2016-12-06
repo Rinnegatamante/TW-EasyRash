@@ -47,6 +47,7 @@ module.exports.policies = {
     addPapers: ['sessionAuth', 'isPaperMine'],
     addChair: ['sessionAuth', 'isChair'],
 	deleteChair: ['sessionAuth', 'isChair'],
+	searchConference: 'sessionAuth',
 	getData: 'sessionAuth'
   },
 
