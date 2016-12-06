@@ -48,6 +48,7 @@ module.exports.policies = {
     addChair: ['sessionAuth', 'isChair'],
 	deleteChair: ['sessionAuth', 'isChair'],
 	searchConference: 'sessionAuth',
+	getPendingPapers: 'sessionAuth',
 	getData: 'sessionAuth'
   },
 

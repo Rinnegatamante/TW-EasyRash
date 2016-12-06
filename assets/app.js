@@ -94,6 +94,9 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
    .when('/selectconf', {
 	  templateUrl: 'conferences/select.template.html'
    })
-
+   .when('/changestatusconf/:id', {
+      templateUrl: 'conferences/changestatus.template.html'
+   })
+   
    $httpProvider.interceptors.push('HttpInterceptorMessage')
  }])

@@ -17,6 +17,7 @@
 						</div>
 						<div class="col-sm-10">
 							<h4>{{conference.title | limitTo: 20}} ({{ conference.acronym }})</h4>
+							<p><a href="#/changestatusconf/{{conference.id}}">Manage conference status</a></p>
 							<p><a href="#/addchairs/{{conference.id}}">Manage Chairs</a></p>
 							<p><a href="#/addpapers/{{conference.id}}">Send papers to this conference</a></p>
 						</div>
@@ -33,38 +34,5 @@
 			</div>
 		</div>
 		
-		<div class="row">
-			<ol class="breadcrumb">
-				<li><svg class="glyph stroked empty message"><use xlink:href="#stroked-empty-message"/></svg>Reviewer Conferences</a></li>
-			</ol>
-		</div><!--/.row-->
-		
-		<br>
-		
-		<div class="row">
-			<div ng-repeat="conference in user.chair_conferences" class="col-xs-12 col-md-6 col-lg-4">
-				<div class="panel panel-blue panel-widget ">
-					<div class="row no-padding">
-						<div class="col-sm-2 widget-left">
-							<svg class="glyph stroked two messages"><use xlink:href="#stroked-two-messages"/></svg>
-						</div>
-						<div class="col-sm-10">
-							<h4>{{conference.title | limitTo: 20}} ({{ conference.acronym }})</h4>
-							<p><a href="#/changestatus/{{conference.id}}">Manage Status</a></p>
-							<p><a href="#/addchairs/{{conference.id}}">Manage Chairs</a></p>
-							<p><a href="#/addpapers/{{conference.id}}">Send papers to this conference</a></p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-xs-12 col-md-6 col-lg-3">
-				<form role="form" ng-submit="create()">
-					<input type="submit" value="Create a new conference" class="btn btn-primary" />
-				</form>
-			</div>
-		</div>
 		<br>
 </div>

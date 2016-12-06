@@ -50,6 +50,7 @@ module.exports.routes = {
   'post /conference/deleteChair': 'ConferenceController.deleteChair',
   'post /conference/addChair': 'ConferenceController.addChair',
   'post /conference/searchConference': 'ConferenceController.searchConference',
+  'post /conference/getPendingPapers': 'ConferenceController.getPendingPapers',
   'post /user/searchByName': 'UserController.searchByName',
   'post /user/login': 'UserController.login',
   'post /user/register': 'UserController.register',
