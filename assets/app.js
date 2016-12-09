@@ -73,6 +73,18 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
    .when('/conferences/:cid/addpaper', {
      templateUrl: 'papers/addpapers.template.html'
    })
+   .when('/conferences/:cid/addchairs', {
+     templateUrl: 'conferences/addchairs.template.html'
+   })
+   .when('/conferences/:cid/changestatus', {
+     templateUrl: 'conferences/changestatus.template.html'
+   })
+   .when('/conferences/create', {
+     templateUrl: 'conferences/newconf.template.html'
+   })
+   .when('/conferences/select', {
+     templateUrl: 'conferences/select.template.html'
+   })
   .when('/papers', {
     templateUrl: 'papers/papers.template.html'
   })
@@ -84,18 +96,6 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
    })
    .when('/reset', {
      templateUrl: 'login/reset.template.html'
-   })
-   .when('/newconf', {
-     templateUrl: 'conferences/newconf.template.html'
-   })
-   .when('/addchairs/:id', {
-     templateUrl: 'conferences/addchairs.template.html'
-   })
-   .when('/selectconf', {
-	  templateUrl: 'conferences/select.template.html'
-   })
-   .when('/changestatusconf/:id', {
-     templateUrl: 'conferences/changestatus.template.html'
    })
 
    $httpProvider.interceptors.push('HttpInterceptorMessage')

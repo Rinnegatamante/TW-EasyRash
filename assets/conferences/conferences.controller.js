@@ -5,7 +5,7 @@ app.controller('conferencesController',
 	})
 	
 	$scope.create = function () {
-		$location.path('/newconf')
+		$location.path('/conferences/create')
 	}
 	
  })

@@ -54,7 +54,7 @@ module.exports = {
 	  if (req.param('state') > 2 || req.param('state') < 0) return res.json(400, {message: 'Invalid status value.'})
 	  conference.status = req.param('state')
 	  conference.save()
-	  return res.json({message: 'Conference status changed successfully'})
+	  return res.json({message: 'Conference status changed successfully!'})
 	})
   },
   

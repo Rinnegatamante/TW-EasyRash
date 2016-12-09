@@ -1,6 +1,6 @@
 app.controller('addchairsController',
     ($scope, $http, $location, $routeParams) => {
-	  $scope.conf = {id : $routeParams.id}
+	  $scope.conf = {id : $routeParams.cid}
 	  $http.post('/conference/getData', $scope.conf).then(res => {
 		$scope.conf = res.data.conference
 	  })
@@ -9,11 +9,13 @@ app.controller('addchairsController',
 		  $location.path('/addchairs/' + res.data.conference.id)
 		})
       }
-	  $scope.search = function () {
-        $http.post('/user/searchByName', $scope.user).then(res => {
-          $scope.users = res.data.users
-        })  
-      }
+	  $scope.$watch('user.field', function(newVal, oldVal) {
+            if(newVal != oldVal) {
+                $http.post('/user/searchByName', $scope.user).then(res => {
+					$scope.users = res.data.users
+				})  
+            }
+      });
 	  $scope.add = function (id) {
 		$scope.conf.add_id = id
 		$http.post('/conference/addChair', $scope.conf).then(res => {

@@ -3,7 +3,7 @@ app.controller('newconfController',
 	  $scope.conf = {}
       $scope.submit = function () {
         $http.post('/conference/create', $scope.conf).then(res => {
-		  $location.path('/addchairs/' + res.data.conference.id)
+		  $location.path('/conferences/' + res.data.conference.id + '/addchairs')
 		})
       }
 	  $scope.search = function () {
