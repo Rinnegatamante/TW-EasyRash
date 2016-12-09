@@ -67,8 +67,8 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
    .when('/profile', {
      templateUrl: 'profile/profile.template.html'
    })
-   .when('/conferences', {
-     templateUrl: 'conferences/conferences.template.html'
+   .when('/conferences/chair', {
+     templateUrl: 'conferences/chair.template.html'
    })
    .when('/conferences/:cid/addpaper', {
      templateUrl: 'papers/addpapers.template.html'
@@ -82,7 +82,7 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
    .when('/conferences/create', {
      templateUrl: 'conferences/newconf.template.html'
    })
-   .when('/conferences/select', {
+   .when('/conferences', {
      templateUrl: 'conferences/select.template.html'
    })
   .when('/papers', {

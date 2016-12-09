@@ -8,6 +8,14 @@
 		<br>
 		
 		<div class="row">
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<input type="text" ng-model="user.field" class="form-control" placeholder="Search..." required="true" />
+			</div>
+		</div>
+		
+		<br>
+		
+		<div class="row">
 			<div ng-repeat="conference in conferences | filter: user.field" class="col-xs-12 col-md-6 col-lg-4">
 				<div class="panel panel-blue panel-widget ">
 					<div class="row no-padding">
@@ -23,10 +31,5 @@
 			</div>
 		</div>
 		
-		<div class="row">
-			<div class="col-xs-12 col-md-6 col-lg-3">
-				<input type="text" ng-model="user.field" class="form-control" placeholder="Search..." required="true" />
-			</div>
-		</div>
 		<br>
 </div>
