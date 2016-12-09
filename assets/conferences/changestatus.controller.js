@@ -3,6 +3,7 @@ app.controller('changestatusController',
 	  $scope.conf = {id : $routeParams.id}
 	  $http.post('/conference/getData', $scope.conf).then(res => {
 		$scope.conf = res.data.conference
+	    $scope.conf.paperstate = '' + res.data.conference.status
 	  })
 	  $http.post('/conference/getPendingPapers', $scope.conf).then(res => {
 		$scope.conf.pending = res.data.papers
@@ -13,5 +14,9 @@ app.controller('changestatusController',
 		  $location.path('/addchairs/' + res.data.conference.id)
 		})
       }
+	  $scope.setStatus = function () {
+	    $scope.req = {id : $scope.conf.id, state: $scope.conf.paperstate}
+	    $http.post('/conference/setStatus', $scope.req)
+	  }
     }
   )

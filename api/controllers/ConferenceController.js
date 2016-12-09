@@ -45,6 +45,19 @@ module.exports = {
 	})
   },
   
+  setStatus: function (req, res) {
+	Conference.findOne({
+	  id: req.param('id')
+	}).exec(function (err, conference) {
+	  if (err) return res.json(500, {error: err})
+	  if (!conference) return res.json(400, {message: 'Conference not found.'})
+	  if (req.param('state') > 2 || req.param('state') < 0) return res.json(400, {message: 'Invalid status value.'})
+	  conference.status = req.param('state')
+	  conference.save()
+	  return res.json({message: 'Conference status changed successfully'})
+	})
+  },
+  
   getPendingPapers: function (req, res) {
 	Conference.findOne({
 	  id: req.param('id')
@@ -53,7 +66,7 @@ module.exports = {
 	  if (!conference) return res.json(400, {message: 'Conference not found.'})
 	  var papers = []
 	  conference.submission.forEach(function eq(el){
-		if (el.status === 0) papers.add(el)
+		if (el.status === 0 || el.status === 3) papers.add(el)
 	  })
 	  return res.json({papers: papers, length: papers.length})
 	})

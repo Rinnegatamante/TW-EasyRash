@@ -8,6 +8,12 @@
               <input type="text" ng-model="conf.title" class="form-control" ng-disabled="true" placeholder="Title" required="true" />
             </div>
 			<div class="form-group">
+				<select ng-if="conf.paperstate < 2" ng-model="conf.paperstate" ng-change="setStatus()" id="paperstate" required="true" class="form-control">
+					<option value=0>Allow new papers submission</option>
+				    <option value=1>Deny new papers submission</option>
+				</select>
+			</div>
+			<div class="form-group">
 			  Pending papers: {{conf.numpending}}
 			</div>
             <div ng-if="conf.numpending === 0" class="form-group">
@@ -15,9 +21,8 @@
 				<input type="submit" value="Close conference" class="btn btn-primary" />
 			  </form>
             </div>
-            <br>
           </fieldset>
-      </div>
+	  </div>
     </div>
   </div>
   <!-- /.col-->

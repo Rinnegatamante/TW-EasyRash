@@ -17,7 +17,7 @@ module.exports = {
     status: {
       type: 'integer',
       required: true,
-      defaultsTo: 1
+      defaultsTo: 0
     },
 
     acronym: {
