@@ -29,16 +29,16 @@ module.exports = {
       })
     })
   },
-  
+
   searchByName: function (req, res) {
-	User.find({
-		name: { 'like' : '%' + req.param('field') + '%'}
-	}).exec(function (err, users){
+    User.find({
+      name: { 'like': '%' + req.param('field') + '%'}
+    }).exec(function (err, users) {
 	  if (err) return res.json(500, {error: err})
 	  return res.json({users: users})
-	})
+    })
   },
-  
+
   login: function (req, res) {
     User.findOne({
       email: req.param('email')
@@ -78,6 +78,15 @@ module.exports = {
 
     return res.json(200, {
       user: u
+    })
+  },
+
+  getFiles: function (req, res) {
+    var u = AuthService.user()
+
+    File.find({author: u.id}).populate('papers').populate('author').exec((err, files) => {
+      if (err) return res.json(500, {error: err})
+      return res.json({files: files})
     })
   },
 

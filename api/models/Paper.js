@@ -14,10 +14,6 @@ module.exports = {
       autoIncrement: true
     },
 
-    author: {
-      model: 'user'
-    },
-
     rash_link: {
       type: 'string'
     },
@@ -31,6 +27,10 @@ module.exports = {
 
     token: {
       type: 'text'
+    },
+
+    file: {
+      model: 'file'
     },
 
     conference: {

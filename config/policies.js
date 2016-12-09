@@ -38,19 +38,20 @@ module.exports.policies = {
     login: true,
     logout: 'sessionAuth',
     getData: 'sessionAuth',
+    getFiles: 'sessionAuth',
     changePassword: 'sessionAuth',
     changeMail: 'sessionAuth'
   },
 
   ConferenceController: {
     create: 'sessionAuth',
-    addPapers: ['sessionAuth', 'isPaperMine'],
+    addPaper: ['sessionAuth', 'isFileMine'],
     addChair: ['sessionAuth', 'isChair'],
-	deleteChair: ['sessionAuth', 'isChair'],
-	searchConference: 'sessionAuth',
-	getPendingPapers: 'sessionAuth',
-	getData: 'sessionAuth',
-	setStatus: ['sessionAuth', 'isChair']
+  	deleteChair: ['sessionAuth', 'isChair'],
+  	searchConference: 'sessionAuth',
+  	getPendingPapers: 'sessionAuth',
+  	getData: 'sessionAuth',
+  	setStatus: ['sessionAuth', 'isChair']
   },
 
   PaperController: {

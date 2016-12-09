@@ -57,11 +57,6 @@ module.exports = {
       via: 'author'
     },
 
-    papers: {
-      collection: 'paper',
-      via: 'author'
-    },
-
     ratings: {
       collection: 'rating',
       via: 'author'

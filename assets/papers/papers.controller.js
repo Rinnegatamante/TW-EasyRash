@@ -6,6 +6,10 @@ app.controller('papersController',
        $scope.user = res.data.user
        $scope.files = res.data.user.files
      })
+     $http.post('/user/getfiles').then(res => {
+       console.info('PAPER -user:', res.data.files)
+       $scope.files = res.data.files
+     })
    }
    $scope.getdata()
 

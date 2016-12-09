@@ -7,21 +7,20 @@
         <form role="form" ng-submit="submit()">
           <fieldset>
             <div class="form-group">
-              <input type="text" ng-model="search.title" class="form-control" placeholder="Title" required="true" />
+              <labl>Search by Title:</label><input type="text" ng-model="search.title" class="form-control" placeholder="Title" required="true" />
             </div>
-            <input type="submit" value="Search" class="btn btn-primary" />
           </fieldset>
         </form>
         <hr/>
         <div class="row">
-          <div ng-repeat="file in files" class="col-xs-offset-1 col-xs-10 col-md-4 col-lg-4 ">
-            <div class="panel panel-blue panel-widget panel-bg-grey">
+          <div ng-repeat="file in files |  filter: search.title" class="col-xs-10 col-md-6 col-lg-6 panel-hv-green">
+            <div class="panel panel-blue panel-widget panel-bg-grey clickable" ng-click="selectPaper(file.id, file.title)">
               <div class="row no-padding">
                 <div class="col-sm-2 widget-left">
                   <svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg>
                 </div>
                 <div class="col-sm-10">
-                  <h4>{{file.title}}</h4>
+                  <h4>{{file.title}} {{file.title.length > 10? file.title.length: 2}}</h4>
                   <p>{{file.createdAt | limitTo:10}}</p>
                   <hr/>
                 </div>
