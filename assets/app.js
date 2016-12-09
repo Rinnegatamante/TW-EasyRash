@@ -70,12 +70,12 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
    .when('/conferences', {
      templateUrl: 'conferences/conferences.template.html'
    })
-   .when('/papers', {
-     templateUrl: 'papers/papers.template.html'
-   })
-   .when('/addpaper/:pid', {
+   .when('/conferences/:cid/addpaper', {
      templateUrl: 'papers/addpapers.template.html'
    })
+  .when('/papers', {
+    templateUrl: 'papers/papers.template.html'
+  })
    .when('/logout', {
      templateUrl: 'login/logout.template.html'
    })
@@ -95,8 +95,8 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
 	  templateUrl: 'conferences/select.template.html'
    })
    .when('/changestatusconf/:id', {
-      templateUrl: 'conferences/changestatus.template.html'
+     templateUrl: 'conferences/changestatus.template.html'
    })
-   
+
    $httpProvider.interceptors.push('HttpInterceptorMessage')
  }])

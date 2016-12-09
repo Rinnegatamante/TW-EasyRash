@@ -8,4 +8,5 @@ app.controller('addpapersController',
        $scope.files = res.data.user.files
      })
    }
+   $scope.getdata()
  })

@@ -1,13 +1,13 @@
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main" ng-controller="conferencesController">
-		
+
 		<div class="row">
 			<ol class="breadcrumb">
 				<li><svg class="glyph stroked empty message"><use xlink:href="#stroked-empty-message"/></svg>Chair Conferences</a></li>
 			</ol>
 		</div><!--/.row-->
-		
+
 		<br>
-		
+
 		<div class="row">
 			<div ng-repeat="conference in user.chair_conferences" class="col-xs-12 col-md-6 col-lg-4">
 				<div class="panel panel-blue panel-widget ">
@@ -19,7 +19,7 @@
 							<h4>{{conference.title | limitTo: 20}} ({{ conference.acronym }})</h4>
 							<p><a href="#/changestatusconf/{{conference.id}}">Manage conference status</a></p>
 							<p><a href="#/addchairs/{{conference.id}}">Manage Chairs</a></p>
-							<p><a href="#/addpapers/{{conference.id}}">Send papers to this conference</a></p>
+							<p><a href="#/conferences/{{conference.id}}/addpaper">Send papers to this conference</a></p>
 						</div>
 					</div>
 				</div>
@@ -33,6 +33,6 @@
 				</form>
 			</div>
 		</div>
-		
+
 		<br>
 </div>
