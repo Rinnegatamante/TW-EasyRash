@@ -12,15 +12,21 @@
 					<option value=0>Allow new papers submission</option>
 				    <option value=1>Deny new papers submission</option>
 				</select>
+				<select ng-if="conf.paperstate == 2" ng-model="conf.paperstate" id="paperstate" required="true" ng-disabled="true" class="form-control">
+					<option value=2>Deny new papers submission</option>
+				</select>
 			</div>
-			<div class="form-group">
+			<div ng-if="conf.paperstate != 2" class="form-group">
 			  Pending papers: {{conf.numpending}}
 			</div>
-            <div ng-if="conf.numpending === 0" class="form-group">
+            <div ng-if="(conf.numpending === 0) && (conf.paperstate != 2)" class="form-group">
               <form role="form" ng-submit="close()">
-				<input type="submit" value="Close conference" class="btn btn-primary" />
+				<input title="Close conference" type="submit" value="Close conference" class="btn btn-primary" />
 			  </form>
             </div>
+			<div ng-if="conf.paperstate == 2" class="form-group">
+				This conference is closed.
+			</div>
           </fieldset>
 	  </div>
     </div>

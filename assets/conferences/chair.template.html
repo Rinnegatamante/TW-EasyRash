@@ -2,7 +2,7 @@
 
 		<div class="row">
 			<ol class="breadcrumb">
-				<li><svg class="glyph stroked empty message"><use xlink:href="#stroked-empty-message"/></svg> Chair Conferences</a></li>
+				<li><svg class="glyph stroked round coffee mug"><use xlink:href="#stroked-round-coffee-mug"/></svg> Chair Conferences</a></li>
 			</ol>
 		</div><!--/.row-->
 
@@ -10,7 +10,7 @@
 
 		<div class="row">
 			<div ng-repeat="conference in user.chair_conferences" class="col-xs-12 col-md-6 col-lg-4">
-				<div class="panel panel-blue panel-widget ">
+				<div class="panel {{conference.status == 2 ? 'panel-red' : 'panel-blue' }} panel-widget ">
 					<div class="row no-padding">
 						<div class="col-sm-2 widget-left">
 							<svg class="glyph stroked two messages"><use xlink:href="#stroked-two-messages"/></svg>
@@ -19,10 +19,10 @@
 							<h4>{{conference.title | limitTo: 20}} ({{ conference.acronym }})</h4>
 							<a href=""><span data-toggle="collapse" href="#sub-item-{{conference.id}}"><i class="fa fa-bars" aria-hidden="true"></i> Actions</span></a>
 							<ul class="children collapse" id="sub-item-{{conference.id}}">
-								<li><p><a href="#/conferences/{{conference.id}}/changestatus">Manage conference status</a></p></li>
-								<li><p><a href="#/conferences/{{conference.id}}/addchairs">Manage chairs</a></p></li>
+								<li ng-if="conference.status < 2"><p><a href="#/conferences/{{conference.id}}/changestatus">Manage conference status</a></p></li>
+								<li ng-if="conference.status < 2"><p><a href="#/conferences/{{conference.id}}/addchairs">Manage chairs</a></p></li>
 								<li><p><a href="#/conferences/{{conference.id}}/managepapers">Manage papers</a></p></li>
-								<li><p><a href="#/conferences/{{conference.id}}/addpaper">Send papers to this conference</a></p></li>
+								<li ng-if="conference.status < 1"><p><a href="#/conferences/{{conference.id}}/addpaper">Send papers to this conference</a></p></li>
 							</ul>
 						</div>
 					</div>
