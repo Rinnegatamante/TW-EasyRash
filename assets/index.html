@@ -43,7 +43,7 @@
 <script src="register/register.component.js"></script>
 <script src="login/logout.component.js"></script>
 <script src="home/home.controller.js"></script>
-<script src="conferences/conferences.controller.js"></script>
+<script src="conferences/chair.controller.js"></script>
 <script src="conferences/newconf.controller.js"></script>
 <script src="conferences/addchairs.controller.js"></script>
 <script src="conferences/select.controller.js"></script>
@@ -71,8 +71,6 @@
 					<li class="dropdown pull-right">
 						<a class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{user.name}}<span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li ng-if="user"><a href="#conferences"><svg class="glyph stroked empty message"><use xlink:href="#stroked-empty-message"/></svg> Conferences</a></li>
-							<li ng-if="user"><a href="#papers"><svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg> Papers</a></li>
 							<li ng-if="user"><a href="#profile"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
 							<li ng-if="user"><a href="#logout"><svg class="glyph stroked lock"><use xlink:href="#stroked-lock"/></svg> Logout</a></li>
 							<li ng-if="!user"><a href="#login"><svg class="glyph stroked lock"><use xlink:href="#stroked-lock"/></svg> Login</a></li>
@@ -88,7 +86,14 @@
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar collapse in">
 		<ul class="nav menu">
 			<li ng-if="user"><a href="#home"><svg class="glyph stroked home"><use xlink:href="#stroked-home"/></use></svg> Dashboard</a></li>
-			<li ng-if="user"><a href="#conferences"><svg class="glyph stroked empty message"><use xlink:href="#stroked-empty-message"/></svg> Conferences</a></li>
+			<li ng-if="user" class="parent "><a href=""><span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked empty message"><use xlink:href="#stroked-empty-message"/></svg> Conferences</span></a>
+				<ul class="children collapse" id="sub-item-1">
+					<li><a href="#/conferences/chair"><svg class="glyph stroked round coffee mug"><use xlink:href="#stroked-round-coffee-mug"/></svg> Chair conferences</a></li>
+					<li><a href="#/conferences/author"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"/></svg> Author conferences</a></li>
+					<li><a href="#/conferences/reviewer"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg> Reviewer conferences</a></li>
+					<li><a href="#/conferences"><svg class="glyph stroked eye"><use xlink:href="#stroked-eye"/></svg> Search for a conference</a></li>
+				</ul>
+			</li>
 			<li ng-if="user"><a href="#papers"><svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg> Papers</a></li>
 			<li ng-if="user"><a href="#profile"><svg class="glyph stroked male-user"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
 			<li role="presentation" class="divider"></li>
