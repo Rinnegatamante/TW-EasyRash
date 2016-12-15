@@ -23,13 +23,19 @@
 				</div>
 				<div class="row no-padding">
 					<div class="col-sm-12">
-						<p>- Subscribed to:</p>
+						<a href=""><span data-toggle="collapse" href="#sub-file-{{file.id}}"><i class="fa fa-bars" aria-hidden="true"></i> Subsctibed to:</span></a>
+						<hr/>
 					</div>
-				</div>
-				<div class="row no-padding">
-					<div class="col-sm-12">
-						<h4>{{file.title}}</h4>
-					</div>
+					<ul class="children collapse" id="sub-file-{{file.id}}">
+						<li>
+							<div ng-repeat="paper in file.papers">
+								<h4>&bull; committed to: <b>{{paper.conference.title}}</b></h4>
+								<h5 class="col-sm-6">status: {{paper.conference.status}}</h5>
+								<h5 class="col-sm-6">date: {{paper.createdAt | limitTo:10}}</h5>
+							</div>
+							<hr/>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>

@@ -33,6 +33,10 @@ module.exports = {
       via: 'files'
     },
 
+    owner: {
+      model: 'user'
+    },
+
     papers: {
       collection: 'paper',
       via: 'file'

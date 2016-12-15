@@ -52,9 +52,14 @@ module.exports = {
       via: 'pc_members'
     },
 
-    files: {
+    co_files: {
       collection: 'file',
       via: 'author'
+    },
+
+    files: {
+      collection: 'file',
+      via: 'owner'
     },
 
     ratings: {

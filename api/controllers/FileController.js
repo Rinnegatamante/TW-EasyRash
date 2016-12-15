@@ -34,6 +34,7 @@ module.exports = {
         }).exec(function (err, createdFile) {
           if (err) { console.log(err) }
           u.files.add(createdFile.id)
+          u.co_files.add(createdFile.id)
 
           console.log(createdFile)
           createdFile.save()

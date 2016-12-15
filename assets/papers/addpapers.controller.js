@@ -10,6 +10,20 @@ app.controller('addpapersController',
      $http.post('/user/getfiles').then(res => {
        console.info('PAPER -user:', res.data.files)
        $scope.files = res.data.files
+       $http.post('/user/getpapers').then(res => {
+         console.info('PAPER -user:', res.data.papers)
+         console.log($scope.files)
+         for (var i = 0; $scope.files[i]; i++) {
+           $scope.files[i].papers = []
+           var findpaper = res.data.papers.forEach((papers) => {
+             if (papers.file.id == $scope.files[i].id) {
+               $scope.files[i].papers.push(papers)
+             }
+             return
+           })
+           console.log($scope.files[i], findpaper)
+         }
+       })
      })
    }
    $scope.getdata()

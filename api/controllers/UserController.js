@@ -84,9 +84,22 @@ module.exports = {
   getFiles: function (req, res) {
     var u = AuthService.user()
 
-    File.find({author: u.id}).populate('papers').populate('author').exec((err, files) => {
-      if (err) return res.json(500, {error: err})
+    File.find({owner: u.id}).populate('papers').populate('owner').populate('author').exec((err, files) => {
+      if (err) return console.log(err)
+      if (!files) return res.json(400, {message: 'You have not files yet'})
       return res.json({files: files})
+    })
+  },
+
+  getPapers: function (req, res) {
+    var criteria = {}
+    req.param('fid') ? criteria['file'] = req.param('fid') : undefined
+    req.param('cid') ? criteria['conference'] = req.param('cid') : undefined
+
+    Paper.find(criteria).populate('conference').populate('file').exec((err, papers) => {
+      if (err) return console.log(err)
+      if (!papers) return res.json(400, {message: 'You have not papers yet'})
+      return res.json({papers: papers})
     })
   },
 
