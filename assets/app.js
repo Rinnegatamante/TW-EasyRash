@@ -85,6 +85,9 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
    .when('/conferences', {
      templateUrl: 'conferences/select.template.html'
    })
+   .when('/conferences/:cid/managepapers', {
+     templateUrl: 'conferences/managepapers.template.html'
+   })
   .when('/papers', {
     templateUrl: 'papers/papers.template.html'
   })

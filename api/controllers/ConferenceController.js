@@ -58,17 +58,11 @@ module.exports = {
     })
   },
 
-  getPendingPapers: function (req, res) {
-    Conference.findOne({
-	  id: req.param('id')
-    }).populate('submission').exec(function (err, conference) {
-	  if (err) return res.json(500, {error: err})
-	  if (!conference) return res.json(400, {message: 'Conference not found.'})
-	  var papers = []
-	  conference.submission.forEach(function eq (el) {
-    if (el.status === 0 || el.status === 3) papers.add(el)
-	  })
-	  return res.json({papers: papers, length: papers.length})
+  getPapers: function (req, res) {
+    Paper.find({conference: req.param('id') }).populate('conference').populate('file').exec((err, papers) => {
+      if (err) return console.log(err)
+      if (!papers) return res.json(400, {message: 'The conference has not papers yet'})
+      return res.json({papers: papers})
     })
   },
 

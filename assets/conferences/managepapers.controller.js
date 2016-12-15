@@ -1,4 +1,4 @@
-app.controller('changestatusController',
+app.controller('managepapersController',
     ($scope, $http, $location, $routeParams) => {
 	  $scope.conf = {id: $routeParams.cid}
 	  $http.post('/conference/getData', $scope.conf).then(res => {

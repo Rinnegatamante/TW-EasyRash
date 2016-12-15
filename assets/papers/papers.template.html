@@ -29,11 +29,15 @@
 					<ul class="children collapse" id="sub-file-{{file.id}}">
 						<li>
 							<div ng-repeat="paper in file.papers">
-								<h4>&bull; committed to: <b>{{paper.conference.title}}</b></h4>
+								<h4>&bull; committed to: <b>{{paper.conference.title}}</b>
+								<div class="columns btn-group pull-right">
+									<button class="btn btn-danger" type="button"title="Remove from this conference" ng-click="deletePaper({{paper.id}})"><i class="fa fa-times" aria-hidden="true"></i></button>
+								</div>
+							</h4>
 								<h5 class="col-sm-6">status: {{paper.conference.status}}</h5>
 								<h5 class="col-sm-6">date: {{paper.createdAt | limitTo:10}}</h5>
 							</div>
-							<hr/>
+							<br/>
 						</li>
 					</ul>
 				</div>

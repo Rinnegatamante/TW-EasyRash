@@ -48,4 +48,7 @@ app.controller('papersController',
    uploader.onCompleteItem = function (fileItem, response, status, headers) {
      $scope.getdata()
    }
+
+   $scope.deletePaper = (pid) => {
+   }
  })

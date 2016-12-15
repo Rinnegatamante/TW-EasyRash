@@ -49,7 +49,7 @@ module.exports.policies = {
     addChair: ['sessionAuth', 'isChair'],
   	deleteChair: ['sessionAuth', 'isChair'],
   	searchConference: 'sessionAuth',
-  	getPendingPapers: 'sessionAuth',
+  	getPapers: 'sessionAuth',
   	getData: 'sessionAuth',
   	setStatus: ['sessionAuth', 'isChair']
   },

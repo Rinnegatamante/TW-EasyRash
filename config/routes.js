@@ -44,8 +44,11 @@ module.exports.routes = {
   'get /paper': {
     view: 'paper_up'
   },
+  // PAPER
   'post /paper/create': 'PaperController.upload',
+  // CONFERENCE
   'post /conference/create': 'ConferenceController.create',
+  'post /conference/papers': 'ConferenceController.getPapers',
   'post /conference/getData': 'ConferenceController.getData',
   'post /conference/deleteChair': 'ConferenceController.deleteChair',
   'post /conference/addChair': 'ConferenceController.addChair',
@@ -53,6 +56,7 @@ module.exports.routes = {
   'post /conference/getPendingPapers': 'ConferenceController.getPendingPapers',
   'post /conference/addpaper': 'ConferenceController.addPaper',
   'post /conference/setStatus': 'ConferenceController.setStatus',
+  // USER
   'post /user/searchByName': 'UserController.searchByName',
   'post /user/login': 'UserController.login',
   'post /user/register': 'UserController.register',
@@ -64,8 +68,10 @@ module.exports.routes = {
   'post /user/test': 'UserController.test',
   'post /user/reset/psw': 'UserController.resetPassword',
   'post /user/reset/send': 'UserController.sendForgot',
+  // RATING
   'post /rating/create': 'RatingController.create',
   'post /rating/update': 'RatingController.update',
+  // FILE
   'post /file/create': 'FileController.upload'
 
 }
