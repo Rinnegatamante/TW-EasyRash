@@ -17,9 +17,9 @@
 				</select>
 			</div>
 			<div ng-if="conf.paperstate != 2" class="form-group">
-			  Pending papers: {{conf.papers.length}}
+			  Pending papers: {{conf.papers.pending.length}}
 			</div>
-            <div ng-if="(conf.papers.length === 0) && (conf.papers.length != 2)" class="form-group">
+            <div ng-if="(conf.papers.pending.length === 0) && (conf.paperstate != 2)" class="form-group">
               <form role="form" ng-submit="close()">
 				<input title="Close conference" type="submit" value="Close conference" class="btn btn-primary" />
 			  </form>
