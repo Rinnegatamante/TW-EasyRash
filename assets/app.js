@@ -91,8 +91,11 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
   .when('/papers', {
     templateUrl: 'papers/papers.template.html'
   })
+  .when('/view/:pid', {
+    templateUrl: 'view/view.template.html'
+  })
    .when('/logout', {
-     templateUrl: 'login/logout.template.html'
+     templateUrl: 'view/view.template.html'
    })
    .when('/forgot', {
      templateUrl: 'login/forgot.template.html'

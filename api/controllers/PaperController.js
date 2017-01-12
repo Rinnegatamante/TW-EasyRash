@@ -16,6 +16,42 @@ module.exports = {
     return res.views('paper_up')
   },
 
+  find: function (req, res) {
+    console.log(sails.config.appPath)
+    Paper.findOne(req.param('pid')).populate('file').populate('conference').exec((err, paper) => {
+      if (err) { console.log(err) }
+      return res.json({
+        paper: paper
+      })
+    })
+  },
+
+  accept: function (req, res) {
+    Paper.findOne(req.param('pid')).populate('file').populate('conference').exec((err, paper) => {
+      paper.status = 1
+      paper.save((err) => {
+        if (err) { console.log(err) }
+        return res.json({
+          message: 'Paper accepted',
+          paper: paper
+        })
+      })
+    })
+  },
+
+  reject: function (req, res) {
+    Paper.findOne(req.param('pid')).populate('file').populate('conference').exec((err, paper) => {
+      paper.status = 0
+      paper.save((err) => {
+        if (err) { console.log(err) }
+        return res.json({
+          message: 'Paper rejected',
+          paper: paper
+        })
+      })
+    })
+  },
+
   upload: function (req, res) {
     var u = AuthService.user()
     req.file('paper').upload({

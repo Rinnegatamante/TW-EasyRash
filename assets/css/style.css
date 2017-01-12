@@ -1,7 +1,9 @@
 .right{
 	float: right;
 }
-
+#view{
+	height: 700px;
+}
 body{
 	display: block;
 	position: absolute;
@@ -12,7 +14,9 @@ body{
 	font-family: 'Raleway', sans-serif;
 	background-image: url("../images/logitech_konferenz.png");
 	background-size: cover;
+	background-repeat: no-repeat
 	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 .lightbox-panel{
 	margin-top: 15%;

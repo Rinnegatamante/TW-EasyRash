@@ -34,6 +34,24 @@ app.controller('managepapersController',
         $location.path('/conferences/' + res.data.conference.id + '/addchairs')
       })
     }
+    $scope.accept = function (id) {
+      $http.post('/paper/' + id + '/accept').then(res => {
+        for (i in $scope.papers.pending) {
+          if ($scope.papers.pending[i].id == id) {
+            $scope.papers.accepted.push(res.data.paper)
+            $scope.papers.pending[i] = {}// TODO
+          }
+        }
+      })
+    }
+    $scope.reject = function (id) {
+      $http.post('/paper/' + id + '/reject').then(res => {
+        for (i in $scope.papers.pending) {
+          $scope.papers.rejected.push(res.data.paper)
+          $scope.papers.pending[i] = {}// TODO
+        }
+      })
+    }
     $scope.setStatus = function () {
       $scope.req = {
         id: $scope.conf.id,

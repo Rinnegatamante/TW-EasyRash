@@ -55,11 +55,15 @@ module.exports.policies = {
   },
 
   PaperController: {
-    upload: 'sessionAuth'
+    upload: 'sessionAuth',
+    find: 'sessionAuth',
+    reject: 'sessionAuth',
+    accept: 'sessionAuth'
   },
 
   FileController: {
-    upload: 'sessionAuth'
+    upload: 'sessionAuth',
+    find: 'sessionAuth'
   },
 
   ReviewController: {

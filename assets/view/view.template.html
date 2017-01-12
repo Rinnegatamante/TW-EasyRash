@@ -1,0 +1,32 @@
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main" ng-controller="viewController">
+	<div class="row">
+		<ol class="breadcrumb">
+			<li><svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg> Paper : <b>{{paper.file.title}}</b></li>
+		</ol>
+	</div>
+	<!--/.row-->
+
+	<br>
+
+	<div class="row">
+		<div class="panel panel-primary chat col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-1">
+					<div class="panel-heading"><svg class="glyph stroked two-messages"><use xlink:href="#stroked-blank-document"/></svg> {{paper.file.title}}</div>
+
+					<div class="panel-body" id="view">
+					</div>
+
+					<div class="panel-footer">
+						<div class="input-group">
+							<input id="btn-input" type="text" class="form-control input-md" placeholder="Type your message here...">
+							<span class="input-group-btn">
+								<button class="btn btn-success btn-md" id="btn-chat">Send</button>
+							</span>
+						</div>
+					</div>
+				</div>
+	</div>
+
+</div>
+<!--/.row-->
+
+</div>

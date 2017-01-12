@@ -40,6 +40,12 @@ module.exports = {
     papers: {
       collection: 'paper',
       via: 'file'
+    },
+
+    toJSON: function () {
+      var obj = this.toObject()
+      obj.url = this.url.replace(sails.config.appPath + '/assets', '')
+      return obj
     }
   }
 }

@@ -16,11 +16,21 @@ module.exports = {
     return res.views('paper_up')
   },
 
+  find: function (req, res) {
+    File.findOne(req.param('fid')).exec((err, paper) => {
+      if (err) { console.log(err) }
+      return res.json({
+        file: file
+      })
+    })
+  },
+
   upload: function (req, res) {
     console.log(req.allParams())
     var u = AuthService.user()
     req.file('file').upload({
-      maxBytes: 10000000
+      maxBytes: 10000000,
+      dirname: require('path').resolve(sails.config.appPath, 'assets/uploads/')
     }, function (err, files) {
       if (err) {
         return res.serverError(err)

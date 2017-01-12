@@ -28,9 +28,11 @@
 					</div>
 					<ul class="children collapse" id="sub-file-{{file.id}}">
 						<li>
+							<h4 ng-hide="file.papers.length">You have no commit your papers to any conference</h4>
 							<div ng-repeat="paper in file.papers">
 								<h4>&bull; committed to: <b>{{paper.conference.title}}</b>
 								<div class="columns btn-group pull-right">
+									<a href="#/view/{{paper.id}}" class="btn btn-default" type="button"title="View paper"><i class="fa fa-eye" aria-hidden="true"></i></a>
 									<button class="btn btn-danger" type="button"title="Remove from this conference" ng-click="deletePaper({{paper.id}})"><i class="fa fa-times" aria-hidden="true"></i></button>
 								</div>
 							</h4>

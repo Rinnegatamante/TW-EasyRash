@@ -41,11 +41,12 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
-  'get /paper': {
-    view: 'paper_up'
-  },
+
   // PAPER
   'post /paper/create': 'PaperController.upload',
+  'post /paper/:pid/accept': 'PaperController.accept',
+  'post /paper/:pid/reject': 'PaperController.reject',
+  'get /paper/:pid': 'PaperController.find',
   // CONFERENCE
   'post /conference/create': 'ConferenceController.create',
   'post /conference/papers': 'ConferenceController.getPapers',
@@ -53,7 +54,7 @@ module.exports.routes = {
   'post /conference/deleteChair': 'ConferenceController.deleteChair',
   'post /conference/addChair': 'ConferenceController.addChair',
   'post /conference/searchConference': 'ConferenceController.searchConference',
-  'post /conference/getPendingPapers': 'ConferenceController.getPendingPapers',
+  // 'post /conference/getPendingPapers': 'ConferenceController.getPendingPapers',
   'post /conference/addpaper': 'ConferenceController.addPaper',
   'post /conference/setStatus': 'ConferenceController.setStatus',
   // USER
@@ -72,6 +73,7 @@ module.exports.routes = {
   'post /rating/create': 'RatingController.create',
   'post /rating/update': 'RatingController.update',
   // FILE
-  'post /file/create': 'FileController.upload'
+  'post /file/create': 'FileController.upload',
+  'post /file/:fid': 'FileController.find'
 
 }
