@@ -1,0 +1,49 @@
+<div class="row" ng-controller="changestatusController">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+    <div class="register-panel panel panel-default">
+      <div class="panel-heading"><a href="#/conferences/chair"><svg class="glyph stroked arrow left"><use xlink:href="#stroked-arrow-left"/></svg></a> Manage conference status</div>
+      <div class="panel-body">
+        <fieldset>
+          <div class="form-group">
+            <input type="text" ng-model="conf.title" class="form-control" ng-disabled="true" placeholder="Title" required="true" />
+          </div>
+          <div class="form-group">
+            <select ng-if="conf.paperstate < 2" ng-model="conf.paperstate" ng-change="setStatus()" id="paperstate" required="true" class="form-control">
+					<option value=0>Allow new papers submission</option>
+				    <option value=1>Deny new papers submission</option>
+				</select>
+            <select ng-if="conf.paperstate == 2" ng-model="conf.paperstate" id="paperstate" required="true" ng-disabled="true" class="form-control">
+					<option value=2>Deny new papers submission</option>
+				</select>
+<<<<<<< HEAD
+          </div>
+          <div ng-if="conf.paperstate != 2" class="form-group">
+            Pending papers: {{conf.pending_papers.length}}
+          </div>
+          <div ng-if="(conf.pending_papers.length === 0)" class="form-group">
+            <form role="form" ng-submit="close()">
+              <input title="Close conference" type="submit" value="Close conference" class="btn btn-primary" />
+            </form>
+          </div>
+=======
+			</div>
+			<div ng-if="conf.paperstate != 2" class="form-group">
+			  Pending papers: {{conf.papers.pending.length}}
+			</div>
+            <div ng-if="(conf.papers.pending.length === 0) && (conf.paperstate != 2)" class="form-group">
+              <form role="form" ng-submit="close()">
+				<input title="Close conference" type="submit" value="Close conference" class="btn btn-primary" />
+			  </form>
+            </div>
+>>>>>>> ce57c5834bb1c5e51bfebaebe3409caf5ae0eb9d
+
+          <div ng-if="conf.paperstate == 2" class="form-group">
+            This conference is closed.
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <!-- /.col-->
+</div>
+<!-- /.row -->
