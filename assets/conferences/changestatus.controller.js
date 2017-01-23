@@ -1,5 +1,5 @@
 app.controller('changestatusController',
-<<<<<<< HEAD
+// <<<<<<< HEAD
   ($scope, $http, $location, $routeParams) => {
     $scope.conf = {
       id: $routeParams.cid
@@ -34,7 +34,7 @@ app.controller('changestatusController',
       $http.post('/conference/setStatus', $scope.req)
     }
   }
-=======
+/* =======
 	($scope, $http, $location, $routeParams) => {
 		$scope.conf = {id: $routeParams.cid}
 		$http.post('/conference/getData', $scope.conf).then(res => {
@@ -63,5 +63,5 @@ app.controller('changestatusController',
 			$http.post('/conference/setStatus', $scope.req)
 		}
     }
->>>>>>> ce57c5834bb1c5e51bfebaebe3409caf5ae0eb9d
+>>>>>>> ce57c5834bb1c5e51bfebaebe3409caf5ae0eb9d */
 )

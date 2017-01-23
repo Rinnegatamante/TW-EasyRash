@@ -27,6 +27,7 @@
 
           <hr/>
           <h4>Accepted Papers:</h4>
+          <i ng-if="!conf.papers.accepted">No accepted papers</i>
           <div ng-repeat="paper in conf.papers.accepted |  filter: search.title " class="col-xs-12 panel-hv-green">
             <div class="panel panel-blue panel-widget panel-bg-grey">
               <div class="row no-padding">
@@ -43,6 +44,7 @@
 
           <hr/>
           <h4>Rejected Papers:</h4>
+          <i ng-if="!conf.papers.rejected">No accepted papers</i>
           <div ng-repeat="paper in conf.papers.rejected |  filter: search.title " class="col-xs-12 panel-hv-green">
             <div class="panel panel-blue panel-widget panel-bg-grey">
               <div class="row no-padding">

@@ -36,19 +36,19 @@ app.controller('managepapersController',
     }
     $scope.accept = function (id) {
       $http.post('/paper/' + id + '/accept').then(res => {
-        for (i in $scope.papers.pending) {
-          if ($scope.papers.pending[i].id == id) {
-            $scope.papers.accepted.push(res.data.paper)
-            $scope.papers.pending[i] = {}// TODO
+        for (i in $scope.conf.papers.pending) {
+          if ($scope.conf.papers.pending[i].id == id) {
+            $scope.conf.papers.accepted.push(res.data.paper)
+            $scope.conf.papers.pending.slice(i, 1)
           }
         }
       })
     }
     $scope.reject = function (id) {
       $http.post('/paper/' + id + '/reject').then(res => {
-        for (i in $scope.papers.pending) {
-          $scope.papers.rejected.push(res.data.paper)
-          $scope.papers.pending[i] = {}// TODO
+        for (i in $scope.conf.papers.pending) {
+          $scope.conf.papers.rejected.push(res.data.paper)
+          $scope.conf.papers.pending.slice(i, 1)
         }
       })
     }

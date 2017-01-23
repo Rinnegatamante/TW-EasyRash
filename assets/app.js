@@ -67,6 +67,9 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
    .when('/profile', {
      templateUrl: 'profile/profile.template.html'
    })
+   .when('/conference/:cid', {
+     templateUrl: 'conferences/conference.template.html'
+   })
    .when('/conferences/chair', {
      templateUrl: 'conferences/chair.template.html'
    })
@@ -95,7 +98,7 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
     templateUrl: 'view/view.template.html'
   })
    .when('/logout', {
-     templateUrl: 'view/view.template.html'
+     templateUrl: 'login/logout.template.html'
    })
    .when('/forgot', {
      templateUrl: 'login/forgot.template.html'

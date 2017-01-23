@@ -1,3 +1,7 @@
+.fnt{
+	height: 1em !important;
+	width: 1em !important;
+	}
 .right{
 	float: right;
 }
