@@ -25,28 +25,41 @@ module.exports = {
     })
   },
 
+  pending: function (req, res) {
+    Paper.findOne(req.param('pid')).populate('conference').populate('file').exec((err, paper) => {
+      paper.status = 0
+      paper.save((err) => {
+        if (err) { console.log(err) }
+      })
+      return res.json({
+        message: 'Saved',
+        paper: paper
+      })
+    })
+  },
+
   accept: function (req, res) {
     Paper.findOne(req.param('pid')).populate('conference').populate('file').exec((err, paper) => {
       paper.status = 1
       paper.save((err) => {
         if (err) { console.log(err) }
-        return res.json({
-          message: 'Saved',
-          paper: paper
-        })
+      })
+      return res.json({
+        message: 'Saved',
+        paper: paper
       })
     })
   },
 
   reject: function (req, res) {
     Paper.findOne(req.param('pid')).populate('conference').populate('file').exec((err, paper) => {
-      paper.status = 0
+      paper.status = 2
       paper.save((err) => {
         if (err) { console.log(err) }
-        return res.json({
-          message: 'Saved ',
-          paper: paper
-        })
+      })
+      return res.json({
+        message: 'Saved ',
+        paper: paper
       })
     })
   },

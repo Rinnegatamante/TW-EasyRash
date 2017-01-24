@@ -34,12 +34,30 @@ app.controller('managepapersController',
         $location.path('/conferences/' + res.data.conference.id + '/addchairs')
       })
     }
+    $scope.pending = function (id) {
+      $http.post('/paper/' + id + '/pending').then(res => {
+        for (i in $scope.conf.papers.accepted) {
+          if ($scope.conf.papers.accepted[i].id == id) {
+            $scope.conf.papers.pending.push(res.data.paper)
+            $scope.conf.papers.accepted.splice(i, 1)
+            return
+          }
+        }
+        for (i in $scope.conf.papers.rejected) {
+          if ($scope.conf.papers.rejected[i].id == id) {
+            $scope.conf.papers.pending.push(res.data.paper)
+            $scope.conf.papers.rejected.splice(i, 1)
+            return
+          }
+        }
+      })
+    }
     $scope.accept = function (id) {
       $http.post('/paper/' + id + '/accept').then(res => {
         for (i in $scope.conf.papers.pending) {
           if ($scope.conf.papers.pending[i].id == id) {
             $scope.conf.papers.accepted.push(res.data.paper)
-            $scope.conf.papers.pending.slice(i, 1)
+            $scope.conf.papers.pending.splice(i, 1)
           }
         }
       })
@@ -47,8 +65,10 @@ app.controller('managepapersController',
     $scope.reject = function (id) {
       $http.post('/paper/' + id + '/reject').then(res => {
         for (i in $scope.conf.papers.pending) {
-          $scope.conf.papers.rejected.push(res.data.paper)
-          $scope.conf.papers.pending.slice(i, 1)
+          if ($scope.conf.papers.pending[i].id == id) {
+            $scope.conf.papers.rejected.push(res.data.paper)
+            $scope.conf.papers.pending.splice(i, 1)
+          }
         }
       })
     }

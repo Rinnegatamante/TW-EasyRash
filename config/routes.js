@@ -44,6 +44,7 @@ module.exports.routes = {
 
   // PAPER
   'post /paper/:pid/accept': 'PaperController.accept',
+  'post /paper/:pid/pending': 'PaperController.pending',
   'post /paper/:pid/reject': 'PaperController.reject',
   'post /paper/:pid/delete': 'PaperController.delete',
   'get /paper/:pid': 'PaperController.find',

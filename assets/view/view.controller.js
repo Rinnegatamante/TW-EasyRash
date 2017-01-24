@@ -1,5 +1,5 @@
 app.controller('viewController',
-($scope, $http, $routeParams) => {
+($scope, $http, $routeParams, $sce) => {
   $scope.highlighted = {
     text: ''
   }

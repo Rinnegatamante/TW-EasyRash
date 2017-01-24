@@ -57,6 +57,7 @@ module.exports.policies = {
   PaperController: {
     upload: 'sessionAuth',
     find: 'sessionAuth',
+    pending: 'sessionAuth',
     reject: 'sessionAuth',
     accept: 'sessionAuth',
     delete: 'sessionAuth'
