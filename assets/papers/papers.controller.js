@@ -7,13 +7,11 @@ app.controller('papersController',
        $scope.files = res.data.user.files
        $http.post('/user/getpapers').then(res => {
          console.info('PAPER -user:', res.data.papers)
-         console.log($scope.files)
          for (var i = 0; $scope.files[i]; i++) {
            $scope.files[i].papers = []
            res.data.papers.forEach((paper) => {
              if (!paper.file) return false
              if (paper.file.id == $scope.files[i].id) {
-               console.log($scope.files[i], paper)
                $scope.files[i].papers.push(paper)
              }
            })
@@ -50,5 +48,21 @@ app.controller('papersController',
    }
 
    $scope.deletePaper = (pid) => {
+     if (!confirm('Are you sure?')) return
+     $http.post('/paper/' + pid + '/delete').then(res => {
+       $scope.files.forEach((file) => {
+         for (i in file.papers) {
+           if (file.papers[i].id == pid) file.papers.splice(i, 1)
+         }
+       })
+     })
+   }
+   $scope.delteFile = (fid) => {
+     if (!confirm('Are you sure?')) return
+     $http.post('/file/' + fid + '/delete').then(res => {
+       for (i in $scope.files) {
+         if ($scope.files[i].id == fid) $scope.files.splice(i, 1)
+       }
+     })
    }
  })

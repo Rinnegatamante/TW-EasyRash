@@ -2,6 +2,9 @@
 	height: 1em !important;
 	width: 1em !important;
 	}
+.fnt-black{
+	color: #263238 !important;
+}
 .right{
 	float: right;
 }

@@ -10,8 +10,7 @@
 
 	<div class="panel panel-primary chat col-sm-10 col-md-8">
 		<div class="panel-heading"><svg class="glyph stroked two-messages"><use xlink:href="#stroked-blank-document"/></svg> {{paper.file.title}}</div>
-		<div class="panel-body" id="view">
-		</div>
+			<div class="panel-body" id="view" ng-mouseup="select()"></div>
 		<div class="panel-footer">
 			<div class="input-group">
 				<input id="btn-input" type="text" class="form-control input-md" placeholder="Type your message here...">
@@ -20,6 +19,10 @@
 							</span>
 			</div>
 		</div>
+	</div>
+	<div class="col-sm-12 col-md-4">
+		<code>Selected: (work in progress...)</code><br/>
+		<code>{{highlighted.text | json}}</code>
 	</div>
 
 </div>

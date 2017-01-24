@@ -49,5 +49,14 @@ module.exports = {
         })
       })
     })
+  },
+
+  delete: function (req, res) {
+    Paper.destroy({id: req.param('pid')}).exec((err, paper) => {
+      if (err) { return res.negotiate(err) }
+      return res.json({
+        message: 'Delete'
+      })
+    })
   }
 }

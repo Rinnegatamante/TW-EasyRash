@@ -58,12 +58,14 @@ module.exports.policies = {
     upload: 'sessionAuth',
     find: 'sessionAuth',
     reject: 'sessionAuth',
-    accept: 'sessionAuth'
+    accept: 'sessionAuth',
+    delete: 'sessionAuth'
   },
 
   FileController: {
     upload: 'sessionAuth',
-    find: 'sessionAuth'
+    find: 'sessionAuth',
+    delete: ['sessionAuth', 'isFileMine']
   },
 
   ReviewController: {

@@ -17,7 +17,7 @@ module.exports = {
   },
 
   find: function (req, res) {
-    File.findOne(req.param('fid')).exec((err, paper) => {
+    File.findOne(req.param('fid')).exec((err, file) => {
       if (err) { console.log(err) }
       return res.json({
         file: file
@@ -62,6 +62,29 @@ module.exports = {
           }
         })
       }
+    })
+  },
+
+  delete: function (req, res) {
+    File.findOne(req.param('fid')).populate('papers').exec((err, file) => {
+      if (err) { return res.negotiate(err) }
+      if (file.papers.length > 0) {
+        return res.json(400, {
+          message: 'You cannot delete this file, it has another ' + file.papers.length + ' paper(s) associated',
+          files: files
+        })
+      }
+      var path = file.url
+      File.destroy({id: req.param('fid')}).exec((err, file) => {
+        const fs = require('fs')
+
+        fs.unlink(path, (err) => {
+          if (err) throw err
+        })
+        return res.json({
+          message: 'Deleted successfully'
+        })
+      })
     })
   }
 

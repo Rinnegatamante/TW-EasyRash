@@ -12,6 +12,7 @@
     "angular-animate": "1.5.x",
     "bootstrap": "3.3.x",
     "js-md5":"~0.4.1",
-    "angular-file-upload":"~2.3.4"
+    "angular-file-upload":"~2.3.4",
+    "angular-input-highlight":"~0.1.2"
   }
 }

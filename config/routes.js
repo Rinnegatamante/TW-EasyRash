@@ -43,9 +43,9 @@ module.exports.routes = {
   ***************************************************************************/
 
   // PAPER
-  'post /paper/create': 'PaperController.upload',
   'post /paper/:pid/accept': 'PaperController.accept',
   'post /paper/:pid/reject': 'PaperController.reject',
+  'post /paper/:pid/delete': 'PaperController.delete',
   'get /paper/:pid': 'PaperController.find',
   // CONFERENCE
   'post /conference/create': 'ConferenceController.create',
@@ -74,6 +74,7 @@ module.exports.routes = {
   'post /rating/update': 'RatingController.update',
   // FILE
   'post /file/create': 'FileController.upload',
-  'post /file/:fid': 'FileController.find'
+  'post /file/:fid': 'FileController.find',
+  'post /file/:fid/delete': 'FileController.delete'
 
 }
