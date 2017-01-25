@@ -70,6 +70,7 @@ module.exports.routes = {
   'post /user/test': 'UserController.test',
   'post /user/reset/psw': 'UserController.resetPassword',
   'post /user/reset/send': 'UserController.sendForgot',
+  'post /user/change/data': 'UserController.updateData',
   // RATING
   'post /rating/create': 'RatingController.create',
   'post /rating/update': 'RatingController.update',

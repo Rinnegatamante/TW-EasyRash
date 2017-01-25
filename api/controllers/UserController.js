@@ -29,6 +29,27 @@ module.exports = {
       })
     })
   },
+  
+  updateData: function (req, res) {
+    var u = AuthService.user()
+    var pass = req.param('newpassword')
+	var old_digest = req.param('olddigest')
+	var old_pass = req.param('oldpassword')
+    var mail = req.param('email')
+	if (!u.verifyPassword(old_digest)) return res.json(401, {message: 'Wrong password.'})
+	if (pass != undefined){
+		if (pass.length < 8) return res.json(400, {message: 'Password is too weak. Must be at least 8 characters.'})
+		u.password = User.encryptPassword(mail, pass)
+	}else{
+		u.password = User.encryptPassword(mail, old_pass)
+	}
+	u.email = mail
+	u.save(function updateData (err) {
+      if (err) return res.json(400, {error: err})
+
+      return res.json({message: 'Profile settings updated successfully!'})
+    })
+  },
 
   searchByName: function (req, res) {
     User.find({
@@ -44,8 +65,8 @@ module.exports = {
       email: req.param('email')
     }).exec(function (err, user) {
       if (err) return res.json(500, {error: err})
-      if (!user) return res.json(400, {message: 'User not found'})
-      if (!user.verifyPassword(req.param('digest'))) return res.json(401, {message: 'User not found'})
+      if (!user) return res.json(400, {message: 'User not found.'})
+      if (!user.verifyPassword(req.param('digest'))) return res.json(401, {message: 'User not found.'})
 
       user.generateToken()
 
