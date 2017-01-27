@@ -45,7 +45,7 @@ module.exports.policies = {
 
   ConferenceController: {
     create: 'sessionAuth',
-    addPaper: ['sessionAuth', 'isFileMine'],
+    addPaper: ['sessionAuth', 'isPaperMine'],
     addChair: ['sessionAuth', 'isChair'],
   	deleteChair: ['sessionAuth', 'isChair'],
   	searchConference: 'sessionAuth',
@@ -60,13 +60,7 @@ module.exports.policies = {
     pending: 'sessionAuth',
     reject: 'sessionAuth',
     accept: 'sessionAuth',
-    delete: 'sessionAuth'
-  },
-
-  FileController: {
-    upload: 'sessionAuth',
-    find: 'sessionAuth',
-    delete: ['sessionAuth', 'isFileMine']
+    delete: ['sessionAuth', 'isPaperMine']
   },
 
   ReviewController: {

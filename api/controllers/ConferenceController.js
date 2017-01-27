@@ -59,7 +59,7 @@ module.exports = {
   },
 
   getPapers: function (req, res) {
-    Paper.find({conference: req.param('id') }).populate('conference').populate('file').exec((err, papers) => {
+    Paper.find({conference: req.param('id') }).populate('conference').populate('author').populate('owner').exec((err, papers) => {
       if (err) return console.log(err)
       if (!papers) return res.json(400, {message: 'The conference has not papers yet'})
       return res.json({papers: papers})
@@ -109,13 +109,10 @@ module.exports = {
 
   addPaper: function (req, res) {
     // if (req.param('papers_id')) return res.json(400, {message: 'Papers field is empty.'})
-    if (!req.param('fid')) return res.json(400, {message: 'File field is empty.'})
+    if (!req.param('pid')) return res.json(400, {message: 'Paper field is empty.'})
     if (!req.param('cid')) return res.json(400, {message: 'Conference field is empty.'})
-    Paper.create({
-      file: req.param('fid'),
-      conference: req.param('cid')
-    }).exec((err, paper) => {
-      if (err) return res.json(500, {error: err})
+    Paper.findOne(req.param('pid')).exec((err, paper) => {
+      if (err) return res.json(500, {message: 'Error: Paper not committed'})
       return res.json({message: 'Paper committed successfully!', paper: paper})
     })
   },

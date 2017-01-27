@@ -25,7 +25,7 @@ app.controller('viewController',
     })
   }
   $scope.view = () => {
-    $http.get($scope.paper.file.url).then(res => {
+    $http.get($scope.paper.url).then(res => {
       $scope.view = res.data
       $('#view').html($scope.view)
     })

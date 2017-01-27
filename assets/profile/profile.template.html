@@ -6,17 +6,14 @@
 	  <fieldset>
 	  <div class="panel-body">
             <div class="form-group">
-              <input type="text" ng-model="user.name" class="form-control" disabled="true" />
+              <label>Name: </label><input type="text" ng-model="user.name" class="form-control" disabled="true" />
             </div>
 
             <div class="form-group">
-              <select ng-model="user.sex" id="sex" disabled="true" class="form-control">
-                <option value="Male">Male</option>
-				<option value="Female">Female</option>
-              </select>
+              <label>Sex: </label><input type="text" ng-model="user.sex" class="form-control" disabled="true" />
             </div>
             <div class="form-group">
-              <input type="email" ng-model="user.email" class="form-control" placeholder="E-mail" required="true" />
+              <label>Email: </label><input type="email" ng-model="user.email" class="form-control" placeholder="E-mail" required="true" />
             </div>
 		</div>
 		<div class="panel-body">
@@ -29,7 +26,7 @@
 		</div>
 		<div class="panel-body">
 			<div class="form-group">
-              <input type="password" ng-model="user.oldpassword" class="form-control" placeholder="Old Password" required="true" />
+              <input type="password" ng-model="user.oldpassword" class="form-control" placeholder="Current Password" required="true" />
             </div>
             <input type="submit" value="Submit Changes" class="btn btn-primary" />
       </div>

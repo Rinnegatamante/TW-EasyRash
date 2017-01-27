@@ -14,7 +14,17 @@ module.exports = {
       autoIncrement: true
     },
 
-    rash_link: {
+    title: {
+      type: 'string',
+      size: 255
+    },
+
+    mime: {
+      type: 'string',
+      size: 255
+    },
+
+    url: {
       type: 'string'
     },
 
@@ -29,8 +39,13 @@ module.exports = {
       type: 'text'
     },
 
-    file: {
-      model: 'file'
+    author: {
+      collection: 'user',
+      via: 'papers'
+    },
+
+    owner: {
+      model: 'user'
     },
 
     conference: {
@@ -63,6 +78,11 @@ module.exports = {
       if (this.token == utoken) {
         this.token == NULL
       }
+    },
+    toJSON: function () {
+      var obj = this.toObject()
+      obj.url = this.url.replace(sails.config.appPath + '/assets', '')
+      return obj
     }
   }
 }

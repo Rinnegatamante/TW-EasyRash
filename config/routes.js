@@ -43,6 +43,7 @@ module.exports.routes = {
   ***************************************************************************/
 
   // PAPER
+  'post /paper/create': 'PaperController.upload',
   'post /paper/:pid/accept': 'PaperController.accept',
   'post /paper/:pid/pending': 'PaperController.pending',
   'post /paper/:pid/reject': 'PaperController.reject',
@@ -73,10 +74,6 @@ module.exports.routes = {
   'post /user/change/data': 'UserController.updateData',
   // RATING
   'post /rating/create': 'RatingController.create',
-  'post /rating/update': 'RatingController.update',
-  // FILE
-  'post /file/create': 'FileController.upload',
-  'post /file/:fid': 'FileController.find',
-  'post /file/:fid/delete': 'FileController.delete'
+  'post /rating/update': 'RatingController.update'
 
 }

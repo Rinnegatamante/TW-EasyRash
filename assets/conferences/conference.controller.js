@@ -14,6 +14,7 @@ app.controller('conferenceController',
        })
      })
    })
+
    $scope.create = function () {
      $location.path('/conferences/create')
    }

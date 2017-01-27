@@ -16,7 +16,7 @@
                   <svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg>
                 </div>
                 <div class="col-sm-10">
-                  <h4>{{paper.file.title}}</h4>
+                  <h4>{{paper.title}}</h4>
                   <a>{{paper.createdAt | limitTo:10}} &nbsp;&bull;&nbsp; status: {{paper.status}}</a>
                   <button class="btn btn-danger right" ng-click="reject(paper.id)">Reject</button>
                   <button class="btn btn-success right" ng-click="accept(paper.id)">Accept</button>
@@ -35,7 +35,7 @@
                   <svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg>
                 </div>
                 <div class="col-sm-10">
-                  <h4>{{paper.file.title}}</h4>
+                  <h4>{{paper.title}}</h4>
                   <a>{{paper.createdAt | limitTo:10}} &nbsp;&bull;&nbsp; status: {{paper.status}}</a>
                   <button class="btn btn-primary right" ng-click="pending(paper.id)">Pending</button>
                 </div>
@@ -53,7 +53,7 @@
                   <svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg>
                 </div>
                 <div class="col-sm-10">
-                  <h4>{{paper.file.title}}</h4>
+                  <h4>{{paper.title}}</h4>
                   <a>{{paper.createdAt | limitTo:10}} &nbsp;&bull;&nbsp; status: {{paper.status}}</a>
                   <button class="btn btn-primary right" ng-click="pending(paper.id)">Pending</button>
                 </div>

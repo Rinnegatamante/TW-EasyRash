@@ -7,15 +7,15 @@
  *
  */
 module.exports = function (req, res, next) {
-  if (!req.param('paper_id')) return res.json(400, {message: 'No paper_id'})
-
-  criteria['papers'] = req.param('paper_id')
+  if (!req.param('pid')) return res.json(400, {message: 'No paper_id'})
 
   var u = AuthService.user()
 
-  if (!u.papers.find(req.param('paper_id'))) {
+  if (!u.papers.find(function eq (el) {
+    return (el.id == req.param('pid'))
+  })) {
     return res.json(400, {
-      message: 'This paper is not of your propriety'
+      message: 'You don\'t have the privileges to do this action.'
     })
   }
 

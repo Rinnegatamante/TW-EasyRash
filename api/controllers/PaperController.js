@@ -17,7 +17,7 @@ module.exports = {
   },
 
   find: function (req, res) {
-    Paper.findOne(req.param('pid')).populate('conference').populate('file').exec((err, paper) => {
+    Paper.findOne(req.param('pid')).populate('conference').populate('author').populate('owner').exec((err, paper) => {
       if (err) { console.log(err) }
       return res.json({
         paper: paper
@@ -26,7 +26,7 @@ module.exports = {
   },
 
   pending: function (req, res) {
-    Paper.findOne(req.param('pid')).populate('conference').populate('file').exec((err, paper) => {
+    Paper.findOne(req.param('pid')).exec((err, paper) => {
       paper.status = 0
       paper.save((err) => {
         if (err) { console.log(err) }
@@ -39,7 +39,7 @@ module.exports = {
   },
 
   accept: function (req, res) {
-    Paper.findOne(req.param('pid')).populate('conference').populate('file').exec((err, paper) => {
+    Paper.findOne(req.param('pid')).exec((err, paper) => {
       paper.status = 1
       paper.save((err) => {
         if (err) { console.log(err) }
@@ -52,7 +52,7 @@ module.exports = {
   },
 
   reject: function (req, res) {
-    Paper.findOne(req.param('pid')).populate('conference').populate('file').exec((err, paper) => {
+    Paper.findOne(req.param('pid')).exec((err, paper) => {
       paper.status = 2
       paper.save((err) => {
         if (err) { console.log(err) }
@@ -65,11 +65,69 @@ module.exports = {
   },
 
   delete: function (req, res) {
-    Paper.destroy({id: req.param('pid')}).exec((err, paper) => {
+    Paper.findOne(req.param('pid')).exec((err, paper) => {
       if (err) { return res.negotiate(err) }
-      return res.json({
-        message: 'Delete'
+      var path = paper.url
+      Paper.destroy({id: req.param('pid')}).exec((err, paper) => {
+        if (err) { return res.negotiate(err) }
+        const fs = require('fs')
+
+        fs.unlink(path, (err) => {
+          if (err) throw err
+        })
+        return res.json({
+          message: 'Paper deleted successfully'
+        })
       })
     })
+  },
+
+  upload: function (req, res) {
+    console.log(req.allParams())
+    if (!req.param('cid')) return res.json(400, {message: 'Conference field is empty.'})
+    var co_ids = req.param('co_ids') ? req.param('co_ids').split(',') : []
+    console.log(co_ids)
+    var u = AuthService.user()
+    co_ids.push(u.id)
+
+    req.file('file').upload({
+      maxBytes: 10000000,
+      dirname: require('path').resolve(sails.config.appPath, 'assets/uploads/')
+    }, function (err, files) {
+      if (err) {
+        return res.serverError(err)
+      }
+      if (files.length == 0) return res.json(400, {message: 'File field is empty.'})
+      console.log('FILES', files)
+      for (var i = 0; files[i]; i++) {
+        Paper.create({
+          title: files[i].filename,
+          mime: files[i].type,
+          url: files[i].fd,
+          conference: req.param('cid'),
+          author: co_ids
+        }).exec(function (err, createdFile) {
+          if (err) { console.log(err) }
+
+          u.papers.add(createdFile.id)
+
+          console.log(createdFile)
+          createdFile.save()
+
+          if (!files[i + 1]) {
+            u.save(function (err) {
+              if (err) { console.log(err) }
+
+              return res.json({
+                message: files.length + ' file(s) uploaded successfully!',
+                attributes: createdFile.toObject(),
+                files: files
+              })
+            })
+          }
+        })
+      }
+    })
   }
+
 }

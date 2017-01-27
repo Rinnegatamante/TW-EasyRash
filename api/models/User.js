@@ -53,12 +53,12 @@ module.exports = {
     },
 
     co_files: {
-      collection: 'file',
+      collection: 'paper',
       via: 'author'
     },
 
-    files: {
-      collection: 'file',
+    papers: {
+      collection: 'paper',
       via: 'owner'
     },
 
@@ -104,6 +104,7 @@ module.exports = {
 
     toJSON: function () {
       var obj = this.toObject()
+      delete obj.tempToken
       delete obj.password
       delete obj.token
       return obj

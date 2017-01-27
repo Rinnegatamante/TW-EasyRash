@@ -7,120 +7,67 @@
 	<!--/.row-->
 
 	<br>
-
 	<div class="row">
-		<div ng-repeat="file in files" class="col-xs-12 col-md-6 col-lg-4">
+		<div class="col-xs-11 col-md-4">
+			<input type="text" ng-model="filter.name" class="form-control" placeholder="Search..." required="true" />
+		</div>
+		<div class="col-xs-12 col-md-8">
+			<span class="btn-group dropdown">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				<span class="page-size">Order by: {{filter.orderBy}}</span> <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a ng-click="filter.orderBy = 'name'">name</a></li>
+				<li><a ng-click="filter.orderBy = 'conference'">conference</a></li>
+				<li><a ng-click="filter.orderBy = 'date'">date</a></li>
+			</ul>
+			</span>
+
+			<div class="columns btn-group">
+				<label class="btn btn-default"> accpeted
+		    <input type="checkbox" ng-model="filter.accepted">
+		   </label>
+				<label class="btn btn-default"> pending
+		    <input type="checkbox" ng-model="filter.pending">
+		   </label>
+				<label class="btn btn-default"> rejected
+		    <input type="checkbox" ng-model="filter.rejected">
+		   </label>
+			</div>
+
+			<button class="btn btn-default pull-right {{settings? 'btn-warning':''}}" title="settings" ng-click="settings = !settings"><i class="fa fa-wrench" aria-hidden="true"></i></button>
+		</div>
+	</div>
+
+	<hr/>
+	<div class="row">
+		<div ng-repeat="paper in user.papers | filter: filterCheckBox| filter: filter.name | orderBy: '-'+filter.orderBy " class="col-xs-12 col-md-6 col-lg-4">
 			<div class="panel panel-blue panel-widget ">
 				<div class="row no-padding">
-					<div class="col-sm-2 widget-left">
+					<a href="#/view/{{paper.id}}"><div class="col-sm-2 widget-left">
 						<svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg>
-					</div>
+					</div></a>
 					<div class="col-sm-10">
-						<h4>{{file.title}}</h4>
-						<p>{{file.createdAt | limitTo:10}}</p>
-						<hr/>
+						<a href="#/view/{{paper.id}}"><h4>{{paper.title}}</h4></a>
+						<h4><a href="#/conference/{{paper.conference.id}}">conference: {{paper.conference.title}} ({{paper.conference.acronym}})</a></h4>
+						<div class="right" ng-show="settings">
+							<button class="btn btn-default" style="margin-right:.5em" title="view paper"><a href="#/view/{{paper.id}}"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
+</button>
+							<button class="btn btn-info" title="delete paper"><i class="fa fa-users" aria-hidden="true"></i></button>
+							<button class="btn btn-danger" title="delete paper" ng-click="deletePaper(paper.id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+
+						</div>
 					</div>
 				</div>
 				<div class="row no-padding">
 					<div class="col-sm-12">
-						<a href=""><span data-toggle="collapse" href="#sub-file-{{file.id}}"><i class="fa fa-bars" aria-hidden="true"></i> Subsctibed to:</span></a>
-						<hr/>
+						<h5>status: <i>{{status(paper.status) }}</i></h5>
+						<h5>date: {{paper.createdAt | limitTo:10}}</h5>
 					</div>
-					<ul class="children collapse" id="sub-file-{{file.id}}">
-						<li>
-							<h4 ng-hide="file.papers.length">You have no commit your papers to any conference</h4>
-							<button ng-hide="file.papers.length" class="btn btn-warning" ng-click="delteFile(file.id)"><i class="fa fa-trash" aria-hidden="true"></i> DELETE FILE</a></button>
-							<div ng-repeat="paper in file.papers">
-								<h4>&bull; committed to: <b>{{paper.conference.title}}</b>
-								<div class="columns btn-group pull-right">
-									<a href="#/view/{{paper.id}}" class="btn btn-default" type="button"title="View paper"><i class="fa fa-eye" aria-hidden="true"></i></a>
-									<button class="btn btn-danger" type="button"title="Remove from this conference" ng-click="deletePaper(paper.id)"><i class="fa fa-times" aria-hidden="true"></i></button>
-								</div>
-							</h4>
-								<h5 class="col-sm-6">status: {{paper.status}}</h5>
-								<h5 class="col-sm-6">date: {{paper.createdAt | limitTo:10}}</h5>
-							</div>
-							<br/>
-						</li>
-					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="row col-sm-10 col-sm-offset-1">
-
-		<h3>Upload files</h3>
-
-		<input type="file" nv-file-select="" uploader="uploader" multiple /><br/>
-		<div class="well my-drop-zone text-center" nv-file-over="" uploader="uploader">
-			<svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg>
-			<h3>Drop your files here</h3>
-		</div>
-
-		<table class="table">
-			<thead>
-				<tr>
-					<th width="50%">Name</th>
-					<th ng-show="uploader.isHTML5">Size</th>
-					<th ng-show="uploader.isHTML5">Progress</th>
-					<th>Status</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="item in uploader.queue">
-					<td><strong>{{ item.file.name }}</strong></td>
-					<td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-					<td ng-show="uploader.isHTML5">
-						<div class="progress" style="margin-bottom: 0;">
-							<div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
-						</div>
-					</td>
-					<td class="text-center">
-						<span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-						<span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-						<span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-					</td>
-					<td nowrap>
-						<button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-			                                        <span class="glyphicon glyphicon-upload"></span> Upload
-			                                    </button>
-						<button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
-			                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-			                                    </button>
-						<button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-			                                        <span class="glyphicon glyphicon-trash"></span> Remove
-			                                    </button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-
-		<div>
-			<div>
-				Queue progress:
-				<div class="progress" style="">
-					<div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
-				</div>
-			</div>
-			<button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
-			                            <span class="glyphicon glyphicon-upload"></span> Upload all
-			                        </button>
-			<button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
-			                            <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
-			                        </button>
-			<button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-			                            <span class="glyphicon glyphicon-trash"></span> Remove all
-			                        </button>
-		</div>
-
-
-
-
-
-
-	</div>
-</div>
-<!--/.row-->
+	<!--/.row-->
 
 </div>

@@ -4,36 +4,88 @@
       <div class="panel-heading">
         <a href="#papers"><svg class="glyph stroked arrow left"><use xlink:href="#stroked-arrow-left"/></svg></a> Add paper to conference: </div>
       <div class="panel-body">
-        <form role="form" ng-submit="submit()">
-          <fieldset>
-            <div class="form-group">
-              <labl>Search by Title:</label><input type="text" ng-model="search.title" class="form-control" placeholder="Title" required="true" />
+        <div class="row">
+          <div class="col-sm-12">
+            <h2>Authors:</h2>
+            <ul class="nav nav-pills">
+              <li>
+                <h4>Current authors:&nbsp;</h4> </li>
+              <li class="active"><a>{{user.name}}</a></li>
+              <li ng-repeat="u in co_authors" class="active" ng-click="remove(u)">
+                <a style="cursor:pointer">{{u.name}} <i class="fa fa-times" aria-hidden="true"></i></a>
+              </li>
+            </ul>
+            <br/>
+            <div class="col-sm-12">
+              <label>Add others paper's authors:</label>
+              <input type="text" ng-model-options="{ debounce: 500 }" ng-model="user.field" class="form-control" placeholder="Search users..." required="true" />
+              <div ng-show="users.length">
+                <ul class="list-group">
+                  <li ng-repeat="u in users | limitTo: 5" class="row list-group-item">
+                    <div class="col-sm-5">{{u.name}}</div>
+                    <div class="col-sm-5">{{u.email}}</div>
+                    <div class="col-sm-2"><a href="" ng-click="add(u)">add <i class="fa fa-plus" aria-hidden="true" title="add"></i></a></div>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </fieldset>
-        </form>
+          </div>
+        </div>
         <hr/>
         <div class="row">
-          <div ng-repeat="file in files |  filter: search.title" class="col-xs-10 col-md-6 col-lg-6 panel-hv-green">
-            <div class="panel panel-blue panel-widget panel-bg-grey">
-              <div class="row no-padding">
-                <div class="col-sm-2 widget-left">
-                  <svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg>
-                </div>
-                <div class="col-sm-10">
-                  <h4>{{file.title}}</h4>
-                  <span class="fnt-black">{{file.createdAt | limitTo:10}}</span>
+          <div class="col-sm-12">
 
-                  <button type="submit" class="btn btn-primary right"  ng-click="selectPaper(file.id, file.title)"><i class="fa fa-paper-plane" aria-hidden="true"></i>
- Send </button>
-                </div>
+            <h2>Upload files:</h2>
+
+            <input type="file" nv-file-select="" uploader="uploader" /><br/>
+            <div ng-show="uploader.isHTML5">
+              <div class="well my-drop-zone text-center" nv-file-drop="" uploader="uploader">
+                <svg class="glyph stroked download"><use xlink:href="#stroked-download"/></svg>
+                <h3>Drop your file here</h3>
               </div>
-
             </div>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th width="50%">Name</th>
+                  <th ng-show="uploader.isHTML5">Size</th>
+                  <th ng-show="uploader.isHTML5">Progress</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in uploader.queue">
+                  <td><strong>{{ item.file.name }}</strong></td>
+                  <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                  <td ng-show="uploader.isHTML5">
+                    <div class="progress" style="margin-bottom: 0;">
+                      <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                  </td>
+                  <td nowrap>
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+        			                                        <span class="glyphicon glyphicon-upload"></span> Upload
+        			                                    </button>
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+        			                                        <span class="glyphicon glyphicon-trash"></span> Remove
+        			                                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- /.col-->
+</div>
+<!-- /.col-->
 </div>
 <!-- /.row -->

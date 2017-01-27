@@ -36,7 +36,6 @@ app.factory('HttpInterceptorMessage', ['$q', '$location', '$rootScope', function
 
     'responseError': function (response) {
      // do something on error
-
       if (response.data && response.data.message) {
         alertify.error(response.data.message)
       }
