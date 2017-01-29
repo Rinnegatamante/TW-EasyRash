@@ -48,6 +48,8 @@ module.exports.routes = {
   'post /paper/:pid/pending': 'PaperController.pending',
   'post /paper/:pid/reject': 'PaperController.reject',
   'post /paper/:pid/delete': 'PaperController.delete',
+  'post /paper/:pid/addauthor/:aid': 'PaperController.addAuthor',
+  'post /paper/:pid/removeauthor/:aid': 'PaperController.removeAuthor',
   'get /paper/:pid': 'PaperController.find',
   // CONFERENCE
   'post /conference/create': 'ConferenceController.create',

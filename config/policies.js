@@ -60,7 +60,9 @@ module.exports.policies = {
     pending: 'sessionAuth',
     reject: 'sessionAuth',
     accept: 'sessionAuth',
-    delete: ['sessionAuth', 'isPaperMine']
+    delete: ['sessionAuth', 'isPaperMine'],
+    addAuthor: ['sessionAuth', 'isPaperMine'],
+    removeAuthor: ['sessionAuth', 'isPaperMine']
   },
 
   ReviewController: {

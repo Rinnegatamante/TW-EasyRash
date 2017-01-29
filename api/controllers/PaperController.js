@@ -121,12 +121,43 @@ module.exports = {
               return res.json({
                 message: files.length + ' file(s) uploaded successfully!',
                 attributes: createdFile.toObject(),
-                files: files
+                paper: files
               })
             })
           }
         })
       }
+    })
+  },
+
+  addAuthor: function (req, res) {
+    if (!req.param('aid')) return res.json(400, {message: 'Author is not specified.'})
+    Paper.findOne(req.param('pid')).populate('author').exec((err, paper) => {
+      if (err) { return res.negotiate(err) }
+      paper.author.add(req.param('aid'))
+      paper.save(function (err) {
+        if (err) { console.log(err) }
+
+        return res.json({
+          message: 'Author added successfully!',
+          paper: paper
+        })
+      })
+    })
+  },
+  removeAuthor: function (req, res) {
+    if (!req.param('aid')) return res.json(400, {message: 'Author is not specified.'})
+    Paper.findOne(req.param('pid')).populate('author').exec((err, paper) => {
+      if (err) { return res.negotiate(err) }
+      paper.author.remove(req.param('aid'))
+      paper.save(function (err) {
+        if (err) { console.log(err) }
+
+        return res.json({
+          message: 'Author removed successfully!',
+          paper: paper
+        })
+      })
     })
   }
 

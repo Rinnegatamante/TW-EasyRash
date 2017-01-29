@@ -93,6 +93,9 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
   .when('/papers', {
     templateUrl: 'papers/papers.template.html'
   })
+  .when('/paper/:pid/addauthors', {
+    templateUrl: 'papers/addauthors.template.html'
+  })
   .when('/view/:pid', {
     templateUrl: 'view/view.template.html'
   })

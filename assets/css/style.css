@@ -1,3 +1,25 @@
+.add-review {
+	height: 100%;
+  vertical-align: middle;
+}
+.highlight-text{
+	width: 100%;
+	height: auto;
+	padding: 1em;
+	padding-left: .5em;
+	padding-right: .5em;
+	margin-bottom: 1em;
+	background-color: #ECEFF1;
+}
+#rew_edit{
+	background: yellow !important;
+	border-bottom: solid 1px black;
+}
+rew{
+	background: green !important;
+	border-bottom: solid 1px black;
+}
+
 .fnt{
 	height: 1em !important;
 	width: 1em !important;

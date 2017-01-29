@@ -1,7 +1,7 @@
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main" ng-controller="viewController">
 	<div class="row">
 		<ol class="breadcrumb">
-			<li><svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg> Paper : <b>{{paper.file.title}}</b></li>
+			<li><svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg> Conference : <b>{{paper.conference.title}} ({{paper.conference.acronym}})</b></li>
 		</ol>
 	</div>
 	<!--/.row-->
@@ -9,8 +9,8 @@
 	<br>
 
 	<div class="panel panel-primary chat col-sm-12 col-md-8">
-		<div class="panel-heading"><svg class="glyph stroked two-messages"><use xlink:href="#stroked-blank-document"/></svg> {{paper.file.title}}</div>
-			<div class="panel-body" id="view" ng-mouseup="select()"></div>
+		<div class="panel-heading"><svg class="glyph stroked two-messages"><use xlink:href="#stroked-blank-document"/></svg> {{paper.title}}</div>
+		<div class="panel-body" id="view" ng-mouseup="select()"></div>
 		<div class="panel-footer">
 			<div class="input-group">
 				<input id="btn-input" type="text" class="form-control input-md" placeholder="Type your message here...">
@@ -20,33 +20,68 @@
 			</div>
 		</div>
 	</div>
+
+	<div ng-hide="highlight.active" ng-click="highlight.active= !highlight.active" class="col-sm-12 col-md-4 col-lg-3" style="cursor:pointer">
+		<div class="panel panel-blue panel-widget">
+			<div class="row no-padding">
+				<div class="col-sm-3 col-lg-5 widget-left">
+					<svg class="glyph stroked plus sign"><use xlink:href="#stroked-plus-sign"/></svg>
+				</div>
+				<div class="col-sm-9 col-lg-7 widget-right" style="background-color:#263238">
+					<div class="large add-review" style="color:white">add review</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div ng-show="highlight.active" class="col-sm-12 col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg>
+				Review
+				<button ng-click="undo_rew()" class="btn btn-primary pull-right"><i class="fa fa-undo" aria-hidden="true"></i> restart</button>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-12">
+							<h4>Selected text:</h4>
+							<div class="highlight-text">
+								{{highlight.text}}
+							</div>
+						</div>
+					</div>
+					<textarea class="form-control" rows="3"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="col-sm-12 col-md-4">
 		<div class="panel panel-default">
 			<div class="panel-heading"><svg class="glyph stroked pencil"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-pencil"></use></svg> Authors</div>
 			<div class="panel-body">
-			<div class="fixed-table-container">
-				<table data-toggle="table" class="table table-hover">
-					<thead>
-						<tr>
-							<th>Name</th>
+				<div class="fixed-table-container">
+					<table data-toggle="table" class="table table-hover">
+						<thead>
+							<tr>
+								<th>Name</th>
 								<th>Email</th>
-						</tr>
+							</tr>
 						</thead>
-					<tbody>
-						<tr ng-repeat="user in paper.author">
-							<td>{{user.name}}</td>
-							<td>{{user.email}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+						<tbody>
+							<tr ng-repeat="user in paper.author">
+								<td>{{user.name}}</td>
+								<td>{{user.email}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-12 col-md-4">
 		<code>Selected: (work in progress...)</code><br/>
-		<code>{{highlighted.text | json}}</code>
+		<code>{{highlight | json}}</code>
 	</div>
 
 </div>
