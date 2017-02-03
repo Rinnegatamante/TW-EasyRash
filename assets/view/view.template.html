@@ -35,9 +35,8 @@
 	</div>
 	<div ng-show="highlight.active" class="col-sm-12 col-md-4">
 		<div class="panel panel-default">
-			<div class="panel-heading"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg>
-				Review
-				<button ng-click="undo_rew()" class="btn btn-primary pull-right"><i class="fa fa-undo" aria-hidden="true"></i> restart</button>
+			<div class="panel-heading"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg> Review
+				<a href="" ng-click="highlight.active= !highlight.active" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
 			</div>
 			<div class="panel-body">
 				<div class="form-group">
@@ -50,6 +49,9 @@
 						</div>
 					</div>
 					<textarea class="form-control" rows="3"></textarea>
+					<br/>
+					<button ng-click="undo_rew()" class="btn btn-primary pull-right" id="restart_rew"><i class="fa fa-undo" aria-hidden="true"></i> restart</button>
+					<button ng-click="undo_rew()" class="btn btn-success"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Save</button>
 				</div>
 			</div>
 		</div>
@@ -84,6 +86,16 @@
 		<code>{{highlight | json}}</code>
 	</div>
 
+</div>
+
+<div class="tooltip_templates">
+	<span id="tooltip_content">
+			<div class="list-group">
+				<a href="#" class="list-group-item">Author 1</a>
+				<a href="#" class="list-group-item list-group-item-action">Author 2</a>
+				<a href="#" class="list-group-item list-group-item-action">Author 3</a>
+			</div>
+    </span>
 </div>
 <!--/.row-->
 
