@@ -51,6 +51,11 @@ module.exports = {
       collection: 'conference',
       via: 'pc_members'
     },
+	
+	reviewer_conferences: {
+	  collection: 'conference',
+	  via: 'reviewers'
+	},
 
     co_files: {
       collection: 'paper',

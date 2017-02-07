@@ -21,6 +21,7 @@
 							<ul class="children collapse" id="sub-item-{{conference.id}}">
 								<li ng-if="conference.status < 2"><p><a href="#/conferences/{{conference.id}}/changestatus">Manage conference status</a></p></li>
 								<li ng-if="conference.status < 2"><p><a href="#/conferences/{{conference.id}}/addchairs">Manage chairs</a></p></li>
+								<li ng-if="conference.status < 2"><p><a href="#/conferences/{{conference.id}}/addreviewers">Manage reviewers</a></p></li>
 								<li><p><a href="#/conferences/{{conference.id}}/managepapers">Manage papers</a></p></li>
 								<li ng-if="conference.status < 1"><p><a href="#/conferences/{{conference.id}}/addpaper">Send papers to this conference</a></p></li>
 							</ul>

@@ -39,7 +39,12 @@ module.exports = {
       collection: 'user',
       via: 'guest_conferences'
     },
-
+    
+	reviewers: {
+	  collection: 'user',
+	  via: 'reviewer_conferences',
+	},
+	
     submission: {
       collection: 'paper',
       via: 'conference'

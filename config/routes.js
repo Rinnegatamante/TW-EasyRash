@@ -57,6 +57,8 @@ module.exports.routes = {
   'post /conference/getData': 'ConferenceController.getData',
   'post /conference/deleteChair': 'ConferenceController.deleteChair',
   'post /conference/addChair': 'ConferenceController.addChair',
+  'post /conference/deleteReviewer': 'ConferenceController.deleteReviewer',
+  'post /conference/addReviewer': 'ConferenceController.addReviewer',
   'post /conference/searchConference': 'ConferenceController.searchConference',
   // 'post /conference/getPendingPapers': 'ConferenceController.getPendingPapers',
   'post /conference/addpaper': 'ConferenceController.addPaper',

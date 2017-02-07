@@ -13,8 +13,9 @@ module.exports = {
       acronym: req.param('acronym')
     }).exec(function (err, conference) {
       if (err) return res.json(500, {error: err})
-      if (!conference) return res.json(400, {message: 'Conference not create'})
-
+      if (!conference) return res.json(400, {message: 'Conference not created.'})
+	  
+	  conference.chairs.length = 0
 	  conference.chairs.add(AuthService.user().id)
       conference.save((err) => {
         if (err) return res.json(500, {error: err})
@@ -38,7 +39,7 @@ module.exports = {
   getData: function (req, res) {
     Conference.findOne({
 	  id: req.param('id')
-    }).populate('chairs').exec(function (err, conference) {
+    }).populate('chairs').populate('reviewers').exec(function (err, conference) {
 	  if (err) return res.json(500, {error: err})
 	  if (!conference) return res.json(400, {message: 'Conference not found.'})
 	  return res.json({conference: conference})
@@ -81,6 +82,46 @@ module.exports = {
           if (err) return res.json(500, {error: err})
           if (!conference) return res.json(400, {message: 'Conference not found.'})
           return res.json({message: 'Chair added successfully!', conference: conference})
+        })
+      })
+    })
+  },
+  
+  addReviewer: function (req, res) {
+    Conference.findOne({
+      id: req.param('id')
+    }).populate('reviewers').exec(function (err, conference) {
+      if (err) return res.json(500, {error: err})
+	    if (!conference) return res.json(400, {message: 'Conference not found.'})
+	    conference.reviewers.add(req.param('add_id'))
+        conference.save((err) => {
+        if (err) return res.json(500, {error: err})
+        Conference.findOne({
+          id: req.param('id')
+        }).populate('reviewers').exec(function (err, conference) {
+          if (err) return res.json(500, {error: err})
+          if (!conference) return res.json(400, {message: 'Conference not found.'})
+          return res.json({message: 'Reviewer added successfully!', conference: conference})
+        })
+      })
+    })
+  },
+  
+  deleteReviewer: function (req, res) {
+    Conference.findOne({
+      id: req.param('id')
+    }).populate('chairs').exec(function (err, conference) {
+      if (err) return res.json(500, {error: err})
+	    if (!conference) return res.json(400, {message: 'Conference not found.'})
+	  conference.reviewers.remove(req.param('delete_id'))
+      conference.save((err) => {
+        if (err) return res.json(500, {error: err})
+        Conference.findOne({
+          id: req.param('id')
+        }).populate('chairs').exec(function (err, conference) {
+          if (err) return res.json(500, {error: err})
+          if (!conference) return res.json(400, {message: 'Conference not found.'})
+          return res.json({message: 'Reviewer removed successfully!', conference: conference})
         })
       })
     })
