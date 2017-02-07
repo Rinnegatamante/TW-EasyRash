@@ -110,7 +110,7 @@ module.exports = {
   deleteReviewer: function (req, res) {
     Conference.findOne({
       id: req.param('id')
-    }).populate('chairs').exec(function (err, conference) {
+    }).populate('reviewers').exec(function (err, conference) {
       if (err) return res.json(500, {error: err})
 	    if (!conference) return res.json(400, {message: 'Conference not found.'})
 	  conference.reviewers.remove(req.param('delete_id'))
@@ -118,7 +118,7 @@ module.exports = {
         if (err) return res.json(500, {error: err})
         Conference.findOne({
           id: req.param('id')
-        }).populate('chairs').exec(function (err, conference) {
+        }).populate('reviewers').exec(function (err, conference) {
           if (err) return res.json(500, {error: err})
           if (!conference) return res.json(400, {message: 'Conference not found.'})
           return res.json({message: 'Reviewer removed successfully!', conference: conference})
