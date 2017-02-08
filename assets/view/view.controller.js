@@ -27,6 +27,10 @@ app.controller('viewController',
       rew = new Review('rew')
     }
 
+    $scope.pushReview = () => {
+
+    }
+
     $scope.undo_rew = () => {
       if (!$scope.highlight.active) return
       if (rew) {
