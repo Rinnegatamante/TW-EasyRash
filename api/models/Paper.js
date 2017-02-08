@@ -41,7 +41,7 @@ module.exports = {
 
     author: {
       collection: 'user',
-      via: 'papers'
+      via: 'co_files'
     },
 
     owner: {
@@ -60,6 +60,11 @@ module.exports = {
     reviews: {
       collection: 'review',
       via: 'paper'
+    },
+
+    reviewers: {
+      model: 'user',
+      via: 'reviewer_papers'
     },
 
     isLocked: function (utoken) {

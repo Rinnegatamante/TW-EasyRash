@@ -7,6 +7,8 @@
 
 module.exports = {
   create: function (req, res) {
+    if (!req.param('pid')) return res.json(400, {message: 'Paper is not specified.'})
+
     var u = AuthService.user()
 
     Paper.findOne({

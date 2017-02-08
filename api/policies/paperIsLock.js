@@ -11,9 +11,14 @@ module.exports = function (req, res, next) {
 
   Paper.findOne({
     id: req.param('paper_id')
-  }).populate('reviews').exec(function (err, paper) {
+  }).populate('reviews').populate('reviewer').exec(function (err, paper) {
     if (err) return res.json(500, {error: err})
     if (!paper) return res.json(400, {message: 'Paper not found'})
+
+    var isaReview = find.paper
+    if (paper.isLocked(req.param('token'))) { return res.json(423, {
+      message: 'Paper is Locked'
+    }) }
 
     if (paper.isLocked(req.param('token'))) { return res.json(423, {
       message: 'Paper is Locked'

@@ -159,6 +159,37 @@ module.exports = {
         })
       })
     })
+  },
+
+  addReviewer: function (req, res) {
+    if (!req.param('reid')) return res.json(400, {message: 'Reviewer is not specified.'})
+    Paper.findOne(req.param('pid')).populate('reviewers').exec((err, paper) => {
+      if (err) { return res.negotiate(err) }
+      paper.reviewers.add(req.param('reid'))
+      paper.save(function (err) {
+        if (err) { console.log(err) }
+
+        return res.json({
+          message: 'Reviewer added successfully!',
+          paper: paper
+        })
+      })
+    })
+  },
+  removeReviewer: function (req, res) {
+    if (!req.param('reid')) return res.json(400, {message: 'Reviewer is not specified.'})
+    Paper.findOne(req.param('pid')).populate('reviewers').exec((err, paper) => {
+      if (err) { return res.negotiate(err) }
+      paper.reviewers.remove(req.param('reid'))
+      paper.save(function (err) {
+        if (err) { console.log(err) }
+
+        return res.json({
+          message: 'Reviewer removed successfully!',
+          paper: paper
+        })
+      })
+    })
   }
 
 }

@@ -12,6 +12,8 @@ module.exports = {
   },
 
   create: function (req, res) {
+    if (!req.param('pid')) return res.json(400, {message: 'Paper is not specified.'})
+
     var u = AuthService.user()
 
     Paper.findOne({
@@ -23,18 +25,19 @@ module.exports = {
       Review.create({
         text: req.param('text')
       }).exec(function (err, review) {
-        if (err) return res.json(500, {error: err})
+        if (err) return res.json(400, {error: 'error'})
         if (!review) return res.json(400, {message: 'Review not found'})
 
         paper.reviews.add(review.id)
-        user.reviews.add(review.id)
+        u.reviews.add(review.id)
 
-        user.save()
+        u.save()
         paper.save((err) => {
           if (err) return res.json(500, {error: err})
           return res.json({
             message: '',
             review: review,
+            reviewer: u,
             paper: paper
           })
         })

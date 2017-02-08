@@ -48,7 +48,7 @@ module.exports.policies = {
     addPaper: ['sessionAuth', 'isPaperMine'],
     addChair: ['sessionAuth', 'isChair'],
   	deleteChair: ['sessionAuth', 'isChair'],
-	addReviewer: ['sessionAuth', 'isChair'],
+	  addReviewer: ['sessionAuth', 'isChair'],
   	deleteReviewer: ['sessionAuth', 'isChair'],
   	searchConference: 'sessionAuth',
   	getPapers: 'sessionAuth',
@@ -65,6 +65,7 @@ module.exports.policies = {
     delete: ['sessionAuth', 'isPaperMine'],
     addAuthor: ['sessionAuth', 'isPaperMine'],
     removeAuthor: ['sessionAuth', 'isPaperMine']
+    addReviewer: ['sessionAuth', 'isReview']
   },
 
   ReviewController: {
