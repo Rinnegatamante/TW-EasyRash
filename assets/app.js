@@ -72,6 +72,9 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
    .when('/conferences/chair', {
      templateUrl: 'conferences/chair.template.html'
    })
+   .when('/conferences/reviewer', {
+     templateUrl: 'conferences/reviewer.template.html'
+   })
    .when('/conferences/:cid/addpaper', {
      templateUrl: 'papers/addpapers.template.html'
    })
@@ -98,6 +101,9 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
   })
   .when('/paper/:pid/addauthors', {
     templateUrl: 'papers/addauthors.template.html'
+  })
+  .when('/paper/:cid/:uid/assign', {
+    templateUrl: 'papers/assignto.template.html'
   })
   .when('/view/:pid', {
     templateUrl: 'view/view.template.html'

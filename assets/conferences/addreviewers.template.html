@@ -20,13 +20,16 @@
 					<thead>
 						<tr>
 							<th>Reviewers Name</th>
+							<th>Email</th>
 						    <th>Action</th>
 						</tr>
 				    </thead>
 					<tbody>
 						<tr ng-repeat="user in conf.reviewers">
 							<td>{{user.name}}</td>
-							<td><a href="" ng-click="delete(user.id)"><i class="fa fa-ban" aria-hidden="true"></i></a></td>
+							<td>{{user.email}}</td>
+							<td><a href="#/paper/{{conf.id}}/{{user.id}}/assign" title="Assign a paper"><i class="fa fa-external-link-square" aria-hidden="true"></i></a>
+							 &nbsp; <a href="" title="Remove reviewer" ng-click="delete(user.id)"><i class="fa fa-ban" aria-hidden="true"></i></a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -50,13 +53,15 @@
 				<thead>
 					<tr>
 						<th>User Name</th>
+						<th>Email</th>
 					    <th>Action</th>
 					</tr>
 			    </thead>
 				<tbody>
 					<tr ng-repeat="user in users">
 						<td>{{user.name}}</td>
-						<td><a href="" ng-click="add(user.id)"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
+						<td>{{user.email}}</td>
+						<td><a href="" ng-click="add(user.id)" title="Add chair"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
 					</tr>
 				</tbody>
 			</table>

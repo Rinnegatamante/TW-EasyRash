@@ -63,7 +63,7 @@ module.exports = {
     },
 
     reviewers: {
-      model: 'user',
+      collection: 'user',
       via: 'reviewer_papers'
     },
 

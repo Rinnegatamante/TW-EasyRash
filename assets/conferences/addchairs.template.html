@@ -20,13 +20,15 @@
 					<thead>
 						<tr>
 							<th>Chairs Name</th>
+							<th>Email</th>
 						    <th>Action</th>
 						</tr>
 				    </thead>
 					<tbody>
 						<tr ng-repeat="user in conf.chairs">
 							<td>{{user.name}}</td>
-							<td><a href="" ng-click="delete(user.id)"><i class="fa fa-ban" aria-hidden="true"></i></a></td>
+							<td>{{user.email}}</td>
+							<td><a href="" ng-click="delete(user.id)" title="Remove chair"><i class="fa fa-ban" aria-hidden="true"></i></a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -50,13 +52,15 @@
 				<thead>
 					<tr>
 						<th>User Name</th>
+						<th>Email</th>
 					    <th>Action</th>
 					</tr>
 			    </thead>
 				<tbody>
 					<tr ng-repeat="user in users">
 						<td>{{user.name}}</td>
-						<td><a href="" ng-click="add(user.id)"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
+						<td>{{user.email}}</td>
+						<td><a href="" ng-click="add(user.id)" title="Add chair"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
 					</tr>
 				</tbody>
 			</table>

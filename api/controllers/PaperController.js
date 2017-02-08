@@ -170,7 +170,7 @@ module.exports = {
         if (err) { console.log(err) }
 
         return res.json({
-          message: 'Reviewer added successfully!',
+          message: 'Reviewer assigned successfully!',
           paper: paper
         })
       })

@@ -62,7 +62,7 @@ module.exports = {
   getPapers: function (req, res) {
     Paper.find({conference: req.param('id') }).populate('conference').populate('author').populate('owner').exec((err, papers) => {
       if (err) return console.log(err)
-      if (!papers) return res.json(400, {message: 'The conference has not papers yet'})
+      if (!papers) return res.json(400, {message: 'The conference has no papers yet.'})
       return res.json({papers: papers})
     })
   },
