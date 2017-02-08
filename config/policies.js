@@ -64,14 +64,14 @@ module.exports.policies = {
     accept: 'sessionAuth',
     delete: ['sessionAuth', 'isPaperMine'],
     addAuthor: ['sessionAuth', 'isPaperMine'],
-    removeAuthor: ['sessionAuth', 'isPaperMine']
-    addReviewer: ['sessionAuth', 'isReview']
+    removeAuthor: ['sessionAuth', 'isPaperMine'],
+    addReviewer: ['sessionAuth', 'isReviewerConference']
   },
 
   ReviewController: {
     create: 'sessionAuth',
     update: ['sessionAuth', 'isMine'],
-    lock: ['sessionAuth', 'isMine', 'paperIsLock'],
+    lock: ['sessionAuth', 'isReviewerPaper', 'paperIsLock'],
     destroy: ['sessionAuth', 'isMine']
   },
 
