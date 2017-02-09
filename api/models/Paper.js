@@ -68,20 +68,20 @@ module.exports = {
     },
 
     isLocked: function (utoken) {
-      if (this.token == NULL || this.token == utoken) {
+      if (this.token == null || this.token == utoken) {
         return false
       } else {
         return true
       }
     },
     lock: function (utoken) {
-      if (this.token == NULL) {
+      if (this.token == null) {
         this.token == utoken
       }
     },
     free: function (utoken, callback) {
       if (this.token == utoken) {
-        this.token == NULL
+        this.token == null
       }
     },
     toJSON: function () {

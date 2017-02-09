@@ -20,6 +20,11 @@ module.exports = {
       required: true
     },
 
+    rew_id: {
+      type: 'integer',
+      required: true
+    },
+
     author: {
       model: 'user'
     },

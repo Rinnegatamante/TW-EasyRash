@@ -11,34 +11,76 @@ module.exports = {
     return res.views('paper_up')
   },
 
+  find: function (req, res) {
+    Review.findOne(req.param('rid')).populate('author').populate('paper').exec((err, review) => {
+      if (err) { console.log(err) }
+      return res.json({
+        review: review
+      })
+    })
+  },
+
+  ofPaper: function (req, res) {
+    Review.find({'paper': req.param('pid')}).populate('author').populate('paper').exec((err, reviews) => {
+      if (err) { console.log(err) }
+      return res.json({
+        reviews: reviews
+      })
+    })
+  },
   create: function (req, res) {
-    if (!req.param('pid')) return res.json(400, {message: 'Paper is not specified.'})
+    if (!req.param('pid')) { return res.json(400, {
+      message: 'Paper is not specified.'
+    }) }
 
     var u = AuthService.user()
 
     Paper.findOne({
-      id: req.param('paper_id')
+      id: req.param('pid')
     }).populate('reviews').exec(function (err, paper) {
-      if (err) return res.json(500, {error: err})
-      if (!paper) return res.json(400, {message: 'Paper not found'})
+      if (err) { return res.json(500, {
+        error: err
+      }) }
+      if (!paper) { return res.json(400, {
+        message: 'Paper not found'
+      }) }
+      if (!req.param('rush')) { return res.json(400, {
+        message: 'Paper not found'
+      }) }
 
       Review.create({
-        text: req.param('text')
+        text: req.param('text'),
+        author: u.id,
+        rew_id: req.param('rew_id')
       }).exec(function (err, review) {
-        if (err) return res.json(400, {error: 'error'})
-        if (!review) return res.json(400, {message: 'Review not found'})
+        if (err) { console.log(err); return res.json(400, {
+          error: 'cannot create review'
+        }) }
+        if (!review) { return res.json(400, {
+          message: 'Review not found'
+        }) }
 
-        paper.reviews.add(review.id)
-        u.reviews.add(review.id)
+        fs = require('fs')
 
-        u.save()
-        paper.save((err) => {
-          if (err) return res.json(500, {error: err})
-          return res.json({
-            message: '',
-            review: review,
-            reviewer: u,
-            paper: paper
+        fs.stat(paper.url, (err, stats) => {
+          if (err) { return res.json(400, {
+            message: 'Paper path not found'
+          }) }
+          fs.writeFile(paper.url, req.param('rush'), (err) => {
+            paper.reviews.add(review.id)
+            paper.free()
+            u.save()
+            paper.save((err) => {
+              if (err) { return res.json(500, {
+                error: 'cannot save paper'
+              }) }
+              return res.json({
+                message: 'Committed successfull',
+                review: review,
+                reviewer: u,
+                paper: paper
+              })
+            })
           })
         })
       })
@@ -51,8 +93,12 @@ module.exports = {
       id: req.param('paper_id'),
       token: req.param('token')
     }).exec(function (err, paper) {
-      if (err) return res.json(500, {error: err})
-      if (!paper) return res.json(400, {message: 'Paper not found'})
+      if (err) { return res.json(500, {
+        error: err
+      }) }
+      if (!paper) { return res.json(400, {
+        message: 'Paper not found'
+      }) }
 
       Review.update({
         id: req.param('review_id')
@@ -60,8 +106,12 @@ module.exports = {
         text: req.param('text'),
         token: NULL
       }).exec(function (err, review) {
-        if (err) return res.json(500, {error: err})
-        if (!review) return res.json(400, {message: 'Review not found'})
+        if (err) { return res.json(500, {
+          error: err
+        }) }
+        if (!review) { return res.json(400, {
+          message: 'Review not found'
+        }) }
 
         return res.json({
           message: '',
@@ -80,7 +130,9 @@ module.exports = {
     p.lock()
 
     p.save(() => {
-      if (err) return res.json(500, {error: err})
+      if (err) { return res.json(500, {
+        error: err
+      }) }
 
       setTimeout(function () {
         p.free()
@@ -104,7 +156,9 @@ module.exports = {
     Review.destroy({
       id: req.param('review_id')
     }).exec(function (err) {
-      if (err) return res.json(500, {error: err})
+      if (err) { return res.json(500, {
+        error: err
+      }) }
 
       u.reviews.remove
       return res.json({
@@ -113,7 +167,7 @@ module.exports = {
     })
   }
 
-    // Blueprint API
-    // find: /review/find
+  // Blueprint API
+  // find: /review/find
 
 }

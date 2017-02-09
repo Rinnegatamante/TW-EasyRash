@@ -78,6 +78,11 @@ module.exports.routes = {
   'post /user/reset/psw': 'UserController.resetPassword',
   'post /user/reset/send': 'UserController.sendForgot',
   'post /user/change/data': 'UserController.updateData',
+  // REVIEW
+  'get /review/': 'ReviewController.find',
+  'get /paper/:pid/reviews/': 'ReviewController.ofPaper',
+  'post /paper/:pid/review/create': 'ReviewController.create',
+  'post /paper/:pid/review/update': 'ReviewController.update',
   // RATING
   'post /rating/create': 'RatingController.create',
   'post /rating/update': 'RatingController.update'

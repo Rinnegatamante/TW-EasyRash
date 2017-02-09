@@ -2,21 +2,28 @@ var rew
 app.controller('viewController',
   ($scope, $http, $routeParams, $animateCss) => {
     $scope.highlight = {
-      active: true,
+      active: false,
       text: '',
       same: false,
-      startOffset: 0,
-      endOffset: 0,
-      rangeCount: 0,
+      textarea: '',
       type: ''
+    }
+    $scope.rew = {
+      sel: '',
+      select: function (rwid) {
+        console.log(rwid)
+        $('.rew-sel').removeClass('rew-sel')
+        $('li[data-rew=' + rwid + ']').addClass('rew-sel')
+        $('rew[data-rew=' + rwid + ']').addClass('rew-sel')
+      }
     }
     $scope.paper = {
       id: $routeParams.pid
     }
 
     $scope.select = () => {
-      console.log(window.getSelection())
       if (!$scope.highlight.active) return
+      if (window.getSelection && window.getSelection().isCollapsed) return
       if (rew && document.getElementsByClassName('in_editing')) {
         $('#restart_rew').addClass('pulse')
         setTimeout(() => {
@@ -25,17 +32,14 @@ app.controller('viewController',
         return
       }
       rew = new Review('rew')
-    }
-
-    $scope.pushReview = () => {
-
+      console.log(rew)
     }
 
     $scope.undo_rew = () => {
       if (!$scope.highlight.active) return
       if (rew) {
         rew.undo()
-        rew = undefined
+        rew = false
       }
     }
 
@@ -43,7 +47,11 @@ app.controller('viewController',
     $scope.getdata = () => {
       $http.get('/paper/' + $scope.paper.id).then(res => {
         $scope.paper = res.data.paper
+        $http.get('/paper/' + $scope.paper.id + '/reviews/').then(res => {
+          $scope.reviews = res.data.reviews
+        })
         $scope.view()
+        $('#tooltip_content').click(function () { $scope.rew.select($scope.rew.sel) })
       })
     }
     $scope.view = () => {
@@ -53,19 +61,43 @@ app.controller('viewController',
         $('rew').tooltipster({
           animation: 'fade',
           interactive: true,
-          delay: 200,
+          delay: 400,
           side: 'bottom',
           theme: 'tooltipster-easyrush',
           contentAsHTML: true,
-          contentCloning: true
+          contentCloning: true,
+          functionBefore: function (instance, helper) {
+            $scope.rew.sel = $(helper.origin).attr('data-rew')
+          },
+          functionAfter: function (instance, helper) {
+            $scope.rew.sel = ''
+          }
         })
+      })
+    }
+    $scope.lock = () => {
+    }
+    $scope.release = () => {
+    }
+    $scope.commit = () => {
+      $('.in-editing').each(function (index) {
+        $(this).removeClass('in-editing')
+      })
+      var data = {
+        rew_id: rew.id,
+        text: $scope.highlight.textarea,
+        rush: document.getElementById('view').innerHTML
+      }
+      $http.post('/paper/' + $scope.paper.id + '/review/create', data).then(res => {
+        $scope.highlight = {}
       })
     }
     $scope.getdata()
 
     var Review = function (type) {
       // console.log(range)
-      var applier
+      this.applier
+      this.id
       this.selection = (function () {
         if (window.getSelection) {
           return window.getSelection()
@@ -77,12 +109,12 @@ app.controller('viewController',
           return false
         }
       }())
-      if (!this.selection || this.selection.isCollapsed) return false
       this.type = type
+      this.modify = this.selection.getRangeAt(0).commonAncestorContainer.innerHTML
 
       this.undo = function () {
-        applier.undoToSelection(view)
-        applier.detach(view)
+        this.applier.undoToSelection(view)
+        this.applier.detach(view)
         $scope.highlight = {
           active: true
         }
@@ -97,15 +129,18 @@ app.controller('viewController',
       }
 
       var view = document.getElementById('view')
-      var id = this.newRewId()
-      applier = rangy.createClassApplier('in-editing', {
+      this.id = this.newRewId()
+      this.applier = rangy.createClassApplier('in-editing', {
         elementTagName: 'rew',
         elementAttributes: {
-          'data-rew': id.toString(),
+          'data-rew': this.id.toString(),
           'rel-rew': '',
           'data-tooltip-content': '#tooltip_content'
         },
         useExistingElements: false
-      }).applyToSelection(view)
+      })
+      this.applier.applyToSelection(view)
+
+      $scope.highlight.text = this.selection.toString()
     }
   })

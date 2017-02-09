@@ -17,7 +17,8 @@ module.exports = {
   },
 
   find: function (req, res) {
-    Paper.findOne(req.param('pid')).populate('conference').populate('author').populate('owner').exec((err, paper) => {
+    Paper.findOne(req.param('pid')).populate('conference').populate('author').populate('owner')
+    .populate('reviewers').populate('reviews').exec((err, paper) => {
       if (err) { console.log(err) }
       return res.json({
         paper: paper
@@ -83,10 +84,8 @@ module.exports = {
   },
 
   upload: function (req, res) {
-    console.log(req.allParams())
     if (!req.param('cid')) return res.json(400, {message: 'Conference field is empty.'})
     var co_ids = req.param('co_ids') ? req.param('co_ids').split(',') : []
-    console.log(co_ids)
     var u = AuthService.user()
     co_ids.push(u.id)
 

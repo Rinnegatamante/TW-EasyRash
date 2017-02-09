@@ -21,7 +21,7 @@
 		</div>
 	</div>
 
-	<div ng-hide="highlight.active" ng-click="highlight.active= !highlight.active" class="col-sm-12 col-md-4 col-lg-3" style="cursor:pointer">
+	<div ng-hide="highlight.active" class="col-sm-12 col-md-4 col-lg-3" style="cursor:pointer">
 		<div class="panel panel-blue panel-widget">
 			<div class="row no-padding">
 				<div class="col-sm-3 col-lg-5 widget-left">
@@ -33,10 +33,10 @@
 			</div>
 		</div>
 	</div>
-	<div ng-show="highlight.active" class="col-sm-12 col-md-4">
+	<div ng-show="highlight.active" ng-click="lock" class="col-sm-12 col-md-4">
 		<div class="panel panel-default">
-			<div class="panel-heading"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg> Review
-				<a href="" ng-click="highlight.active= !highlight.active" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+			<div class="review panel-heading review"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg> Review
+				<a href="" ng-click="release" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
 			</div>
 			<div class="panel-body">
 				<div class="form-group">
@@ -44,17 +44,17 @@
 						<div class="col-sm-12">
 							<h4>Selected text:</h4>
 							<div class="highlight-text">
-								{{highlight.text}}
+								{{highlight.text | limitTo: 400}}{{highlight.text.length > 400? ' ...':''}}
 							</div>
 						</div>
 					</div>
-					<textarea class="form-control" rows="3"></textarea>
+					<textarea class="form-control" rows="3" ng-model="highlight.textarea"></textarea>
 					<br/>
 					<div class="easypiechart" id="easypiechart-blue" data-percent="92"><span class="percent">92%</span>
 						<canvas height="121" width="121" style="height: 70px; width: 70px;"></canvas>
 					</div>
-					<button ng-click="undo_rew()" class="btn btn-primary pull-right" id="restart_rew"><i class="fa fa-undo" aria-hidden="true"></i> restart</button>
-					<button ng-click="undo_rew()" class="btn btn-success"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Save</button>
+					<button ng-click="undo_rew()" class="btn btn-primary" id="restart_rew"><i class="fa fa-undo" aria-hidden="true"></i> restart</button>
+					<button ng-click="commit()" class="btn btn-success  pull-right"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Commit</button>
 				</div>
 			</div>
 		</div>
@@ -85,21 +85,63 @@
 		</div>
 	</div>
 	<div class="col-sm-12 col-md-4">
-		<code>Selected: (work in progress...)</code><br/>
-		<code>{{highlight | json}}</code>
+		<div class="panel panel-default chat">
+					<div class="panel-heading" id="accordion"><svg class="glyph stroked notepad "><use xlink:href="#stroked-notepad"/></svg> Reviews</div>
+
+					<div class="panel-body">
+						<ul>
+							<li ng-repeat="review in reviews" class="clearfix"  data-rew="{{review.rew_id}}" ng-click="rew.select(review.rew_id)">
+								<div class="chat-body clearfix">
+									<div class="header">
+										<i class="pull-right fa fa-file-text-o" style="cursor: pointer" aria-hidden="true" title="read all"></i>
+										<strong class="pull-left primary-font {{rew.sel == review.rew_id ? 'rew-sel':''}}">{{review.author.name}}</strong> <small class="text-muted">{{review.createdAt | limitTo : 10}}</small>
+									</div>
+									<p>
+										{{review.text | limitTo: 400}}{{review.text.length > 400? ' ...':''}}
+									</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+
+					<div class="panel-footer">
+					</div>
+				</div>
+	</div>
+	<div class="col-sm-12 col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading"><svg class="glyph stroked clipboard with paper"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-clipboard-with-paper"></use></svg> Reviewers</div>
+			<div class="panel-body">
+				<div class="fixed-table-container">
+					<table data-toggle="table" class="table table-hover">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Email</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="user in paper.reviewers">
+								<td>{{user.name}}</td>
+								<td>{{user.email}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
 	</div>
 
+
 </div>
 
-<div class="tooltip_templates">
+<div class="tooltip_templates" >
 	<span id="tooltip_content">
-			<div class="list-group">
-				<a href="#" class="list-group-item">Author 1</a>
-				<a href="#" class="list-group-item list-group-item-action">Author 2</a>
-				<a href="#" class="list-group-item list-group-item-action">Author 3</a>
-			</div>
+			<h4 style="cursor:pointer">See</h4>
     </span>
 </div>
+
 <!--/.row-->
 
 </div>
