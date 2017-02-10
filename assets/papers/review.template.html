@@ -1,0 +1,35 @@
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main" ng-controller="reviewController">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#/conferences/reviewer"><svg class="glyph stroked arrow left"><use xlink:href="#stroked-arrow-left"/></svg></a> Select a paper to review</a></li>
+			</ol>
+		</div><!--/.row-->
+
+		<br>
+
+		<div class="row">
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<input type="text" ng-model="paper.field" class="form-control" placeholder="Search..." required="true" />
+			</div>
+		</div>
+
+		<br>
+
+		<div class="row">
+			<div ng-repeat="paper in user.reviewer_papers | filter: paper.field" class="col-xs-12 col-md-6 col-lg-4">
+				<div ng-if="(paper.conference == conference.id)" class="panel panel-blue panel-widget">
+					<div class="row no-padding">
+						<a href="#/papers/{{paper.id}}"><div class="col-sm-2 widget-left">
+							<svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg>
+						</div></a>
+						<div class="col-sm-10">
+							<a href="#/view/{{paper.id}}"><h4>{{paper.title | limitTo: 20}}</h4></a>
+							<p ng-if="paper.status < 1"><a href="#/view/{{paper.id}}">Review this paper</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<br>
+</div>

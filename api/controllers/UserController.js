@@ -119,7 +119,7 @@ module.exports = {
       }) }
 
       return res.json({
-        message: 'Successfully logout'
+        message: 'Successfully logout.'
       })
     })
   },
@@ -140,7 +140,7 @@ module.exports = {
     Paper.find(criteria).populate('conference').populate('author').populate('owner').exec((err, papers) => {
       if (err) return console.log(err)
       if (!papers) { return res.json(400, {
-        message: 'You have not papers yet'
+        message: 'You have no papers yet.'
       }) }
       return res.json({
         papers: papers
@@ -275,9 +275,5 @@ module.exports = {
       })
     })
   },
-
-  test: function (req, res) {
-    return res.json(req.allParams())
-  }
 
 }

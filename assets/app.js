@@ -105,6 +105,9 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider',
   .when('/paper/:cid/:uid/assign', {
     templateUrl: 'papers/assignto.template.html'
   })
+  .when('/paper/:cid/review', {
+    templateUrl: 'papers/review.template.html'
+  })
   .when('/view/:pid', {
     templateUrl: 'view/view.template.html'
   })
