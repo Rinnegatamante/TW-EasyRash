@@ -25,7 +25,7 @@ module.exports = function (req, res, next) {
   })
   .populate('chair_conferences')
   .populate('guest_conferences')
-  .populate('reviewers_conferences')
+  .populate('reviewer_conferences')
   .populate('reviewer_papers')
   .populate('papers')
   .exec(function (err, user) {
