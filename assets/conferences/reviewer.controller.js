@@ -5,8 +5,6 @@ app.controller('reviewerController',
    })
   $scope.filterPapers = function(conference){
 	return function(paper){
-		console.log(paper);
-		console.log(conference);
 		return conference == paper.conference;
 	}
   }
