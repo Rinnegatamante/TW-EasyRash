@@ -17,7 +17,7 @@
 				</select>
           </div>
           <div ng-if="conf.paperstate != 2" class="form-group">
-            Pending papers: {{conf.pending_papers.length}}
+            <a href="#/conferences/{{conf.id}}/managepapers">Pending papers: {{conf.pending_papers.length}}</a>
           </div>
           <div ng-if="(conf.pending_papers.length === 0)" class="form-group">
             <form role="form" ng-submit="close()">

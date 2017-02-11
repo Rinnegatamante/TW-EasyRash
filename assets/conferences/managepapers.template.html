@@ -1,14 +1,15 @@
 <div ng-controller="managepapersController">
   <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
     <div class="register-panel panel panel-default">
-      <div class="panel-heading"><a href="#/conferences/chair"><svg class="glyph stroked arrow left"><use xlink:href="#stroked-arrow-left"/></svg></a> Manage conference status</div>
+      <div class="panel-heading"><a href="#/conferences/chair"><svg class="glyph stroked arrow left"><use xlink:href="#stroked-arrow-left"/></svg></a> Manage papers</div>
       <div class="panel-body">
           <fieldset>
             <div class="form-group">
-                <input type="text" ng-model="search.title" class="form-control"l   placeholder="Title" required="true" />
+                <input type="text" ng-model="search.title" class="form-control"l   placeholder="Search..." required="true" />
             </div>
           </fieldset>
           <h4>Pending Papers:</h4>
+		  <i ng-if="conf.papers.pending.length == 0">No pending papers</i>
           <div ng-repeat="paper in conf.papers.pending |  filter: search.title" class="col-xs-12 panel-hv-green">
             <div class="panel panel-blue panel-widget panel-bg-grey">
               <div class="row no-padding">
@@ -17,9 +18,10 @@
                 </div>
                 <div class="col-sm-10">
                   <h4>{{paper.title}}</h4>
-                  <a>{{paper.createdAt | limitTo:10}} &nbsp;&bull;&nbsp; status: {{paper.status}}</a>
+                  <h5>Submitted on {{paper.createdAt | limitTo:10}} by {{paper.owner.name}}</h5>
                   <button class="btn btn-danger right" ng-click="reject(paper.id)">Reject</button>
                   <button class="btn btn-success right" ng-click="accept(paper.id)">Accept</button>
+				  <button class="btn btn-primary right" ng-click="requestchange(paper.id)">Request change</button>
                 </div>
               </div>
             </div>
@@ -27,7 +29,7 @@
 
           <hr/>
           <h4>Accepted Papers:</h4>
-          <i ng-if="!conf.papers.accepted">No accepted papers</i>
+          <i ng-if="conf.papers.accepted.length == 0">No accepted papers</i>
           <div ng-repeat="paper in conf.papers.accepted |  filter: search.title " class="col-xs-12 panel-hv-green">
             <div class="panel panel-blue panel-widget panel-bg-grey">
               <div class="row no-padding">
@@ -36,8 +38,7 @@
                 </div>
                 <div class="col-sm-10">
                   <h4>{{paper.title}}</h4>
-                  <a>{{paper.createdAt | limitTo:10}} &nbsp;&bull;&nbsp; status: {{paper.status}}</a>
-                  <button class="btn btn-primary right" ng-click="pending(paper.id)">Pending</button>
+                  <h5>Submitted on {{paper.createdAt | limitTo:10}} by {{paper.owner.name}}</h5>
                 </div>
               </div>
             </div>
@@ -45,7 +46,7 @@
 
           <hr/>
           <h4>Rejected Papers:</h4>
-          <i ng-if="!conf.papers.rejected">No accepted papers</i>
+          <i ng-if="conf.papers.rejected.length == 0">No rejected papers</i>
           <div ng-repeat="paper in conf.papers.rejected |  filter: search.title " class="col-xs-12 panel-hv-green">
             <div class="panel panel-blue panel-widget panel-bg-grey">
               <div class="row no-padding">
@@ -54,8 +55,7 @@
                 </div>
                 <div class="col-sm-10">
                   <h4>{{paper.title}}</h4>
-                  <a>{{paper.createdAt | limitTo:10}} &nbsp;&bull;&nbsp; status: {{paper.status}}</a>
-                  <button class="btn btn-primary right" ng-click="pending(paper.id)">Pending</button>
+                  <h5>Submitted on {{paper.createdAt | limitTo:10}} by {{paper.owner.name}}</h5>
                 </div>
               </div>
             </div>
