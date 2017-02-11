@@ -16,15 +16,20 @@
 		<br>
 
 		<div class="row">
-			<div ng-repeat="paper in user.reviewer_papers | filter: paper.field" class="col-xs-12 col-md-6 col-lg-4">
-				<div ng-if="(paper.conference == conference.id)" class="panel panel-blue panel-widget">
-					<div class="row no-padding">
-						<a href="#/papers/{{paper.id}}"><div class="col-sm-2 widget-left">
-							<svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg>
-						</div></a>
-						<div class="col-sm-10">
-							<a href="#/view/{{paper.id}}"><h4>{{paper.title | limitTo: 20}}</h4></a>
-							<p ng-if="paper.status < 1"><a href="#/view/{{paper.id}}">Review this paper</a></p>
+			<div ng-repeat="paper in user.reviewer_papers | filter: paper.field">
+				<div ng-if="(paper.conference == conference.id)">
+					<div class="col-xs-12 col-md-6 col-lg-4">
+						<div class="panel panel-blue panel-widget">
+							<div class="row no-padding">
+								<a href="#/papers/{{paper.id}}">
+								<div class="col-sm-2 widget-left">
+									<svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg>
+								</div></a>
+								<div class="col-sm-10">
+									<a href="#/view/{{paper.id}}"><h4>{{paper.title | limitTo: 20}}</h4></a>
+									<p ng-if="paper.status < 1"><a href="#/view/{{paper.id}}">Review this paper</a></p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
