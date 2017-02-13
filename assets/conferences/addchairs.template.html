@@ -1,74 +1,71 @@
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-<div class="row">
+	<div class="row">
 		<ol class="breadcrumb">
 			<li><a href="#/conferences/chair"><svg class="glyph stroked arrow left"><use xlink:href="#stroked-arrow-left"/></svg></a> Manage conference chairs</li>
 		</ol>
 	</div>
 	<br>
-<div class="row" ng-controller="addchairsController">
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">Manage current chairs</div>
-      <div class="panel-body">
-        <form role="form" ng-submit="submit()">
-          <fieldset>
-            <div class="form-group">
-              <input type="text" ng-model="conf.title" class="form-control" placeholder="Title" ng-disabled="true" required="true" />
-            </div>
-			<div class="fixed-table-container">
-				<table data-toggle="table" class="table table-hover">
-					<thead>
-						<tr>
-							<th>Chairs Name</th>
-							<th>Email</th>
-						    <th>Action</th>
-						</tr>
-				    </thead>
-					<tbody>
-						<tr ng-repeat="user in conf.chairs">
-							<td>{{user.name}}</td>
-							<td>{{user.email}}</td>
-							<td><a href="" ng-click="delete(user.id)" title="Remove chair"><i class="fa fa-ban" aria-hidden="true"></i></a></td>
-						</tr>
-					</tbody>
-				</table>
+	<div class="row" ng-controller="addchairsController">
+		<div class="col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">Manage current chairs</div>
+				<div class="panel-body">
+					<form role="form" ng-submit="submit()">
+						<fieldset>
+							<div class="form-group">
+								<input type="text" ng-model="conf.title" class="form-control" placeholder="Title" ng-disabled="true" required="true" />
+							</div>
+							<div class="fixed-table-container">
+								<table data-toggle="table" class="table table-hover">
+									<thead>
+										<tr>
+											<th>Chairs Name</th>
+											<th>Email</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="user in conf.chairs">
+											<td>{{user.name}}</td>
+											<td>{{user.email}}</td>
+											<td><a href="" ng-click="delete(user.id)" title="Remove chair"><i class="fa fa-ban" aria-hidden="true"></i></a></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<br>
+						</fieldset>
+					</form>
+				</div>
 			</div>
-            <br>
-          </fieldset>
-        </form>
-      </div>
-    </div>
-  </div>
-  <!-- /.col-->
-    <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">Add new chairs</div>
-      <div class="panel-body">
-		<div class="form-group">
-			<input type="text" ng-model-options="{ debounce: 500 }" ng-model="user.field" class="form-control" placeholder="Search..." required="true" />
-        </div>
-		<div class="fixed-table-container">
-			<table data-toggle="table" class="table table-hover">
-				<thead>
-					<tr>
-						<th>User Name</th>
-						<th>Email</th>
-					    <th>Action</th>
-					</tr>
-			    </thead>
-				<tbody>
-					<tr ng-repeat="user in users">
-						<td>{{user.name}}</td>
-						<td>{{user.email}}</td>
-						<td><a href="" ng-click="add(user.id)" title="Add chair"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
-					</tr>
-				</tbody>
-			</table>
 		</div>
-      </div>
-    </div>
-  </div>
-  <!-- /.col-->
-</div>
-<!-- /.row -->
+		<div class="col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">Add new chairs</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<input type="text" ng-model-options="{ debounce: 500 }" ng-model="user.field" class="form-control" placeholder="Search..." required="true" />
+					</div>
+					<div class="fixed-table-container">
+						<table data-toggle="table" class="table table-hover">
+							<thead>
+								<tr>
+									<th>User Name</th>
+									<th>Email</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="user in users">
+									<td>{{user.name}}</td>
+									<td>{{user.email}}</td>
+									<td><a href="" ng-click="add(user.id)" title="Add chair"><i class="fa fa-plus" aria-hidden="true"></i></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
