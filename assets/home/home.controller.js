@@ -1,6 +1,8 @@
-app.controller('homeController',
- ($scope, $http, $routeParams, $location) => {
-	 $http.post('/user/getdata').then(res => {
+// Controller for home template
+app.controller('homeController',($scope, $http, $routeParams, $location) => {
+	
+	// Get logged user data
+	$http.post('/user/getdata').then(res => {
 		$scope.user = res.data.user
 		$scope.user.conf_memberships = res.data.user.reviewer_conferences.length + res.data.user.chair_conferences.length
 		$scope.user.conf_papers = []
@@ -8,6 +10,8 @@ app.controller('homeController',
 		$scope.user.accepted_num = 0
 		$scope.user.rejected_num = 0
 		$scope.user.need_change_num = 0
+		
+		// Counting number of distinct conferences where the user is currently subscribed
 		for (i=0;i<res.data.user.chair_conferences.length;i++){
 			for (z=0;z<res.data.user.reviewer_conferences.length;z++){
 				if (res.data.user.chair_conferences[i].id == res.data.user.reviewer_conferences[z].id){
@@ -16,6 +20,8 @@ app.controller('homeController',
 				}
 			}
 		}
+		
+		// Separating assigned papers as reviewer for each assigned conference
 		for (i=0;i<res.data.user.reviewer_conferences.length;i++){
 			var j=0;
 			$scope.user.conf_papers.push({
@@ -30,6 +36,8 @@ app.controller('homeController',
 				}
 			}
 		}
+		
+		// Counting owned papers in terms of their states
 		for (i=0;i<res.data.user.papers.length;i++){
 			switch (res.data.user.papers[i].status){
 				case 0:
@@ -46,5 +54,7 @@ app.controller('homeController',
 					break;
 			}
 		}
+		
 	})
- })
+	
+})

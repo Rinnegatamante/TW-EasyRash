@@ -1,107 +1,120 @@
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main" ng-controller="homeController">
-		<div class="row">
-			<ol class="breadcrumb">
-				<li><svg class="glyph stroked home"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-home"></use></svg> Dashboard</li>
-			</ol>
-		</div><!--/.row-->
-		<br>
-    <div class="row">
-			<div class="col-xs-12 col-md-6 col-lg-3">
-				<div class="panel panel-blue panel-widget ">
-					<div class="row no-padding">
-						<div class="col-sm-3 col-lg-5 widget-left">
-							<svg class="glyph stroked bag"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-bag"></use></svg>
-						</div>
-						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">TODO</div>
-							<div class="text-muted">TBD</div>
-						</div>
+	<div class="row">
+		<ol class="breadcrumb">
+			<li>
+				<svg class="glyph stroked home">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-home"></use>
+				</svg>
+				Dashboard
+			</li>
+		</ol>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-xs-12 col-md-6 col-lg-3">
+			<div class="panel panel-blue panel-widget ">
+				<div class="row no-padding">
+					<div class="col-sm-3 col-lg-5 widget-left">
+						<svg class="glyph stroked bag">
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-bag"></use>
+						</svg>
 					</div>
-				</div>
-			</div>
-			<div class="col-xs-12 col-md-6 col-lg-3">
-				<div class="panel panel-orange panel-widget">
-					<div class="row no-padding">
-						<div class="col-sm-3 col-lg-5 widget-left">
-							<svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg>
-						</div>
-						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">{{user.papers.length}}</div>
-							<div class="text-muted">Submitted Papers</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-12 col-md-6 col-lg-3">
-				<div class="panel panel-teal panel-widget">
-					<div class="row no-padding">
-						<div class="col-sm-3 col-lg-5 widget-left">
-							<svg class="glyph stroked male-user"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-male-user"></use></svg>
-						</div>
-						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">{{user.conf_memberships}}</div>
-							<div class="text-muted">Conference Memberships</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-12 col-md-6 col-lg-3">
-				<div class="panel panel-red panel-widget">
-					<div class="row no-padding">
-						<div class="col-sm-3 col-lg-5 widget-left">
-							<svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg>
-						</div>
-						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">{{user.reviewer_papers.length}}</div>
-							<div class="text-muted">Pending Reviews</div>
-						</div>
+					<div class="col-sm-9 col-lg-7 widget-right">
+						<div class="large">TODO</div>
+						<div class="text-muted">TBD</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
-		<div class="row">
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-heading">TBD:</div>
-					<div class="panel-body">
-						
+		<div class="col-xs-12 col-md-6 col-lg-3">
+			<div class="panel panel-orange panel-widget">
+				<div class="row no-padding">
+					<div class="col-sm-3 col-lg-5 widget-left">
+						<svg class="glyph stroked blank document">
+							<use xlink:href="#stroked-blank-document"/>
+						</svg>
+					</div>
+					<div class="col-sm-9 col-lg-7 widget-right">
+						<div class="large">{{user.papers.length}}</div>
+						<div class="text-muted">Submitted Papers</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-heading">Papers statistics:</div>
-					<div class="panel-body">
-						<ul><li><a href="/#/papers">{{user.pending_num}} pending paper<span ng-if="user.pending_num !=1">s</span>.</a></li>
+		</div>
+		<div class="col-xs-12 col-md-6 col-lg-3">
+			<div class="panel panel-teal panel-widget">
+				<div class="row no-padding">
+					<div class="col-sm-3 col-lg-5 widget-left">
+						<svg class="glyph stroked male-user">
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-male-user"></use>
+						</svg>
+					</div>
+					<div class="col-sm-9 col-lg-7 widget-right">
+						<div class="large">{{user.conf_memberships}}</div>
+						<div class="text-muted">Conference Memberships</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-6 col-lg-3">
+			<div class="panel panel-red panel-widget">
+				<div class="row no-padding">
+					<div class="col-sm-3 col-lg-5 widget-left">
+						<svg class="glyph stroked clipboard with paper">
+							<use xlink:href="#stroked-clipboard-with-paper"/>
+						</svg>
+					</div>
+					<div class="col-sm-9 col-lg-7 widget-right">
+						<div class="large">{{user.reviewer_papers.length}}</div>
+						<div class="text-muted">Pending Reviews</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-6 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">TBD:</div>
+				<div class="panel-body">
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-6 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">Papers statistics:</div>
+				<div class="panel-body">
+					<ul>
+						<li><a href="/#/papers">{{user.pending_num}} pending paper<span ng-if="user.pending_num !=1">s</span>.</a></li>
 						<li><a href="/#/papers">{{user.accepted_num}} accepted paper<span ng-if="user.accepted_num !=1">s</span>.</a></li>
 						<li><a href="/#/papers">{{user.rejected_num}} rejected paper<span ng-if="user.rejected_num !=1">s</span>.</a></li>
 						<li><a href="/#/papers">{{user.need_change_num}} paper<span ng-if="user.need_change_num !=1">s</span> need a revision.</a></li>
-						</ul>
-					</div>
+					</ul>
 				</div>
 			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-heading">Memberships statistics:</div>
-					<div class="panel-body">
-						<ul><li><a href="/#/conferences/chair">You're chair of {{user.chair_conferences.length}} conference<span ng-if="user.chair_conferences.length !=1">s</span>.</a></li>
-						<li><a href="/#/conferences/reviewer">You're reviewer of {{user.reviewer_conferences.length}} conference<span ng-if="user.reviewer_conferences.length !=1">s</span>.</a></li></ul>
-					</div>
+		</div>
+		<div class="col-xs-6 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">Memberships statistics:</div>
+				<div class="panel-body">
+					<ul>
+						<li><a href="/#/conferences/chair">You're chair of {{user.chair_conferences.length}} conference<span ng-if="user.chair_conferences.length !=1">s</span>.</a></li>
+						<li><a href="/#/conferences/reviewer">You're reviewer of {{user.reviewer_conferences.length}} conference<span ng-if="user.reviewer_conferences.length !=1">s</span>.</a></li>
+					</ul>
 				</div>
 			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-heading">Pending reviews statistics:</div>
-					<div class="panel-body">					
-						<ul>
+		</div>
+		<div class="col-xs-6 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">Pending reviews statistics:</div>
+				<div class="panel-body">
+					<ul>
 						<div ng-repeat="conf in user.conf_papers">
 							<li><a href="/#/paper/{{conf.id}}/review">{{conf.papers.length}} paper<span ng-if="conf.papers.length !=1">s</span> in {{conf.title}} conference.</a></li>
 						</div>
-						</ul>
-					</div>
+					</ul>
 				</div>
 			</div>
-		</div><!--/.row-->
-
+		</div>
 	</div>
+</div>
