@@ -37,7 +37,7 @@
 							<li ng-if="conference.status < 2">
 								<p><a href="#/conferences/{{conference.id}}/addreviewers">Manage reviewers</a></p>
 							</li>
-							<li>
+							<li ng-if="conference.status < 2">
 								<p><a href="#/conferences/{{conference.id}}/managepapers">Manage papers</a></p>
 							</li>
 							<li ng-if="conference.status < 1">
