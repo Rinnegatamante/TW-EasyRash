@@ -35,4 +35,5 @@ app.controller('addchairsController',($scope, $http, $location, $routeParams) =>
 			$scope.conf = res.data.conference
 		})
 	}
+	
 })

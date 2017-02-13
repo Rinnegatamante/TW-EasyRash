@@ -1,23 +1,29 @@
 <div class="row" ng-controller="newconfController">
-  <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
-    <div class="register-panel panel panel-default">
-      <div class="panel-heading"><a href="#/conferences/chair"><svg class="glyph stroked arrow left"><use xlink:href="#stroked-arrow-left"/></svg></a> Create a new conference</div>
-      <div class="panel-body">
-        <form role="form" ng-submit="submit()">
-          <fieldset>
-            <div class="form-group">
-              <input type="text" ng-model="conf.title" class="form-control" placeholder="Title" required="true" />
-            </div>
-            <div class="form-group">
-              <input type="text" ng-model="conf.acronym" class="form-control" placeholder="Acronym" required="true" />
-            </div>
-            <br>
-			<input type="submit" value="Create conference" class="btn btn-primary" />
-          </fieldset>
-        </form>
-      </div>
-    </div>
-  </div>
-  <!-- /.col-->
+	<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+		<div class="register-panel panel panel-default">
+			<div class="panel-heading">
+				<a href="#/conferences/chair">
+					<svg class="glyph stroked arrow left">
+						<use xlink:href="#stroked-arrow-left"/>
+					</svg>
+				</a>
+				Create a new conference
+			</div>
+			<div class="panel-body">
+				<form role="form" ng-submit="submit()">
+					<fieldset>
+						<div class="form-group">
+							<input type="text" ng-model="conf.title" class="form-control" placeholder="Title" required="true" />
+						</div>
+						<div class="form-group">
+							<input type="text" ng-model="conf.acronym" class="form-control" placeholder="Acronym" required="true" />
+						</div>
+						<br>
+						<input type="submit" value="Create conference" class="btn btn-primary" />
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
-<!-- /.row -->
+
