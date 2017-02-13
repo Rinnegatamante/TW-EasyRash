@@ -62,7 +62,7 @@ rew{
 	border-bottom: solid 1px black;
 }
 .rew-sel{
-	background: #FFD54F;
+	background: #FFD54F !important;
 	border-bottom: dotted 2px black;
 }
 .rew-sel > rew{

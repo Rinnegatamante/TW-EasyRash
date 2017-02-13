@@ -10,6 +10,8 @@
  */
 module.exports.globals = {
 
+  timeLock: 120000 // 2min //300000 // 5 minutes
+
   /****************************************************************************
   *                                                                           *
   * Expose the lodash installed in Sails core as a global variable. If this   *
@@ -60,4 +62,4 @@ module.exports.globals = {
   ****************************************************************************/
 
 	// models: true
-};
+}
