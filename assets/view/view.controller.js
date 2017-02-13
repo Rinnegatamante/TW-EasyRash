@@ -58,7 +58,7 @@ app.controller('viewController',
         if ($scope.rews[i].id == rid) $scope.rews.splice(i, 1)
       }
       saveLocalReview($scope.paper.id, $scope.rews)
-      $scope.view()
+      $scope.getview()
     }
 
     $scope.add_rew = () => {
@@ -77,20 +77,19 @@ app.controller('viewController',
       }
     }
 
-    $scope.view = '<h3>Loading paper ...</h3>'
     $scope.getdata = () => {
       $http.get('/paper/' + $scope.paper.id).then(res => {
         $scope.paper = res.data.paper
         $http.get('/paper/' + $scope.paper.id + '/reviews/').then(res => {
           $scope.reviews = res.data.reviews
         })
-        $scope.view()
+        $scope.getview()
         $('#tooltip_content').click(function () {
           $scope.watchReview.select($scope.watchReview.sel)
         })
       })
     }
-    $scope.view = () => {
+    $scope.getview = () => {
       $http.get($scope.paper.url).then(res => {
         $scope.view = res.data
         $('#view').html($scope.view)
@@ -110,7 +109,6 @@ app.controller('viewController',
           }
         })
         restoreLocalReview($scope.paper.id, (rews) => {
-          console.log(rews)
           $scope.rews = rews
         })
       })
@@ -133,6 +131,7 @@ app.controller('viewController',
     $scope.commit = () => {
       $('.in-editing').removeClass('in-editing')
       $('.rew-sel').removeClass('rew-sel')
+      loadReviewsJSONLD($scope.rews, $scope.paper, $rootScope.user, $scope.status)
 
       /* $scope.lock((token) => { */
       var data = {
@@ -147,7 +146,6 @@ app.controller('viewController',
       }
       $http.post('/paper/' + $scope.paper.id + '/review/create', data).then(res => {
         $scope.highlight = {}
-        loadReviewsJSONLD($scope.rews, $scope.paper, $rootScope.user, $scope.status)
         $scope.rews = []
         saveLocalReview($scope.paper.id, [])
         $scope.free()
@@ -283,7 +281,7 @@ var restoreLocalReview = (pid, cb) => { // save in rews the reviews array restor
   cb(obj)
 }
 
-var loadReviewsJSONLD = (rewiews, paper, auth, status) => {
+var loadReviewsJSONLD = (reviews, paper, user, status) => {
   var comments = []
   var rews = []
   var date = new Date()
@@ -302,12 +300,12 @@ var loadReviewsJSONLD = (rewiews, paper, auth, status) => {
   var ld = [{
     '@context': 'easyrash.json',
     '@type': 'review',
-    '@id': review.id,
+    '@id': reviews[0].id,
     'article': {
       '@id': paper.id,
       'eval': {
         '@context': 'easyrash.json',
-        '@id': '#review' + rews[0].id + '-eval',
+        '@id': '#review' + reviews[0].id + '-eval',
         '@type': 'score',
         'status': 'pso:' + status,
         'author': 'mailto:' + paper.owner.email,
@@ -321,7 +319,7 @@ var loadReviewsJSONLD = (rewiews, paper, auth, status) => {
     '@id': user.email,
     'name': user.name,
     'as': {
-      '@id': '#role' + rews[0].id,
+      '@id': '#role' + reviews[0].id,
       '@type': 'role',
       'role_type': 'pro:reviewer', // TODO
       'in': ''
@@ -329,9 +327,10 @@ var loadReviewsJSONLD = (rewiews, paper, auth, status) => {
   }]
 
   var view = document.getElementById('view')
-  var title = document.getElementsByTagName('title')[0]
+  var title = view.getElementsByTagName('title')[0]
   var script = document.createElement('script')
   script.setAttribute('type', 'application/ld+json')
   script.innerHTML = JSON.stringify(ld)
+  console.log(script.innerHTML)
   title.parentNode.insertBefore(script, title.nextSibling)
 }
