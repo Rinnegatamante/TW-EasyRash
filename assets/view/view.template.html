@@ -10,18 +10,19 @@
 
 	<div class="panel panel-primary chat col-sm-12 col-md-8">
 		<div class="panel-heading"><svg class="glyph stroked two-messages"><use xlink:href="#stroked-blank-document"/></svg> {{paper.title}}</div>
-		<div class="panel-body" id="view" ng-mouseup="select()"></div>
+		<div class="panel-body" id="view" ng-mouseup="select()">
+			<h3>Loading paper ...</h3></div>
 		<div class="panel-footer">
 			<div class="input-group">
 				<input id="btn-input" type="text" class="form-control input-md" placeholder="Type your message here...">
 				<span class="input-group-btn">
-								<button class="btn btn-success btn-md" id="btn-chat">Send</button>
+								<button class="btn btn-success btn-md" id="btn-chat" ng-click="restore()">Send</button>
 							</span>
 			</div>
 		</div>
 	</div>
 
-	<div ng-hide="highlight.active" class="col-sm-12 col-md-4 col-lg-3" style="cursor:pointer">
+	<div ng-hide="highlight.active" ng-click="highlight.active = !highlight.active" class="col-sm-12 col-md-4 col-lg-3" style="cursor:pointer">
 		<div class="panel panel-blue panel-widget">
 			<div class="row no-padding">
 				<div class="col-sm-3 col-lg-5 widget-left">
@@ -33,10 +34,10 @@
 			</div>
 		</div>
 	</div>
-	<div ng-show="highlight.active" ng-click="lock" class="col-sm-12 col-md-4">
+	<div ng-show="highlight.active" class="col-sm-12 col-md-4">
 		<div class="panel panel-default">
 			<div class="review panel-heading review"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg> Review
-				<a href="" ng-click="release" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+				<a href="" ng-click="highlight.active = !highlight.active" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
 			</div>
 			<div class="panel-body">
 				<div class="form-group">
@@ -44,23 +45,43 @@
 						<div class="col-sm-12">
 							<h4>Selected text:</h4>
 							<div class="highlight-text">
-								{{highlight.text | limitTo: 400}}{{highlight.text.length > 400? ' ...':''}}
+								{{summaryText(highlight.text, 400)}}
 							</div>
 						</div>
 					</div>
-					<textarea class="form-control" rows="3" ng-model="highlight.textarea"></textarea>
+					<textarea class="form-control" rows="3" ng-model="highlight.review" placeholder="write here your review..."></textarea>
 					<br/>
-					<div class="easypiechart" id="easypiechart-blue" data-percent="92"><span class="percent">92%</span>
-						<canvas height="121" width="121" style="height: 70px; width: 70px;"></canvas>
+					<button ng-click="undo_rew()" class="btn btn-primary" id="restart_rew"><i class="fa fa-undo" aria-hidden="true"></i> cancel</button>
+					<button ng-click="add_rew()" class="btn btn-success pull-right"><i class="fa fa-plus-circle" aria-hidden="true"></i> add</button>
+					<hr/>
+
+					<div ng-show="rews.length > 0" class="fixed-table-container">
+						<table data-toggle="table" class="table table-hover">
+							<thead>
+								<tr>
+									<th>current reviews</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="rew in rews" data-rew="{{rew.id}}" style="cursor:pointer">
+									<td>{{summaryText(rew.review, 45)}}</td>
+									<td>
+										<button ng-click="watchReview.select(rew.id)" class="btn btn-warning"><i class="fa fa-lightbulb-o" title='view' title="higlhight" aria-hidden="true"></i></button>
+										<button ng-click="cancel_rew(rew.id)" class="btn btn-danger pull-right"><i class="fa fa-trash" title='delete' aria-hidden="true"></i></button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<button ng-click="commit()" class="btn btn-success pull-right"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Commit</button>
 					</div>
-					<button ng-click="undo_rew()" class="btn btn-primary" id="restart_rew"><i class="fa fa-undo" aria-hidden="true"></i> restart</button>
-					<button ng-click="commit()" class="btn btn-success  pull-right"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Commit</button>
+
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="col-sm-12 col-md-4">
+	<div ng-hide="highlight.active" class="col-sm-12 col-md-4">
 		<div class="panel panel-default">
 			<div class="panel-heading"><svg class="glyph stroked pencil"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-pencil"></use></svg> Authors</div>
 			<div class="panel-body">
@@ -84,31 +105,31 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-12 col-md-4">
+	<div ng-hide="highlight.active" class="col-sm-12 col-md-4">
 		<div class="panel panel-default chat">
-					<div class="panel-heading" id="accordion"><svg class="glyph stroked notepad "><use xlink:href="#stroked-notepad"/></svg> Reviews</div>
+			<div class="panel-heading" id="accordion"><svg class="glyph stroked notepad "><use xlink:href="#stroked-notepad"/></svg> Reviews</div>
 
-					<div class="panel-body">
-						<ul>
-							<li ng-repeat="review in reviews" class="clearfix"  data-rew="{{review.rew_id}}" ng-click="rew.select(review.rew_id)">
-								<div class="chat-body clearfix">
-									<div class="header">
-										<i class="pull-right fa fa-file-text-o" style="cursor: pointer" aria-hidden="true" title="read all"></i>
-										<strong class="pull-left primary-font {{rew.sel == review.rew_id ? 'rew-sel':''}}">{{review.author.name}}</strong> <small class="text-muted">{{review.createdAt | limitTo : 10}}</small>
-									</div>
-									<p>
-										{{review.text | limitTo: 400}}{{review.text.length > 400? ' ...':''}}
-									</p>
-								</div>
-							</li>
-						</ul>
-					</div>
+			<div class="panel-body">
+				<ul>
+					<li ng-repeat="review in reviews | orderBy: '-created_at'" class="clearfix" data-rew="{{review.rew_id}}" ng-click="watchReview.select(review.rew_id)">
+						<div class="chat-body clearfix">
+							<div class="header">
+								<i class="pull-right fa fa-lightbulb-o" style="cursor: pointer" aria-hidden="true" title="read all"></i>
+								<strong class="pull-left primary-font {{watchReview.sel == review.rew_id ? 'rew-sel':''}}">{{review.author.name}}</strong> <small class="text-muted">{{review.createdAt | limitTo : 10}}</small>
+							</div>
+							<p>
+								{{review.text | limitTo: 400}}{{review.text.length > 400? ' ...':''}}
+							</p>
+						</div>
+					</li>
+				</ul>
+			</div>
 
-					<div class="panel-footer">
-					</div>
-				</div>
+			<div class="panel-footer">
+			</div>
+		</div>
 	</div>
-	<div class="col-sm-12 col-md-4">
+	<div ng-hide="highlight.active" class="col-sm-12 col-md-4">
 		<div class="panel panel-default">
 			<div class="panel-heading"><svg class="glyph stroked clipboard with paper"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-clipboard-with-paper"></use></svg> Reviewers</div>
 			<div class="panel-body">
@@ -136,7 +157,7 @@
 
 </div>
 
-<div class="tooltip_templates" >
+<div class="tooltip_templates">
 	<span id="tooltip_content">
 			<h4 style="cursor:pointer">See</h4>
     </span>
