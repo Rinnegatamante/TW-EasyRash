@@ -1,32 +1,41 @@
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main" ng-controller="viewController">
 	<div class="row">
 		<ol class="breadcrumb">
-			<li><svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"/></svg> Conference : <b>{{paper.conference.title}} ({{paper.conference.acronym}})</b></li>
+			<li>
+				<svg class="glyph stroked blank document">
+					<use xlink:href="#stroked-blank-document"/>
+				</svg>
+				Conference : <b>{{paper.conference.title}} ({{paper.conference.acronym}})</b>
+			</li>
 		</ol>
 	</div>
-	<!--/.row-->
-
 	<br>
-
 	<div class="panel panel-primary chat col-sm-12 col-md-8">
-		<div class="panel-heading"><svg class="glyph stroked two-messages"><use xlink:href="#stroked-blank-document"/></svg> {{paper.title}}</div>
+		<div class="panel-heading">
+			<svg class="glyph stroked two-messages">
+				<use xlink:href="#stroked-blank-document"/>
+			</svg>
+			{{paper.title}}
+		</div>
 		<div class="panel-body" id="view" ng-mouseup="select()">
-			<h3>Loading paper ...</h3></div>
+			<h3>Loading paper ...</h3>
+		</div>
 		<div class="panel-footer">
 			<div class="input-group">
 				<input id="btn-input" type="text" class="form-control input-md" placeholder="Type your message here...">
 				<span class="input-group-btn">
-								<button class="btn btn-success btn-md" id="btn-chat" ng-click="restore()">Send</button>
-							</span>
+				<button class="btn btn-success btn-md" id="btn-chat" ng-click="restore()">Send</button>
+				</span>
 			</div>
 		</div>
 	</div>
-
 	<div ng-hide="highlight.active" ng-click="highlight.active = !highlight.active" class="col-sm-12 col-md-4 col-lg-3" style="cursor:pointer">
 		<div class="panel panel-blue panel-widget">
 			<div class="row no-padding">
 				<div class="col-sm-3 col-lg-5 widget-left">
-					<svg class="glyph stroked plus sign"><use xlink:href="#stroked-plus-sign"/></svg>
+					<svg class="glyph stroked plus sign">
+						<use xlink:href="#stroked-plus-sign"/>
+					</svg>
 				</div>
 				<div class="col-sm-9 col-lg-7 widget-right" style="background-color:#263238">
 					<div class="large add-review" style="color:white">add review</div>
@@ -36,7 +45,11 @@
 	</div>
 	<div ng-show="highlight.active" class="col-sm-12 col-md-4">
 		<div class="panel panel-default">
-			<div class="review panel-heading review"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg> Review
+			<div class="review panel-heading review">
+				<svg class="glyph stroked clipboard with paper">
+					<use xlink:href="#stroked-clipboard-with-paper"/>
+				</svg>
+				Review
 				<a href="" ng-click="highlight.active = !highlight.active" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
 			</div>
 			<div class="panel-body">
@@ -54,7 +67,6 @@
 					<button ng-click="undo_rew()" class="btn btn-primary" id="restart_rew"><i class="fa fa-undo" aria-hidden="true"></i> cancel</button>
 					<button ng-click="add_rew()" class="btn btn-success pull-right"><i class="fa fa-plus-circle" aria-hidden="true"></i> add</button>
 					<hr/>
-
 					<div ng-show="rews.length > 0" class="fixed-table-container">
 						<table data-toggle="table" class="table table-hover">
 							<thead>
@@ -75,15 +87,18 @@
 						</table>
 						<button ng-click="commit()" class="btn btn-success pull-right"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Commit</button>
 					</div>
-
 				</div>
 			</div>
 		</div>
 	</div>
-
 	<div ng-hide="highlight.active" class="col-sm-12 col-md-4">
 		<div class="panel panel-default">
-			<div class="panel-heading"><svg class="glyph stroked pencil"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-pencil"></use></svg> Authors</div>
+			<div class="panel-heading">
+				<svg class="glyph stroked pencil">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-pencil"></use>
+				</svg>
+				Authors
+			</div>
 			<div class="panel-body">
 				<div class="fixed-table-container">
 					<table data-toggle="table" class="table table-hover">
@@ -101,14 +116,17 @@
 						</tbody>
 					</table>
 				</div>
-
 			</div>
 		</div>
 	</div>
 	<div ng-hide="highlight.active" class="col-sm-12 col-md-4">
 		<div class="panel panel-default chat">
-			<div class="panel-heading" id="accordion"><svg class="glyph stroked notepad "><use xlink:href="#stroked-notepad"/></svg> Reviews</div>
-
+			<div class="panel-heading" id="accordion">
+				<svg class="glyph stroked notepad ">
+					<use xlink:href="#stroked-notepad"/>
+				</svg>
+				Reviews
+			</div>
 			<div class="panel-body">
 				<ul>
 					<li ng-repeat="review in reviews | orderBy: '-created_at'" class="clearfix" data-rew="{{review.rew_id}}" ng-click="watchReview.select(review.rew_id)">
@@ -124,14 +142,18 @@
 					</li>
 				</ul>
 			</div>
-
 			<div class="panel-footer">
 			</div>
 		</div>
 	</div>
 	<div ng-hide="highlight.active" class="col-sm-12 col-md-4">
 		<div class="panel panel-default">
-			<div class="panel-heading"><svg class="glyph stroked clipboard with paper"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-clipboard-with-paper"></use></svg> Reviewers</div>
+			<div class="panel-heading">
+				<svg class="glyph stroked clipboard with paper">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-clipboard-with-paper"></use>
+				</svg>
+				Reviewers
+			</div>
 			<div class="panel-body">
 				<div class="fixed-table-container">
 					<table data-toggle="table" class="table table-hover">
@@ -149,20 +171,12 @@
 						</tbody>
 					</table>
 				</div>
-
 			</div>
 		</div>
 	</div>
-
-
 </div>
-
 <div class="tooltip_templates">
 	<span id="tooltip_content">
-			<h4 style="cursor:pointer">See</h4>
-    </span>
-</div>
-
-<!--/.row-->
-
+		<h4 style="cursor:pointer">See</h4>
+	</span>
 </div>
