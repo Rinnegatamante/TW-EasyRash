@@ -24,15 +24,24 @@ app.controller('homeController',($scope, $http, $routeParams, $location) => {
 		// Separating assigned papers as reviewer for each assigned conference
 		for (i=0;i<res.data.user.reviewer_conferences.length;i++){
 			var j=0;
-			$scope.user.conf_papers.push({
-				title: res.data.user.reviewer_conferences[i].title,
-				papers: [],
-				id: res.data.user.reviewer_conferences[i].id
-			})
-			for (z=0;z<res.data.user.reviewer_papers.length;z++){
-				if (res.data.user.reviewer_conferences[i].id == res.data.user.reviewer_papers[z].conference){
-					$scope.user.conf_papers[i].papers[j] = $scope.user.reviewer_papers[z].title;
-					j++;
+			var skip=false;
+			for (h=0;h<res.data.user.reviews.length;h++){
+				if (res.data.user.reviews[h].paper == res.data.user.reviewer_conferences[i].id){
+					skip = true
+					break
+				}
+			}
+			if (!skip){
+				$scope.user.conf_papers.push({
+					title: res.data.user.reviewer_conferences[i].title,
+					papers: [],
+					id: res.data.user.reviewer_conferences[i].id
+				})
+				for (z=0;z<res.data.user.reviewer_papers.length;z++){
+					if (res.data.user.reviewer_conferences[i].id == res.data.user.reviewer_papers[z].conference){
+						$scope.user.conf_papers[i].papers[j] = $scope.user.reviewer_papers[z].title;
+						j++;
+					}
 				}
 			}
 		}
@@ -52,6 +61,20 @@ app.controller('homeController',($scope, $http, $routeParams, $location) => {
 				default:
 					$scope.user.need_change_num++;
 					break;
+			}
+		}
+		
+		// Counting owned reviews in terms of their states
+		$scope.user.positive_reviews = 0
+		$scope.user.negative_reviews = 0
+		for (i=0;i<res.data.user.reviews.length;i++){
+			switch (res.data.user.reviews[i].flag){
+				case 0:
+					$scope.user.negative_reviews++;
+					break;
+				default:
+					$scope.user.positive_reviews++;
+					break;		
 			}
 		}
 		
