@@ -26,7 +26,8 @@
     "hat":"~0.0.3",
     "js-md5":"~0.4.1",
     "bcryptjs":"2.3.0",
-	"nodemailer":"0.7.1"
+	"nodemailer":"0.7.1",
+	"epub-gen":"0.0.17 "
   },
   "scripts": {
     "debug": "node debug app.js",

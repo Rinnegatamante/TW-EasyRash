@@ -3,12 +3,11 @@
 var rew
 var Review
 app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $animateCss) => {
-	
 	// Check if the user is logged, instead redirect to welcome page
-	$http.post('/user/getdata').then(res => {},function errorCallback(response) {
-		$location.path('/') // Redirect to welcome page if not logged
-	});
-	
+  $http.post('/user/getdata').then(res => {}, function errorCallback (response) {
+    $location.path('/') // Redirect to welcome page if not logged
+  })
+
   rangy.init()
   $scope.highlight = { // actual highlighted comment
     active: false,
@@ -124,6 +123,7 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
   }
 
   $scope.add_rew = () => { // add review to local reviews
+    if (!rew) alertify('Select first the text you want to comment and then insert the relative one')
     if (!$scope.highlight.active) return
     if (!$scope.highlight.type) return
     if (!$scope.highlight.review || $scope.highlight.review.length <= 0) return
@@ -147,7 +147,6 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
         $scope.reviews = res.data.reviews
       })
       $http.get('/paper/' + $scope.paper.id + '/imReviewer/').then(res => { // check if user can review this paper
-        console.log(res.data)
         if (res.data.response == 1) $scope.isaReviewer = true
       })
       $scope.getview()
@@ -450,9 +449,7 @@ var loadReviewsJSONLD = (reviews, paper, user, status) => { // insert into the p
 }
 
 function read_rew (el, rwid) {
-  console.log(el, rwid)
   var scope = angular.element(document.getElementById('view')).scope()
-  console.log(scope)
   scope.read_rew(rwid)
 }
 function focusReview (el, rwid) {

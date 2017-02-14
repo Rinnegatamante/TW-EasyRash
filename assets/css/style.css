@@ -290,8 +290,11 @@ body{
   -webkit-transform: translateY(0);
   opacity: 1;
 }
+.navbar-fixed-top, .navbar-fixed-bottom{
+	z-index: 100 !important
+}
 .sidebar{
-	z-index: 100 !important;
+	z-index: 99 !important;
 }
 .alertify{
 	z-index: 101 !important;
