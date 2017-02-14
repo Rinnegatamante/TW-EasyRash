@@ -2,15 +2,35 @@
 	background-color: #263238!important;
 	color: #FAFAFA!important;
 }
-
-#tooltip_content>h4:hover{
-	color: #F57C00;
+#read_rew{
+	height: 100%;
+	width: 100%;
+	max-height: 80vh;
+	overflow-y: scroll;
+}
+#tooltip_content .fa{
+	font-size: 1.2em;
+}
+#tooltip_content > .content{
+	overflow-y: scroll;
+	height: 100%;
+	line-height: 1.3em;
+}
+#tooltip_content > .header{
+	background-color: #CFD8DC;
+	min-height: 2em;
+	line-height: 2em;
+	border-radius: .3em;
+	vertical-align: middle;
 }
 .tooltip_templates{
 	display: none;
 }
 .tooltipster-easyrush .tooltipster-content {
     background-color: #FAFAFA !important;
+		color: black;
+		width: auto;
+		min-height: 100px;
     line-height: 5px;
     padding: 0px;
 }
@@ -22,10 +42,9 @@
 }
 .tooltipster-easyrush {
     border-radius: .3em;
+		width: auto !important;
 }
-.tooltipster-easyrush .list-group {
-    margin: 0px;
-}
+
 .tooltipster-easyrush .tooltipster-arrow-background {
     border-bottom-color: #FAFAFA !important ;
     left: 0;
@@ -57,8 +76,12 @@
 	background: #FDD835 !important;
 	border-bottom: dotted 2px black;
 }
-rew{
+rew.comment.highlight{
 	background: yellow;
+	border-bottom: solid 1px black;
+}
+rew.secondary-comment.highlight{
+	background: #B2DFDB;
 	border-bottom: solid 1px black;
 }
 .rew-sel{
@@ -88,7 +111,7 @@ rew{
 	float: right;
 }
 #view{
-	height: 700px;
+	height: 78vh;
 }
 body{
 	display: block;
@@ -266,4 +289,10 @@ body{
   -ms-transform: translateY(0);
   -webkit-transform: translateY(0);
   opacity: 1;
+}
+.sidebar{
+	z-index: 100 !important;
+}
+.alertify{
+	z-index: 101 !important;
 }

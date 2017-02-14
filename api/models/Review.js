@@ -21,7 +21,7 @@ module.exports = {
     },
 
     rew_id: {
-      type: 'integer',
+      type: 'string',
       required: true
     },
 

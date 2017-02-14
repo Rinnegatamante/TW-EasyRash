@@ -25,7 +25,7 @@
 						<a href="#/conference/{{conference.id}}">
 							<h4>{{conference.title | limitTo: 20}} ({{ conference.acronym }})</h4>
 						</a>
-						<h5>Papers to review: 
+						<h5>Papers to review:
 							<span ng-repeat="paper in user.reviewer_papers|filter:filterPapers(conference.id) as rev_papers">
 							</span>
 							<span ng-if="rev_papers.length > 0">{{rev_papers.length}}</span>
@@ -35,9 +35,6 @@
 						<ul class="children collapse" id="sub-item-{{conference.id}}">
 							<li ng-if="rev_papers.length > 0">
 								<p><a href="#/paper/{{conference.id}}/review">Review a paper</a></p>
-							</li>
-							<li ng-if="conference.status < 1">
-								<p><a href="#/conferences/{{conference.id}}/addpaper">Send papers to this conference</a></p>
 							</li>
 						</ul>
 					</div>

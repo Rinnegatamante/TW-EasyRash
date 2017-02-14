@@ -61,10 +61,12 @@ module.exports = {
           message: 'Paper not found'
         })
       }
+      paper.reviewerAccept(req.param('status'))
 
       for (var i = 0; i < req.param('rew_id').length; i++) {
         Review.create({
           text: req.param('text')[i],
+          type: req.param('type')[i],
           author: u.id,
           rew_id: req.param('rew_id')[i]
         }).exec(function (err, review) {
@@ -79,7 +81,8 @@ module.exports = {
               message: 'Review not found'
             })
           }
-          console.log(i)
+          console.log(req.param('status'))
+          paper.reviews.add(review.id)
 
           if (review.rew_id == req.param('rew_id')[req.param('rew_id').length - 1]) {
             fs = require('fs')
@@ -91,7 +94,6 @@ module.exports = {
                 })
               }
               fs.writeFile(paper.url, req.param('rush'), (err) => {
-                paper.reviews.add(review.id)
                 paper.free()
                 u.save()
                 paper.save((err) => {

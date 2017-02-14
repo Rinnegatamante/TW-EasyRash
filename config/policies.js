@@ -66,7 +66,8 @@ module.exports.policies = {
     addAuthor: ['sessionAuth', 'isPaperMine'],
     removeAuthor: ['sessionAuth', 'isPaperMine'],
     addReviewer: ['sessionAuth'],
-    removeReviewer: ['sessionAuth']
+    removeReviewer: ['sessionAuth'],
+    isaReviewer: [ 'sessionAuth', 'isReviewerPaper' ]
   },
 
   ReviewController: {
@@ -74,8 +75,8 @@ module.exports.policies = {
     ofPaper: true,
     create: 'sessionAuth',
     update: ['sessionAuth', 'isMine'],
-    lockPaper: /* [ 'sessionAuth', 'isReviewerPaper', */ 'paperIsLock'/* ] */,
-    freePaper: 'paperIsLock' /* [ 'sessionAuth', 'isReviewerPaper', */ /* ] */,
+    lockPaper: [ 'sessionAuth', 'isReviewerPaper', 'paperIsLock' ],
+    freePaper: [ 'sessionAuth', 'paperIsLock' ],
     destroy: ['sessionAuth', 'isMine']
   },
 

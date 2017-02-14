@@ -28,6 +28,7 @@ module.exports = function (req, res, next) {
   .populate('reviewer_conferences')
   .populate('reviewer_papers')
   .populate('papers')
+  .populate('reviews')
   .exec(function (err, user) {
     if (err) return res.forbidden('You are not permitted to perform this action.')
     if (!user) return res.forbidden('You are not permitted to perform this action.')

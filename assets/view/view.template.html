@@ -4,8 +4,7 @@
 			<li>
 				<svg class="glyph stroked blank document">
 					<use xlink:href="#stroked-blank-document"/>
-				</svg>
-				Conference : <b>{{paper.conference.title}} ({{paper.conference.acronym}})</b>
+				</svg> Conference : <b>{{paper.conference.title}} ({{paper.conference.acronym}})</b>
 			</li>
 		</ol>
 	</div>
@@ -14,22 +13,28 @@
 		<div class="panel-heading">
 			<svg class="glyph stroked two-messages">
 				<use xlink:href="#stroked-blank-document"/>
-			</svg>
-			{{paper.title}}
+			</svg> {{paper.title}}
+			<div class="pull-right">
+				<span class="btn-group dropdown">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					<span class="page-size"><b>Higlhight:</b> {{filter.see}}</span> <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a ng-click="filter.see = 'No comments'">No comments</a></li>
+						<li><a ng-click="filter.see = 'Main comments'">Main comments</a></li>
+						<li><a ng-click="filter.see = 'Secondary comments'">Secondary comments</a></li>
+						<li><a ng-click="filter.see = 'All comments'">All comments</a></li>
+					</ul>
+				</span>
+			</div>
 		</div>
 		<div class="panel-body" id="view" ng-mouseup="select()">
 			<h3>Loading paper ...</h3>
 		</div>
 		<div class="panel-footer">
-			<div class="input-group">
-				<input id="btn-input" type="text" class="form-control input-md" placeholder="Type your message here...">
-				<span class="input-group-btn">
-				<button class="btn btn-success btn-md" id="btn-chat" ng-click="restore()">Send</button>
-				</span>
-			</div>
 		</div>
 	</div>
-	<div ng-hide="highlight.active" ng-click="highlight.active = !highlight.active" class="col-sm-12 col-md-4 col-lg-3" style="cursor:pointer">
+	<div ng-if="!highlight.active && isaReviewer" ng-click="lock()" class="col-sm-12 col-md-4 col-lg-3" style="cursor:pointer">
 		<div class="panel panel-blue panel-widget">
 			<div class="row no-padding">
 				<div class="col-sm-3 col-lg-5 widget-left">
@@ -48,14 +53,18 @@
 			<div class="review panel-heading review">
 				<svg class="glyph stroked clipboard with paper">
 					<use xlink:href="#stroked-clipboard-with-paper"/>
-				</svg>
-				Review
-				<a href="" ng-click="highlight.active = !highlight.active" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+				</svg> Review
+				<a href="" ng-click="free()" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
 			</div>
 			<div class="panel-body">
 				<div class="form-group">
 					<div class="row">
 						<div class="col-sm-12">
+							<label>Type: <select name="type" ng-model="highlight.type">
+					      <option value="comment">Main Comment</option>
+					      <option value="secondary-comment">Secondary Comment</option>
+					    </select></label>
+							<br>
 							<h4>Selected text:</h4>
 							<div class="highlight-text">
 								{{summaryText(highlight.text, 400)}}
@@ -79,13 +88,15 @@
 								<tr ng-repeat="rew in rews" data-rew="{{rew.id}}" style="cursor:pointer">
 									<td>{{summaryText(rew.review, 45)}}</td>
 									<td>
-										<button ng-click="watchReview.select(rew.id)" class="btn btn-warning"><i class="fa fa-lightbulb-o" title='view' title="higlhight" aria-hidden="true"></i></button>
+										<button ng-click="edit_rew(rew.id)" class="btn btn-primary"><i class="pull-right fa fa-pencil-square-o" aria-hidden="true" title="edit"></i></i></button>
+										<button ng-click="read_rew(rew.id)" class="btn btn-warning"><i class="pull-right fa fa-file-text-o" aria-hidden="true" title="read all"></i></i></button>
+										<button ng-click="focusReview(rew.id)" class="btn btn-warning"><i class="fa fa-lightbulb-o" title='highlight' aria-hidden="true"></i></button>
 										<button ng-click="cancel_rew(rew.id)" class="btn btn-danger pull-right"><i class="fa fa-trash" title='delete' aria-hidden="true"></i></button>
 									</td>
 								</tr>
 							</tbody>
 						</table>
-						<button ng-click="commit()" class="btn btn-success pull-right"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Commit</button>
+						<button ng-click="commit()" class="btn btn-info pull-right"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Commit</button>
 					</div>
 				</div>
 			</div>
@@ -96,8 +107,7 @@
 			<div class="panel-heading">
 				<svg class="glyph stroked pencil">
 					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-pencil"></use>
-				</svg>
-				Authors
+				</svg> Authors
 			</div>
 			<div class="panel-body">
 				<div class="fixed-table-container">
@@ -124,15 +134,15 @@
 			<div class="panel-heading" id="accordion">
 				<svg class="glyph stroked notepad ">
 					<use xlink:href="#stroked-notepad"/>
-				</svg>
-				Reviews
+				</svg> Reviews
 			</div>
 			<div class="panel-body">
 				<ul>
-					<li ng-repeat="review in reviews | orderBy: '-created_at'" class="clearfix" data-rew="{{review.rew_id}}" ng-click="watchReview.select(review.rew_id)">
+					<li ng-repeat="review in reviews | orderBy: '-created_at'" class="clearfix" data-rew="{{review.rew_id}}" ng-click="focusReview(review.rew_id)">
 						<div class="chat-body clearfix">
 							<div class="header">
-								<i class="pull-right fa fa-lightbulb-o" style="cursor: pointer" aria-hidden="true" title="read all"></i>
+								<i class="pull-right fa fa-file-text-o" style="cursor: pointer" aria-hidden="true" ng-click="read_rew(review.rew_id)" title="read all"></i>
+								<i class="pull-right fa fa-lightbulb-o" style="cursor: pointer" aria-hidden="true" ng-click="focusReview(review.rew_id)" title="highlight in paper"></i>
 								<strong class="pull-left primary-font {{watchReview.sel == review.rew_id ? 'rew-sel':''}}">{{review.author.name}}</strong> <small class="text-muted">{{review.createdAt | limitTo : 10}}</small>
 							</div>
 							<p>
@@ -151,8 +161,7 @@
 			<div class="panel-heading">
 				<svg class="glyph stroked clipboard with paper">
 					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-clipboard-with-paper"></use>
-				</svg>
-				Reviewers
+				</svg> Reviewers
 			</div>
 			<div class="panel-body">
 				<div class="fixed-table-container">
@@ -176,7 +185,4 @@
 	</div>
 </div>
 <div class="tooltip_templates">
-	<span id="tooltip_content">
-		<h4 style="cursor:pointer">See</h4>
-	</span>
 </div>

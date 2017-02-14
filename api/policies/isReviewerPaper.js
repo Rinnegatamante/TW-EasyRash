@@ -12,11 +12,17 @@ module.exports = function (req, res, next) {
 
   var u = AuthService.user()
 
-  if (!u.reviewer_papers.find(function eq (el) {
-    return (el.id === req.param('pid'))
+  if (!u.reviewer_papers.find(function eq (el) { // check if user is a reviewer for this paper
+    return (el.id == req.param('pid'))
+  })) {
+    return res.json(403)
+  }
+
+  if (u.reviews.find(function eq (el) { // check if reviewer hase alredy comment this paper
+    return (el.paper == req.param('pid'))
   })) {
     return res.json(400, {
-      message: 'You don\'t have the privileges to do this action. You aren\'t a reviewer'
+      message: 'You have already review this paper'
     })
   }
 

@@ -28,9 +28,11 @@
 							<div class="col-sm-10">
 								<h4>{{paper.title}}</h4>
 								<h5>Submitted on {{paper.createdAt | limitTo:10}} by {{paper.owner.name}}</h5>
+								<hr/>
+								<h5>Positive Review: {{paper.r_accepted}} &nbsp;-&nbsp; Negative Review: {{paper.r_rejected}}</h5>
+								<h5>Pending Review: {{paper.reviewers.length- (paper.r_accepted+paper.r_rejected)}}</h5>
 								<button class="btn btn-danger right" ng-click="reject(paper.id)">Reject</button>
 								<button class="btn btn-success right" ng-click="accept(paper.id)">Accept</button>
-								<button class="btn btn-primary right" ng-click="requestchange(paper.id)">Request change</button>
 							</div>
 						</div>
 					</div>

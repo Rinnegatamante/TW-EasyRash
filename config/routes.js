@@ -51,6 +51,7 @@ module.exports.routes = {
   'post /paper/:pid/removeauthor/:aid': 'PaperController.removeAuthor',
   'post /paper/:pid/addreviewer/:reid': 'PaperController.addReviewer',
   'post /paper/:pid/removereviewer/:reid': 'PaperController.removeReviewer',
+  'get /paper/:pid/imReviewer': 'PaperController.isaReviewer',
   'get /paper/:pid': 'PaperController.find',
   // CONFERENCE
   'post /conference/create': 'ConferenceController.create',
