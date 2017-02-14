@@ -3,6 +3,12 @@
 var rew
 var Review
 app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $animateCss) => {
+	
+	// Check if the user is logged, instead redirect to welcome page
+	$http.post('/user/getdata').then(res => {},function errorCallback(response) {
+		$location.path('/') // Redirect to welcome page if not logged
+	});
+	
   rangy.init()
   $scope.highlight = { // actual highlighted comment
     active: false,

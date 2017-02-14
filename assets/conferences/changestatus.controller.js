@@ -1,6 +1,11 @@
 // Controller for changestatus template
 app.controller('changestatusController',($scope, $http, $location, $routeParams) => {
 	
+	// Check if the user is logged, instead redirect to welcome page
+	$http.post('/user/getdata').then(res => {},function errorCallback(response) {
+		$location.path('/') // Redirect to welcome page if not logged
+	});
+	
 	// Get conference ID from URL
 	$scope.conf = {
 		id: $routeParams.cid

@@ -1,6 +1,11 @@
 // Controller for login template
 app.controller('loginController',($rootScope, $scope, $http, $location) => {
 	
+	// Check if the user is logged, if so redirect to dashboard
+	$http.post('/user/getdata').then(res => {
+		$location.path('/home')
+	});
+	
 	// digest function, calculate digest data for password encyption
 	var digest = (name, password) => {
 		var ha1 = md5(name + '' + password) // digest password

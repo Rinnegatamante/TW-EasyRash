@@ -1,6 +1,11 @@
 // Controller for conference template
 app.controller('conferenceController',($scope, $http, $routeParams, $location) => {
 	
+	// Check if the user is logged, instead redirect to welcome page
+	$http.post('/user/getdata').then(res => {},function errorCallback(response) {
+		$location.path('/') // Redirect to welcome page if not logged
+	});
+	
 	// Get conference ID from URL
 	$scope.conf = {
 		id: $routeParams.cid

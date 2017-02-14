@@ -14,7 +14,9 @@ app.controller('profileController', ($scope, $http, $routeParams, $location) => 
 	$http.post('/user/getdata').then(res => {
 		$scope.user = res.data.user
 		$scope.user.oldemail = res.data.user.email
-	})
+	},function errorCallback(response) {
+		$location.path('/') // Redirect to welcome page if not logged
+	});
 	
 	// submit function, sends new user data to the server
 	$scope.submit = function () {
