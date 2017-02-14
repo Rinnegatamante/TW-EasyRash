@@ -14,7 +14,9 @@ app.controller('addauthorsController',($scope, $http, $routeParams, $location, $
 				$scope.paper = res.data.paper
 				$scope.co_authors = res.data.paper.author
 			})
-		})
+		},function errorCallback(response) {
+			$location.path('/') // Redirect to welcome page if not logged
+		});
 	}
 	
 	$scope.getdata() // Executing getdata function at controller loading

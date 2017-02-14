@@ -22,7 +22,9 @@ app.controller('papersController',($scope, $http, $rootScope, $location) => {
 					}
 				})
 			}
-		})
+		},function errorCallback(response) {
+			$location.path('/') // Redirect to welcome page if not logged
+		});
 	}
 	$scope.getdata()
 	

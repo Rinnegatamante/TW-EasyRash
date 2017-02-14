@@ -83,6 +83,8 @@ app.controller('homeController',($scope, $http, $routeParams, $location) => {
 			}
 		}
 		
-	})
+	},function errorCallback(response) {
+		$location.path('/') // Redirect to welcome page if not logged
+	});
 	
 })

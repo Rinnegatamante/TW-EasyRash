@@ -1,5 +1,10 @@
 // Controller for assignto template
 app.controller('assigntoController',($scope, $http, $routeParams, $location) => {
+	
+	$http.post('/user/getdata').then(res => {},function errorCallback(response) {
+		$location.path('/') // Redirect to welcome page if not logged
+	});
+	
 	var uid = $routeParams.uid // Getting user ID from URL
 	var cid = $routeParams.cid // Getting conference ID from URL
 	if ($scope.paper === undefined) $scope.paper = {}

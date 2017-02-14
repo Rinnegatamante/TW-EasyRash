@@ -7,7 +7,9 @@ app.controller('addpapersController',($scope, $http, $routeParams, $location, $r
 	$scope.getdata = () => {
 		$http.post('/user/getdata').then(res => {
 			$scope.user = res.data.user
-		})
+		},function errorCallback(response) {
+			$location.path('/') // Redirect to welcome page if not logged
+		});
 	}
 	$scope.getdata()
 	
