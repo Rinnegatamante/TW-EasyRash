@@ -21,27 +21,35 @@ app.controller('homeController',($scope, $http, $routeParams, $location) => {
 			}
 		}
 		
+		// Removing already reviewed papers
+		$scope.papers = []
+		for (i=0;i<res.data.user.reviewer_papers.length;i++){
+			if (res.data.user.reviewer_papers[i].status == 0){ // Excluding accepted/rejected papers
+				var reviewed = false
+				for (z=0;z<res.data.user.reviews.length;z++){
+					if (res.data.user.reviewer_papers[i].id == res.data.user.reviews[z].paper){
+						reviewed = true
+						break
+					}
+				}
+				if (!reviewed){
+					$scope.papers.push(res.data.user.reviewer_papers[i]);
+				}
+			}
+		}
+		
 		// Separating assigned papers as reviewer for each assigned conference
 		for (i=0;i<res.data.user.reviewer_conferences.length;i++){
 			var j=0;
-			var skip=false;
-			for (h=0;h<res.data.user.reviews.length;h++){
-				if (res.data.user.reviews[h].paper == res.data.user.reviewer_conferences[i].id){
-					skip = true
-					break
-				}
-			}
-			if (!skip){
-				$scope.user.conf_papers.push({
-					title: res.data.user.reviewer_conferences[i].title,
-					papers: [],
-					id: res.data.user.reviewer_conferences[i].id
-				})
-				for (z=0;z<res.data.user.reviewer_papers.length;z++){
-					if (res.data.user.reviewer_conferences[i].id == res.data.user.reviewer_papers[z].conference){
-						$scope.user.conf_papers[i].papers[j] = $scope.user.reviewer_papers[z].title;
-						j++;
-					}
+			$scope.user.conf_papers.push({
+				title: res.data.user.reviewer_conferences[i].title,
+				papers: [],
+				id: res.data.user.reviewer_conferences[i].id
+			})
+			for (z=0;z<$scope.papers.length;z++){
+				if (res.data.user.reviewer_conferences[i].id == $scope.papers[z].conference){
+					$scope.user.conf_papers[i].papers[j] = $scope.papers[z].title;
+					j++;
 				}
 			}
 		}
