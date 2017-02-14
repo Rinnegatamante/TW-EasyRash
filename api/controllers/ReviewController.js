@@ -179,7 +179,7 @@ module.exports = {
       }, sails.config.globals.timeLock)
 
       return res.json({
-        message: 'paper still lock for 5 minutes',
+        message: 'Paper still lock for 5 minutes',
         paper: p,
         s_token: p.token
       })
@@ -198,7 +198,6 @@ module.exports = {
         return res.negotiate(err)
       }
       return res.json({
-        message: 'Paper has been unlocked',
         paper: p
       })
     })
