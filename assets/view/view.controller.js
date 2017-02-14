@@ -193,6 +193,13 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
     })
   }
 
+  $scope.getEpub = () => { // download the epub verison
+    $http.get('/paper/' + $scope.paper.id + '/epub').then(res => {
+      if (res.data.path) {
+        window.open(res.data.path)
+      }
+    })
+  }
   $scope.lock = (cb) => { // request the access to paper
     $scope.getdata()
     $http.get('/paper/' + $scope.paper.id + '/lock').then(res => {

@@ -15,6 +15,9 @@
 				<use xlink:href="#stroked-blank-document"/>
 			</svg> {{paper.title}}
 			<div class="pull-right">
+				<button ng-click="getEpub()" class="btn btn-info" title="get EPUB version">
+					<i class="fa fa-arrow-circle-down" aria-hidden="true"></i>
+					<i class="fa fa-book" aria-hidden="true"></i></button>
 				<span class="btn-group dropdown">
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 					<span class="page-size"><b>Higlhight:</b> {{filter.see}}</span> <span class="caret"></span>

@@ -67,7 +67,8 @@ module.exports.policies = {
     removeAuthor: ['sessionAuth', 'isPaperMine'],
     addReviewer: ['sessionAuth'],
     removeReviewer: ['sessionAuth'],
-    isaReviewer: [ 'sessionAuth', 'isReviewerPaper' ]
+    isaReviewer: [ 'sessionAuth', 'isReviewerPaper' ],
+    getEPUB: true
   },
 
   ReviewController: {
