@@ -5,39 +5,42 @@
 				<svg class="glyph stroked empty message">
 					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-empty-message"></use>
 				</svg>
-				 {{conf.title}} ({{ conf.acronym }})
+				{{conf.title}} ({{ conf.acronym }})
 			</li>
 		</ol>
 	</div>
 	<br/>
-	<div class="col-md-4 panel panel-default">
-		<div class="panel-heading">
-			<svg class="glyph stroked blank document">
-				<use xlink:href="#stroked-blank-document"></use>
-			</svg>
-			Accepted Papers
-		</div>
-		<br/>
-		<h4 ng-hide="conf.papers.length">This conference has no papers yet.</h4>
-		<div ng-repeat="paper in conf.papers" class="col-md-12">
-			<div class="panel panel-blue panel-widget">
-				<div class="row no-padding">
-					<a href="#/view/{{paper.id}}">
-						<div class="col-md-4 widget-left">
-							<svg class="glyph stroked blank document">
-								<use xlink:href="#stroked-blank-document"/>
-							</svg>
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<svg class="glyph stroked blank document">
+					<use xlink:href="#stroked-blank-document"></use>
+				</svg>
+				Accepted Papers
+			</div>
+			<div class="panel-body">
+				<h4 ng-hide="conf.papers.length">This conference has no papers yet.</h4>
+				<div ng-repeat="paper in conf.papers" class="col-md-12">
+					<div class="panel panel-blue panel-widget">
+						<div class="row no-padding">
+							<a href="#/view/{{paper.id}}">
+								<div class="col-md-4 widget-left">
+									<svg class="glyph stroked blank document">
+										<use xlink:href="#stroked-blank-document"/>
+									</svg>
+								</div>
+							</a>
+							<div class="col-md-8">
+								<a href="#/view/{{paper.id}}">
+									<h4>{{paper.title}}</h4>
+								</a>
+								<p><b>Authors:</b>
+									<span ng-repeat="u in paper.author | limitTo: 6">
+									{{u.name}}{{!$last?', ':''}}
+									</span>
+								</p>
+							</div>
 						</div>
-					</a>
-					<div class="col-md-8">
-						<a href="#/view/{{paper.id}}">
-							<h4>{{paper.title}}</h4>
-						</a>
-						<p><b>Authors:</b>
-							<span ng-repeat="u in paper.author | limitTo: 6">
-							{{u.name}}{{!$last?', ':''}}
-							</span>
-						</p>
 					</div>
 				</div>
 			</div>
