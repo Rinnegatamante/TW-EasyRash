@@ -63,11 +63,8 @@ app.controller('homeController',($scope, $http, $routeParams, $location) => {
 				case 1:
 					$scope.user.accepted_num++;
 					break;
-				case 2:
-					$scope.user.rejected_num++;
-					break;
 				default:
-					$scope.user.need_change_num++;
+					$scope.user.rejected_num++;
 					break;
 			}
 		}
