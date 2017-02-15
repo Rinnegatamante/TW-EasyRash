@@ -73,12 +73,12 @@ module.exports = {
           if (err) {
             console.log(err)
             return res.json(400, {
-              error: 'cannot create review'
+              error: 'Cannot create review.'
             })
           }
           if (!review) {
             return res.json(400, {
-              message: 'Review not found'
+              message: 'Review not found.'
             })
           }
           console.log(req.param('status'))
@@ -90,7 +90,7 @@ module.exports = {
             fs.stat(paper.url, function (err, stats) {
               if (err) {
                 return res.json(400, {
-                  message: 'Paper path not found'
+                  message: 'Paper path not found.'
                 })
               }
               fs.writeFile(paper.url, req.param('rush'), function (err) {
@@ -99,11 +99,11 @@ module.exports = {
                 paper.save(function (err) {
                   if (err) {
                     return res.json(500, {
-                      error: 'cannot save paper'
+                      error: 'Cannot save paper.'
                     })
                   }
                   return res.json({
-                    message: 'Committed successfull',
+                    message: 'Review committed successfully!',
                     review: review,
                     reviewer: u,
                     paper: paper
@@ -130,7 +130,7 @@ module.exports = {
       }
       if (!paper) {
         return res.json(400, {
-          message: 'Paper not found'
+          message: 'Paper not found.'
         })
       }
 
@@ -147,7 +147,7 @@ module.exports = {
         }
         if (!review) {
           return res.json(400, {
-            message: 'Review not found'
+            message: 'Review not found.'
           })
         }
 
@@ -179,7 +179,7 @@ module.exports = {
       }, sails.config.globals.timeLock)
 
       return res.json({
-        message: 'Paper still lock for 5 minutes',
+        message: 'You have 30 minutes to work on your reviews.',
         paper: p,
         s_token: p.token
       })
@@ -219,7 +219,7 @@ module.exports = {
 
       u.reviews.remove
       return res.json({
-        message: 'Review deleated'
+        message: 'Review deleted.'
       })
     })
   }

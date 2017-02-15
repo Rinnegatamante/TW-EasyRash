@@ -62,7 +62,7 @@ app.controller('addpapersController', ($scope, $http, $routeParams, $location, $
   })
 
   uploader.onSuccessItem = function (fileItem, response, status, headers) {
-    $('.dialog .msg').html(fileItem._file.name + ' was upload successfully\n')
+    $('.dialog .msg').html(fileItem._file.name + ' uploaded successfully!\n')
     $location.path('/papers')
   }
   uploader.onBeforeUploadItem = function (item) {
