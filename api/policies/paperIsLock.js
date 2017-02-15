@@ -18,10 +18,10 @@ module.exports = function (req, res, next) {
     if (paper.isLocked(req.param('token'))) {
       var start_time = new Date(paper.updatedAt).getTime()
       var now = new Date().getTime()
-      console.log('updated at: ', start_time)
       var minutes = new Date((start_time + sails.config.globals.timeLock) - now).getMinutes()
+	  var seconds = new Date((start_time + sails.config.globals.timeLock) - now).getSeconds()
       return res.json(423, {
-        message: 'Paper is Locked for another ' + minutes + ' minutes. After try again.'
+        message: 'Paper is still locked for other ' + minutes + ' minutes and ' + seconds + 'seconds. Please, ry again later.'
       })
     }
 
