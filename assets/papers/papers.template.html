@@ -57,8 +57,6 @@
 						</a>
 						<h4><a href="#/conference/{{paper.conference.id}}">conference: {{paper.conference.title}} ({{paper.conference.acronym}})</a></h4>
 						<div class="right" ng-show="settings">
-							<button class="btn btn-default" style="margin-right:.5em" title="view paper"><a href="#/view/{{paper.id}}"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
-							</button>
 							<a href="#/paper/{{paper.id}}/addauthors"><button class="btn btn-info" title="authors"><i class="fa fa-users" aria-hidden="true"></i></button></a>
 							<button class="btn btn-danger" title="delete paper" ng-click="deletePaper(paper.id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 						</div>

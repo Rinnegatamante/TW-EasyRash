@@ -99,17 +99,11 @@
        }
        return false
      },
-     reviewerAccept: function (status) { // Incremet r_accept if reviewer accpet otherwise increment r_rejected
-       console.log(status)
-       if (status == 1) {
-         if (!this.r_accepted) this.r_accepted = 0
+     reviewerAccept: function (r_status) { // Incremet r_accept if reviewer accpet otherwise increment r_rejected
+       if (r_status == 1) {
          this.r_accepted++
-         console.log(this.r_accepted)
        } else {
-         if (!this.r_rejected) this.r_rejected = 0
          this.r_rejected++
-         console.log(this.r_rejected)
-         return false
        }
      },
      toJSON: function () {

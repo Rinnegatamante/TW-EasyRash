@@ -226,14 +226,14 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
     ev.preventDefault()
     $('.in-editing').removeClass('in-editing')
     $('.rew-sel').removeClass('rew-sel')
-    loadReviewsJSONLD($scope.rews, $scope.paper, $rootScope.user, $scope.status)
+    loadReviewsJSONLD($scope.rews, $scope.paper, $rootScope.user, 1)
 
     var data = {
       token: '', // token,
       rew_id: [],
       type: [],
       text: [],
-      status: 1,
+      r_status: 1,
       rush: document.getElementById('view').innerHTML
     }
     for (var i = 0; i < $scope.rews.length; i++) {
@@ -250,14 +250,14 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
     ev.preventDefault()
     $('.in-editing').removeClass('in-editing')
     $('.rew-sel').removeClass('rew-sel')
-    loadReviewsJSONLD($scope.rews, $scope.paper, $rootScope.user, $scope.status)
+    loadReviewsJSONLD($scope.rews, $scope.paper, $rootScope.user, 2)
 
     var data = {
       token: '', // token,
       rew_id: [],
       type: [],
       text: [],
-      status: 2,
+      r_status: 2,
       rush: document.getElementById('view').innerHTML
     }
     for (var i = 0; i < $scope.rews.length; i++) {

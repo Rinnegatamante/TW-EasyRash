@@ -61,7 +61,7 @@ module.exports = {
           message: 'Paper not found'
         })
       }
-      paper.reviewerAccept(req.param('status'))
+      paper.reviewerAccept(req.param('r_status'))
 
       for (var i = 0; i < req.param('rew_id').length; i++) {
         Review.create({
@@ -81,7 +81,6 @@ module.exports = {
               message: 'Review not found.'
             })
           }
-          console.log(req.param('status'))
           paper.reviews.add(review.id)
 
           if (review.rew_id == req.param('rew_id')[req.param('rew_id').length - 1]) {
@@ -114,49 +113,6 @@ module.exports = {
           }
         })
       }
-    })
-  },
-
-  update: function (req, res) {
-    // POLICIES : [paperIsLock,isMine]
-    Paper.findOne({
-      id: req.param('paper_id'),
-      token: req.param('token')
-    }).exec(function (err, paper) {
-      if (err) {
-        return res.json(500, {
-          error: err
-        })
-      }
-      if (!paper) {
-        return res.json(400, {
-          message: 'Paper not found.'
-        })
-      }
-
-      Review.update({
-        id: req.param('review_id')
-      }, {
-        text: req.param('text'),
-        token: NULL
-      }).exec(function (err, review) {
-        if (err) {
-          return res.json(500, {
-            error: err
-          })
-        }
-        if (!review) {
-          return res.json(400, {
-            message: 'Review not found.'
-          })
-        }
-
-        return res.json({
-          message: '',
-          review: review,
-          paper: paper
-        })
-      })
     })
   },
 
