@@ -15,8 +15,6 @@ module.exports = function (req, res, next) {
   var u = AuthService.user()
 
   for (i in criteria) {
-    console.log(u[i])
-    console.log(!u[i].find(criteria[i]))
     if (!u[i].find(criteria[i])) {
       return res.json(400, {
         error: '',

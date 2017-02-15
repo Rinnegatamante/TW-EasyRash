@@ -248,7 +248,6 @@ module.exports = {
         message: 'Invalid link, please retry the whole procedure.'
       })
     }
-    console.log(req.param('tempToken'))
     User.findOne({
       tempToken: req.param('tempToken')
     }).exec(function (err, user) {

@@ -17,7 +17,6 @@ module.exports = function (req, res, next) {
 
   var id = credential[0]
   var token = credential[1]
-  console.log('#A:- auth req: ', credential)
 
   User.findOne({
     id: id,
@@ -32,7 +31,6 @@ module.exports = function (req, res, next) {
   .exec(function (err, user) {
     if (err) return res.forbidden('You are not permitted to perform this action.')
     if (!user) return res.forbidden('You are not permitted to perform this action.')
-    console.log('#A:- authorized user: ' + user.name + ' - id: ' + user.id)
     AuthService.user(user)
     return next()
   })

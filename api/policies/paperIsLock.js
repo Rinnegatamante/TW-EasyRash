@@ -21,7 +21,7 @@ module.exports = function (req, res, next) {
       var minutes = new Date((start_time + sails.config.globals.timeLock) - now).getMinutes()
 	  var seconds = new Date((start_time + sails.config.globals.timeLock) - now).getSeconds()
       return res.json(423, {
-        message: 'Paper is still locked for other ' + minutes + ' minutes and ' + seconds + 'seconds. Please, ry again later.'
+        message: 'Paper is still locked for other ' + minutes + ' minutes and ' + seconds + 'seconds. Please, try again later.'
       })
     }
 

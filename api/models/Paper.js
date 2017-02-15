@@ -91,7 +91,7 @@
        }
        return false
      },
-     free: function (utoken) {
+     freeLock: function (utoken) {
        if (this.token == utoken) {
          this.token = null
          return true

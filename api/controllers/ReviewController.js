@@ -93,7 +93,7 @@ module.exports = {
                 })
               }
               fs.writeFile(paper.url, req.param('rush'), function (err) {
-                paper.free()
+                paper.freeLock()
                 u.save()
                 paper.save(function (err) {
                   if (err) {
@@ -129,9 +129,12 @@ module.exports = {
       }
 
       setTimeout(function () {
-        p.free(token)
-        p.save()
-        console.log('free paper - id: ' + p.id)
+        Paper.findOne(id:p.id).exec(function(err,paper){
+          if (paper.status==0){
+            paper.freeLock(token)
+            paper.save()
+          }
+        })
       }, sails.config.globals.timeLock)
 
       return res.json({
@@ -147,7 +150,7 @@ module.exports = {
     var u = AuthService.user()
     var p = AuthService.paper()
 
-    p.free(req.param('token'))
+    p.freeLock(req.param('token'))
 
     p.save(function (err) {
       if (err) {
