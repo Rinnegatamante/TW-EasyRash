@@ -129,8 +129,8 @@ module.exports = {
       }
 
       setTimeout(function () {
-        Paper.findOne(id:p.id).exec(function(err,paper){
-          if (paper.status==0){
+        Paper.findOne({id: p.id}).exec(function (err, paper) {
+          if (paper.status == 0) {
             paper.freeLock(token)
             paper.save()
           }
