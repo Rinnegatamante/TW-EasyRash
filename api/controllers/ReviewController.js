@@ -12,7 +12,7 @@ module.exports = {
   },
 
   find: function (req, res) {
-    Review.findOne(req.param('rid')).populate('author').populate('paper').exec((err, review) => {
+    Review.findOne(req.param('rid')).populate('author').populate('paper').exec(function (err, review) {
       if (err) {
         console.log(err)
       }
@@ -25,7 +25,7 @@ module.exports = {
   ofPaper: function (req, res) {
     Review.find({
       'paper': req.param('pid')
-    }).populate('author').populate('paper').exec((err, reviews) => {
+    }).populate('author').populate('paper').exec(function (err, reviews) {
       if (err) {
         console.log(err)
       }
@@ -87,16 +87,16 @@ module.exports = {
           if (review.rew_id == req.param('rew_id')[req.param('rew_id').length - 1]) {
             fs = require('fs')
 
-            fs.stat(paper.url, (err, stats) => {
+            fs.stat(paper.url, function (err, stats) {
               if (err) {
                 return res.json(400, {
                   message: 'Paper path not found'
                 })
               }
-              fs.writeFile(paper.url, req.param('rush'), (err) => {
+              fs.writeFile(paper.url, req.param('rush'), function (err) {
                 paper.free()
                 u.save()
-                paper.save((err) => {
+                paper.save(function (err) {
                   if (err) {
                     return res.json(500, {
                       error: 'cannot save paper'
@@ -167,7 +167,7 @@ module.exports = {
 
     var token = p.lock()
 
-    p.save((err) => {
+    p.save(function (err) {
       if (err) {
         return res.negotiate(err)
       }
@@ -193,7 +193,7 @@ module.exports = {
 
     p.free(req.param('token'))
 
-    p.save((err) => {
+    p.save(function (err) {
       if (err) {
         return res.negotiate(err)
       }
