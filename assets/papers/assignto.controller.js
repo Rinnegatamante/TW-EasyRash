@@ -18,18 +18,18 @@ app.controller('assigntoController',($scope, $http, $routeParams, $location) => 
 	// Getting conference's papers
 	$http.post('/conference/getPapers', $scope.conference).then(res => {
 		
-		// Removing already reviewed papers
+		// Removing already assigned papers
 		$scope.papers = []
 		for (i=0;i<res.data.papers.length;i++){
 			if (res.data.papers[i].status == 0){ // Excluding accepted/rejected papers
-				var reviewed = false
-				for (z=0;z<$scope.user.reviews.length;z++){
-					if (res.data.papers[i].id == $scope.user.reviews[z].paper){
-						reviewed = true
+				var assigned = false
+				for (z=0;z<res.data.papers[i].reviewers.length;z++){
+					if (res.data.papers[i].reviewers[z].id == $scope.user.id){
+						assigned = true
 						break
 					}
 				}
-				if (!reviewed){
+				if (!assigned){
 					$scope.papers.push(res.data.papers[i]);
 				}
 			}
