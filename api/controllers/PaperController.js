@@ -113,6 +113,7 @@ module.exports = {
         url: files[0].fd,
         r_accepted: 0,
         r_rejected: 0,
+        status: 0,
         conference: req.param('cid'),
         author: co_ids
       }).exec(function (err, createdFile) {
@@ -238,7 +239,7 @@ module.exports = {
     // POLICIES : [ 'sessionAuth', 'isReviewerPaper' ],
     var u = AuthService.user()
     return res.json({
-      response: 1,
+      response: 1
     })
   },
 
