@@ -21,13 +21,13 @@
 				<span class="btn-group dropdown">
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 					<span class="page-size"><b>Highlight:</b> {{filter.see}}</span> <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu">
-						<li><a ng-click="filter.see = 'No comments'">No comments</a></li>
-						<li><a ng-click="filter.see = 'Main comments'">Main comments</a></li>
-						<li><a ng-click="filter.see = 'Secondary comments'">Secondary comments</a></li>
-						<li><a ng-click="filter.see = 'All comments'">All comments</a></li>
-					</ul>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a ng-click="filter.see = 'No comments'">No comments</a></li>
+					<li><a ng-click="filter.see = 'Main comments'">Main comments</a></li>
+					<li><a ng-click="filter.see = 'Secondary comments'">Secondary comments</a></li>
+					<li><a ng-click="filter.see = 'All comments'">All comments</a></li>
+				</ul>
 				</span>
 			</div>
 		</div>
@@ -37,151 +37,153 @@
 		<div class="panel-footer">
 		</div>
 	</div>
-	<div ng-if="!highlight.active && isaReviewer" ng-click="lock()" class="col-sm-12 col-md-4 col-lg-3" style="cursor:pointer">
-		<div class="panel panel-blue panel-widget">
-			<div class="row no-padding">
-				<div class="col-sm-3 col-lg-5 widget-left">
-					<svg class="glyph stroked plus sign">
+	<div class="col-sm-12 col-md-4">
+		<div ng-if="!highlight.active && isaReviewer" ng-click="lock()" class="col-sm-12" style="cursor:pointer">
+			<div class="panel panel-blue panel-widget">
+				<div class="row no-padding">
+					<div class="col-sm-3 col-lg-5 widget-left">
+						<svg class="glyph stroked plus sign">
 						<use xlink:href="#stroked-plus-sign"/>
 					</svg>
-				</div>
-				<div class="col-sm-9 col-lg-7 widget-right" style="background-color:#263238">
-					<div class="large add-review" style="color:white">add review</div>
+					</div>
+					<div class="col-sm-9 col-lg-7 widget-right" style="background-color:#263238">
+						<div class="large add-review" style="color:white">add review</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div ng-show="highlight.active" class="col-sm-12 col-md-4">
-		<div class="panel panel-default">
-			<div class="review panel-heading review">
-				<svg class="glyph stroked clipboard with paper">
+		<div ng-show="highlight.active">
+			<div class="panel panel-default">
+				<div class="review panel-heading review">
+					<svg class="glyph stroked clipboard with paper">
 					<use xlink:href="#stroked-clipboard-with-paper"/>
 				</svg> Review
-				<a href="" ng-click="free()" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
-			</div>
-			<div class="panel-body">
-				<div class="form-group">
-					<div class="row">
-						<div class="col-sm-12">
-							<label>Type: <select name="type" ng-model="highlight.type">
+					<a href="" ng-click="free()" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+				</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-12">
+								<label>Type: <select name="type" ng-model="highlight.type">
 					      <option value="comment">Main Comment</option>
 					      <option value="secondary-comment">Secondary Comment</option>
 					    </select></label>
-							<br>
-							<h4>Selected text:</h4>
-							<div class="highlight-text">
-								{{summaryText(highlight.text, 400)}}
+								<br>
+								<h4>Selected text:</h4>
+								<div class="highlight-text">
+									{{summaryText(highlight.text, 400)}}
+								</div>
 							</div>
 						</div>
+						<textarea class="form-control" rows="3" ng-model="highlight.review" placeholder="write here your review..."></textarea>
+						<br/>
+						<button ng-click="undo_rew()" class="btn btn-primary" id="restart_rew"><i class="fa fa-undo" aria-hidden="true"></i> cancel</button>
+						<button ng-click="add_rew()" class="btn btn-success pull-right"><i class="fa fa-plus-circle" aria-hidden="true"></i> add</button>
+						<hr/>
+						<div ng-show="rews.length > 0" class="fixed-table-container">
+							<table data-toggle="table" class="table table-hover">
+								<thead>
+									<tr>
+										<th>current reviews</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="rew in rews" data-rew="{{rew.id}}" style="cursor:pointer">
+										<td>{{summaryText(rew.review, 45)}}</td>
+										<td>
+											<button ng-click="edit_rew(rew.id)" class="btn btn-primary"><i class="pull-right fa fa-pencil-square-o" aria-hidden="true" title="edit"></i></i></button>
+											<button ng-click="read_rew(rew.id)" class="btn btn-warning"><i class="pull-right fa fa-file-text-o" aria-hidden="true" title="read all"></i></i></button>
+											<button ng-click="focusReview(rew.id)" class="btn btn-warning"><i class="fa fa-lightbulb-o" title='highlight' aria-hidden="true"></i></button>
+											<button ng-click="cancel_rew(rew.id)" class="btn btn-danger pull-right"><i class="fa fa-trash" title='delete' aria-hidden="true"></i></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<button ng-click="commit()" class="btn btn-info pull-right"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Commit</button>
+						</div>
 					</div>
-					<textarea class="form-control" rows="3" ng-model="highlight.review" placeholder="write here your review..."></textarea>
-					<br/>
-					<button ng-click="undo_rew()" class="btn btn-primary" id="restart_rew"><i class="fa fa-undo" aria-hidden="true"></i> cancel</button>
-					<button ng-click="add_rew()" class="btn btn-success pull-right"><i class="fa fa-plus-circle" aria-hidden="true"></i> add</button>
-					<hr/>
-					<div ng-show="rews.length > 0" class="fixed-table-container">
+				</div>
+			</div>
+		</div>
+		<div ng-hide="highlight.active">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<svg class="glyph stroked pencil">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-pencil"></use>
+				</svg> Authors
+				</div>
+				<div class="panel-body">
+					<div class="fixed-table-container">
 						<table data-toggle="table" class="table table-hover">
 							<thead>
 								<tr>
-									<th>current reviews</th>
-									<th>Action</th>
+									<th>Name</th>
+									<th>Email</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="rew in rews" data-rew="{{rew.id}}" style="cursor:pointer">
-									<td>{{summaryText(rew.review, 45)}}</td>
-									<td>
-										<button ng-click="edit_rew(rew.id)" class="btn btn-primary"><i class="pull-right fa fa-pencil-square-o" aria-hidden="true" title="edit"></i></i></button>
-										<button ng-click="read_rew(rew.id)" class="btn btn-warning"><i class="pull-right fa fa-file-text-o" aria-hidden="true" title="read all"></i></i></button>
-										<button ng-click="focusReview(rew.id)" class="btn btn-warning"><i class="fa fa-lightbulb-o" title='highlight' aria-hidden="true"></i></button>
-										<button ng-click="cancel_rew(rew.id)" class="btn btn-danger pull-right"><i class="fa fa-trash" title='delete' aria-hidden="true"></i></button>
-									</td>
+								<tr ng-repeat="user in paper.author">
+									<td>{{user.name}}</td>
+									<td>{{user.email}}</td>
 								</tr>
 							</tbody>
 						</table>
-						<button ng-click="commit()" class="btn btn-info pull-right"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Commit</button>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div ng-hide="highlight.active" class="col-sm-12 col-md-4">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<svg class="glyph stroked pencil">
-					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-pencil"></use>
-				</svg> Authors
-			</div>
-			<div class="panel-body">
-				<div class="fixed-table-container">
-					<table data-toggle="table" class="table table-hover">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Email</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="user in paper.author">
-								<td>{{user.name}}</td>
-								<td>{{user.email}}</td>
-							</tr>
-						</tbody>
-					</table>
+		<div ng-hide="highlight.active">
+			<div class="panel panel-default chat">
+				<div class="panel-heading" id="accordion">
+					<svg class="glyph stroked notepad ">
+					<use xlink:href="#stroked-notepad"/>
+				</svg> Reviews
+				</div>
+				<div class="panel-body">
+					<ul>
+						<li ng-repeat="review in reviews | orderBy: '-created_at'" class="clearfix" data-rew="{{review.rew_id}}" ng-click="focusReview(review.rew_id)">
+							<div class="chat-body clearfix">
+								<div class="header">
+									<i class="pull-right fa fa-file-text-o" style="cursor: pointer" aria-hidden="true" ng-click="read_rew(review.rew_id)" title="read all"></i>
+									<i class="pull-right fa fa-lightbulb-o" style="cursor: pointer" aria-hidden="true" ng-click="focusReview(review.rew_id)" title="highlight in paper"></i>
+									<strong class="pull-left primary-font {{watchReview.sel == review.rew_id ? 'rew-sel':''}}">{{review.author.name}}</strong> <small class="text-muted">{{review.createdAt | limitTo : 10}}</small>
+								</div>
+								<p>
+									{{review.text | limitTo: 400}}{{review.text.length > 400? ' ...':''}}
+								</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="panel-footer">
 				</div>
 			</div>
 		</div>
-	</div>
-	<div ng-hide="highlight.active" class="col-sm-12 col-md-4">
-		<div class="panel panel-default chat">
-			<div class="panel-heading" id="accordion">
-				<svg class="glyph stroked notepad ">
-					<use xlink:href="#stroked-notepad"/>
-				</svg> Reviews
-			</div>
-			<div class="panel-body">
-				<ul>
-					<li ng-repeat="review in reviews | orderBy: '-created_at'" class="clearfix" data-rew="{{review.rew_id}}" ng-click="focusReview(review.rew_id)">
-						<div class="chat-body clearfix">
-							<div class="header">
-								<i class="pull-right fa fa-file-text-o" style="cursor: pointer" aria-hidden="true" ng-click="read_rew(review.rew_id)" title="read all"></i>
-								<i class="pull-right fa fa-lightbulb-o" style="cursor: pointer" aria-hidden="true" ng-click="focusReview(review.rew_id)" title="highlight in paper"></i>
-								<strong class="pull-left primary-font {{watchReview.sel == review.rew_id ? 'rew-sel':''}}">{{review.author.name}}</strong> <small class="text-muted">{{review.createdAt | limitTo : 10}}</small>
-							</div>
-							<p>
-								{{review.text | limitTo: 400}}{{review.text.length > 400? ' ...':''}}
-							</p>
-						</div>
-					</li>
-				</ul>
-			</div>
-			<div class="panel-footer">
-			</div>
-		</div>
-	</div>
-	<div ng-hide="highlight.active" class="col-sm-12 col-md-4">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<svg class="glyph stroked clipboard with paper">
+		<div ng-hide="highlight.active">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<svg class="glyph stroked clipboard with paper">
 					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-clipboard-with-paper"></use>
 				</svg> Reviewers
-			</div>
-			<div class="panel-body">
-				<div class="fixed-table-container">
-					<table data-toggle="table" class="table table-hover">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Email</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="user in paper.reviewers">
-								<td>{{user.name}}</td>
-								<td>{{user.email}}</td>
-							</tr>
-						</tbody>
-					</table>
+				</div>
+				<div class="panel-body">
+					<div class="fixed-table-container">
+						<table data-toggle="table" class="table table-hover">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Email</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="user in paper.reviewers">
+									<td>{{user.name}}</td>
+									<td>{{user.email}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>

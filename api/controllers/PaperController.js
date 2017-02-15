@@ -249,9 +249,8 @@ module.exports = {
         return res.negotiate(err)
       }
       var path = paper.url
-      var new_path = require('path').resolve(sails.config.appPath, 'assets/epub') + '/' + paper.title + '.epub'
+      var new_path = require('path').resolve(sails.config.appPath, 'assets/epub') + '/' + paper.title + '.epub.zip'
       var new_rel_path = new_path.replace(sails.config.appPath + '/assets', '')
-      console.log(new_path, new_rel_path)
       var author = []
       for (i in paper.author) {
         author.push(paper.author[i].name)
@@ -262,7 +261,6 @@ module.exports = {
           return console.log(err)
         }
         var Epub = require('epub-gen')
-        var AdmZip = require('adm-zip')
 
         new Epub({ // create epub
           title: paper.title,
@@ -272,14 +270,8 @@ module.exports = {
             data: data.toString() // pass html string
           }]
         }, new_path).promise.then(function () {
-          var zip = new AdmZip() // zipped epub
-          zip.addLocalFile(new_path)
-          zip.writeZip(new_path + '.zip')
-          fs.unlink(new_path, function (err) { // remove epub
-            if (err) throw err
-            return res.json({
-              path: new_rel_path + '.zip'
-            })
+          return res.json({
+            path: new_rel_path
           })
         }, function (err) {
           return res.json(400, {
