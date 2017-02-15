@@ -22,7 +22,7 @@ module.exports = function (req, res, next) {
     return (el.paper == req.param('pid'))
   })) {
     return res.json(400, {
-      message: 'You have already review this paper'
+      message: 'You have already reviewed this paper.'
     })
   }
 

@@ -239,7 +239,6 @@ module.exports = {
     var u = AuthService.user()
     return res.json({
       response: 1,
-      message: 'You are a reviewer for this paper'
     })
   },
 
