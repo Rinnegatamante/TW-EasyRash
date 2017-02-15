@@ -38,14 +38,12 @@
 
      r_accepted: {
        type: 'integer',
-       size: 1,
-       defaultsTo: 0
+       size: 1
      },
 
      r_rejected: {
        type: 'integer',
-       size: 1,
-       defaultsTo: 0
+       size: 1
      },
 
      token: {

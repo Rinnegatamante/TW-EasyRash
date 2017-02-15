@@ -107,32 +107,30 @@ module.exports = {
           message: 'File field is empty.'
         })
       }
-      for (var i = 0; files[i]; i++) {
-        Paper.create({
-          title: files[i].filename,
-          mime: files[i].type,
-          url: files[i].fd,
-          conference: req.param('cid'),
-          author: co_ids
-        }).exec(function (err, createdFile) {
-          u.papers.add(createdFile.id)
-          createdFile.save()
+      Paper.create({
+        title: files[0].filename,
+        mime: files[0].type,
+        url: files[0].fd,
+        r_accepted: 0,
+        r_rejected: 0,
+        conference: req.param('cid'),
+        author: co_ids
+      }).exec(function (err, createdFile) {
+        u.papers.add(createdFile.id)
+        createdFile.save()
 
-          if (!files[i + 1]) {
-            u.save(function (err) {
-              if (err) {
-                console.log(err)
-              }
-
-              return res.json({
-                message: files.length + ' file(s) uploaded successfully!',
-                attributes: createdFile.toObject(),
-                paper: files
-              })
-            })
+        u.save(function (err) {
+          if (err) {
+            console.log(err)
           }
+
+          return res.json({
+            message: 'File uploaded successfully!',
+            attributes: createdFile.toObject(),
+            paper: files[0]
+          })
         })
-      }
+      })
     })
   },
 
