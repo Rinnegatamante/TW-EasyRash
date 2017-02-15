@@ -32,7 +32,6 @@
      status: {
        type: 'integer',
        size: 1,
-       defaultsTo: 0,
        required: true
      },
 
