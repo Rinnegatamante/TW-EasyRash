@@ -62,10 +62,10 @@ module.exports.routes = {
   'put /conference/addChair': 'ConferenceController.addChair',
   'delete /conference/:id/deleteReviewer/:delete_id': 'ConferenceController.deleteReviewer',
   'put /conference/addReviewer': 'ConferenceController.addReviewer',
-  'get /conference/searchConference/:field': 'ConferenceController.searchConference',
+  'post /conference/searchConference/': 'ConferenceController.searchConference',
   'post /conference/setStatus': 'ConferenceController.setStatus',
   // USER
-  'get /user/searchByName/:name': 'UserController.searchByName',
+  'get /user/searchByName/:field': 'UserController.searchByName',
   'post /user/login': 'UserController.login',
   'put /user/register': 'UserController.register',
   'get /user/getdata': 'UserController.getData',
