@@ -89,7 +89,7 @@ module.exports = {
 
     verifyPassword: function (digest) {
       ha1 = this.password // digest password
-      ha2 = 'POST' + 'http://localhost:1337'
+      ha2 = 'asdfasdf'
       var d = new Date()
       var nonce_pre = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDay(), d.getUTCHours(), d.getUTCMinutes() - 1).toString()
       var nonce = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDay(), d.getUTCHours(), d.getUTCMinutes()).toString()

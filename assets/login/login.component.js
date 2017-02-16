@@ -9,7 +9,7 @@ app.controller('loginController',($rootScope, $scope, $http, $location) => {
 	// digest function, calculate digest data for password encyption
 	var digest = (name, password) => {
 		var ha1 = md5(name + '' + password) // digest password
-		var ha2 = 'POST' + window.location.origin
+		var ha2 = 'abcdabcd'
 		var d = new Date()
 		var nonce = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDay(), d.getUTCHours(), d.getUTCMinutes()).toString()
 		return (md5(ha1 + nonce + ha2))
