@@ -130,7 +130,7 @@ module.exports = {
         })
       }
       Paper.create({
-        title: files[0].filename,
+        title: req.param('title'),
         mime: files[0].type,
         url: files[0].fd,
         r_accepted: 0,

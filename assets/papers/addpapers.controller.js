@@ -57,6 +57,10 @@ app.controller('addpapersController', ($scope, $http, $routeParams, $location, $
   uploader.filters.push({
     name: 'file',
     fn: function (item /* {File|FileLikeObject} */, options) {
+      if (!$scope.title) {
+        alertify.log('Insert title, please...')
+        return false
+      }
       return (this.queue.length <= 1 && item.type == 'text/html')
     }
   })
@@ -75,7 +79,7 @@ app.controller('addpapersController', ($scope, $http, $routeParams, $location, $
       co_ids: ids
     }, {
       cid: cid
-    }]
+    }, {title: $scope.title}]
     item.formData = formData
   }
 })
