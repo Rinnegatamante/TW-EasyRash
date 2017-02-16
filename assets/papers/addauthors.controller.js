@@ -2,6 +2,7 @@
 app.controller('addauthorsController', ($scope, $http, $routeParams, $location, $rootScope, FileUploader) => {
   var pid = $routeParams.pid // Getting papers id from URL
   $scope.co_authors = []
+  $scope.users = []
 
 	// Getting logged user data
   $scope.getdata = () => {
@@ -24,7 +25,12 @@ app.controller('addauthorsController', ($scope, $http, $routeParams, $location, 
   $scope.$watch('user.field', function (newVal, oldVal) {
     if (newVal != oldVal) { // Modification detected, executing an user research by name
       $http.get('/user/searchByName/' + $scope.user.field).then(res => {
-        $scope.users = res.data.users
+        $scope.users = []
+        for (var i in res.data.users) {
+          if (res.data.users[i].id != $rootScope.user.id) {
+            $scope.users.push(res.data.users[i])
+          }
+        }
       })
     }
   })
