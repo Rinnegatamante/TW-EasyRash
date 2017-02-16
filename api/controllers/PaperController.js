@@ -270,9 +270,9 @@ module.exports = {
             data: data.toString() // pass html string
           }]
         }, new_path).promise.then(function () {
-          return res.json({
+          setTimeout(function () { return res.json({
             path: new_rel_path
-          })
+          }) }, 2000)
         }, function (err) {
           return res.json(400, {
             message: 'Sorry, we cannot generate a epub'

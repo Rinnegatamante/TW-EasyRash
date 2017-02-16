@@ -80,11 +80,11 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
       rew = false
     }
   }
-  $scope.cancel_rew = (rid) => { // delete a review
+  $scope.cancel_rew = (rid, stayHighlight) => { // delete a review
     if (!$scope.highlight.active) return
     for (var i = 0; i < $scope.rews.length; i++) {
       if ($scope.rews[i].id == rid) {
-        $scope.rews[i].undo()
+        if (!stayHighlight) $scope.rews[i].undo()
         $scope.rews.splice(i, 1)
       }
     }
@@ -96,7 +96,7 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
     })
     if (!r) return
     rew = r
-    $scope.cancel_rew(rid)
+    $scope.cancel_rew(rid, true)
     $scope.highlight.review = r.review
     $scope.highlight.text = r.text
     $scope.highlight.type = r.type
@@ -194,6 +194,7 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
   }
 
   $scope.getEpub = () => { // download the epub verison
+    alertify.log('Generating epub file, please wait...')
     $http.get('/paper/' + $scope.paper.id + '/epub').then(res => {
       if (res.data.path) {
         window.open(res.data.path)
