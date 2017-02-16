@@ -1,5 +1,3 @@
-// TODO json-ld
-
 var rew
 var Review
 app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $animateCss) => {
@@ -51,7 +49,7 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
     $('[data-rew=' + rwid + ']').addClass('rew-sel')
   }
 
-  $scope.summaryText = (text, max) => {
+  $scope.summaryText = (text, max) => { // return a short text of a input string of lenght max charchter
     if (!text || text.length == 0) return ''
     var limit = parseInt(max / 2) - 4
     if (text.length > max) {
@@ -60,7 +58,7 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
     return text
   }
 
-  $scope.select = () => {
+  $scope.select = () => { // get selected text and create Rew object
     if (!$scope.highlight.active) return
     if (window.getSelection && window.getSelection().isCollapsed) return
     if (document.getElementsByClassName('in-editing').length > 0) {
@@ -80,7 +78,7 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
       rew = false
     }
   }
-  $scope.cancel_rew = (rid, stayHighlight) => { // delete a review
+  $scope.cancel_rew = (rid, stayHighlight) => { // delete a review : stayHighlight not delete current highlight
     if (!$scope.highlight.active) return
     for (var i = 0; i < $scope.rews.length; i++) {
       if ($scope.rews[i].id == rid) {
@@ -89,7 +87,7 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
       }
     }
   }
-  $scope.edit_rew = (rid) => {
+  $scope.edit_rew = (rid) => { // edit comment of selected review
     if (!$scope.highlight.active) return
     r = $scope.rews.find((el) => {
       return (el.id == rid)
@@ -223,7 +221,7 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
     alertify
   .okBtn('Accept')
   .cancelBtn('Reject')
-  .confirm('What is your opinion about this paper?', function (ev) {
+  .confirm('What is your opinion about this paper?', function (ev) { // send reviews with r_status accepted
     ev.preventDefault()
     $('.in-editing').removeClass('in-editing')
     $('.rew-sel').removeClass('rew-sel')
@@ -247,7 +245,7 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
       $scope.rews = []
       $scope.free()
     })
-  }, function (ev) {
+  }, function (ev) { // send reviews with r_status rejected
     ev.preventDefault()
     $('.in-editing').removeClass('in-editing')
     $('.rew-sel').removeClass('rew-sel')
@@ -342,10 +340,10 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
       return this
     }
 
-    this.setReview = function (text) {
+    this.setReview = function (text) { // change comment of this Review object
       this.review = text
     }
-    this.setType = function (type) {
+    this.setType = function (type) { // change type of this Review object
       if (this.type) $('[data-rew=' + this.id + ']').removeClass(this.type)
       this.type = type
       $('[data-rew=' + this.id + ']').addClass(this.type)
@@ -407,13 +405,15 @@ var loadReviewsJSONLD = (reviews, paper, user, status) => { // insert into the p
   var comments = []
   var rews = []
   var date = new Date()
+  var pso = status == 1 ? 'accepted-for-pubblivation' : 'rejected-for-pubblication'
+
   for (var i = 0; i < reviews.length; i++) {
     comments.push(reviews[i].id)
     rews.push({
       '@context': 'easyrash.json',
       '@type': 'comment',
       '@id': reviews[i].id,
-      'text': reviews[i],
+      'text': reviews[i].review,
       'ref': '[data-rew=' + reviews[i].id + ']',
       'author': user.email,
       'date': date.toUTCString()
@@ -429,14 +429,14 @@ var loadReviewsJSONLD = (reviews, paper, user, status) => { // insert into the p
         '@context': 'easyrash.json',
         '@id': '#review' + reviews[0].id + '-eval',
         '@type': 'score',
-        'status': 'pso:' + status,
+        'status': 'pso:' + pso,
         'author': 'mailto:' + paper.owner.email,
         'date': date.toUTCString()
       }
     },
     'comments': comments
   }, rews, {
-    '@context': 'http://vitali.web.cs.unibo.it/twiki/pub/TechWeb16/context.json',
+    '@context': 'easyrash.json',
     '@type': 'person',
     '@id': user.email,
     'name': user.name,

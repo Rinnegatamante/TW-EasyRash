@@ -32,14 +32,25 @@ module.exports = {
   accept: function (req, res) {
     Paper.findOne(req.param('pid')).exec(function (err, paper) {
       paper.status = 1
-      paper.save(function (err) {
+      fs = require('fs')
+
+      fs.stat(paper.url, function (err, stats) {
         if (err) {
-          console.log(err)
+          return res.json(400, {
+            message: 'Paper path not found.'
+          })
         }
-      })
-      return res.json({
-        message: 'Paper status changed successfully!',
-        paper: paper
+        fs.writeFile(paper.url, req.param('rash'), function (err) {
+          paper.save(function (err) {
+            if (err) {
+              console.log(err)
+            }
+            return res.json({
+              message: 'Paper status changed successfully!',
+              paper: paper
+            })
+          })
+        })
       })
     })
   },
@@ -48,14 +59,25 @@ module.exports = {
   reject: function (req, res) {
     Paper.findOne(req.param('pid')).exec(function (err, paper) {
       paper.status = 2
-      paper.save(function (err) {
+      fs = require('fs')
+
+      fs.stat(paper.url, function (err, stats) {
         if (err) {
-          console.log(err)
+          return res.json(400, {
+            message: 'Paper path not found.'
+          })
         }
-      })
-      return res.json({
-        message: 'Paper status changed successfully!',
-        paper: paper
+        fs.writeFile(paper.url, req.param('rash'), function (err) {
+          paper.save(function (err) {
+            if (err) {
+              console.log(err)
+            }
+            return res.json({
+              message: 'Paper status changed successfully!',
+              paper: paper
+            })
+          })
+        })
       })
     })
   },
