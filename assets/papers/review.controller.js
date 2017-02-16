@@ -8,7 +8,7 @@ app.controller('reviewController',($scope, $http, $routeParams, $location) => {
 	$scope.paper.field = '' // Used as input for the Angular filter for the search
 	
 	// Get logged user data
-	$http.post('/user/getdata').then(res => {
+	$http.get('/user/getdata').then(res => {
 		$scope.user = res.data.user
 	},function errorCallback(response) {
 		$location.path('/') // Redirect to welcome page if not logged

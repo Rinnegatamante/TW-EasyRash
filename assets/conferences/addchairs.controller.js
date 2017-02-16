@@ -1,44 +1,41 @@
 // Controller for addchairs template
-app.controller('addchairsController',($scope, $http, $location, $routeParams) => {
-	
+app.controller('addchairsController', ($scope, $http, $location, $routeParams) => {
 	// Check if the user is logged, instead redirect to welcome page
-	$http.post('/user/getdata').then(res => {},function errorCallback(response) {
-		$location.path('/') // Redirect to welcome page if not logged
-	});
-	
+  $http.get('/user/getdata').then(res => {}, function errorCallback (response) {
+    $location.path('/') // Redirect to welcome page if not logged
+  })
+
 	// Get conference ID from URL
-	$scope.conf = {
-		id: $routeParams.cid
-	}
-	
+  $scope.conf = {
+    id: $routeParams.cid
+  }
+
 	// Request conference data
-	$http.post('/conference/getData', $scope.conf).then(res => {
-		$scope.conf = res.data.conference
-	})
-	
+  $http.get('/conference/' + $scope.conf.id + '/getData').then(res => {
+    $scope.conf = res.data.conference
+  })
+
 	// Watch for search input status modifications
-	$scope.$watch('user.field', function (newVal, oldVal) {
-		if (newVal != oldVal) { // Modification detected, request a search by name
-			$http.post('/user/searchByName', $scope.user).then(res => {
-				$scope.users = res.data.users
-			})
-		}
-	})
-	
+  $scope.$watch('user.field', function (newVal, oldVal) {
+    if (newVal != oldVal) { // Modification detected, request a search by name
+      $http.get('/user/searchByName/' + $scope.user.field).then(res => {
+        $scope.users = res.data.users
+      })
+    }
+  })
+
 	// add function, adds a new co-chair to the conference
-	$scope.add = function (id) {
-		$scope.conf.add_id = id
-		$http.post('/conference/addChair', $scope.conf).then(res => {
-			$scope.conf = res.data.conference
-		})
-	}
-	
+  $scope.add = function (id) {
+    $scope.conf.add_id = id
+    $http.put('/conference/addChair', $scope.conf).then(res => {
+      $scope.conf = res.data.conference
+    })
+  }
+
 	// delete function, removes a co-chair from the conference
-	$scope.delete = function (id) {
-		$scope.conf.delete_id = id
-		$http.post('/conference/deleteChair', $scope.conf).then(res => {
-			$scope.conf = res.data.conference
-		})
-	}
-	
+  $scope.delete = function (id) {
+    $http.delete('/conference/' + $scope.conf.id + '/deleteChair/' + id).then(res => {
+      $scope.conf = res.data.conference
+    })
+  }
 })

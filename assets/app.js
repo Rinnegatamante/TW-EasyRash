@@ -2,7 +2,7 @@ var app = angular.module('easyrashApp', ['ngRoute', 'ngAnimate', 'angularFileUpl
 
 app.run(($http, $rootScope, $location) => {
   if (localStorage.getItem('id') && localStorage.getItem('token')) {
-    $http.post('/user/getdata').then(res => {
+    $http.get('/user/getdata').then(res => {
       $rootScope.user = res.data.user
       $rootScope.user['token'] = localStorage.getItem('token')
     })

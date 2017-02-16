@@ -2,7 +2,7 @@ var rew
 var Review
 app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $animateCss) => {
 	// Check if the user is logged, instead redirect to welcome page
-  $http.post('/user/getdata').then(res => {}, function errorCallback (response) {
+  $http.get('/user/getdata').then(res => {}, function errorCallback (response) {
     $location.path('/') // Redirect to welcome page if not logged
   })
 
@@ -201,7 +201,7 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
   }
   $scope.lock = (cb) => { // request the access to paper
     $scope.getdata()
-    $http.get('/paper/' + $scope.paper.id + '/lock').then(res => {
+    $http.post('/paper/' + $scope.paper.id + '/lock').then(res => {
       if (res.data.s_token) {
         $scope.highlight.active = true
         $scope.s_token = res.data.s_token
@@ -210,7 +210,7 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
     })
   }
   $scope.free = () => { // set free access to the paper
-    $http.get('/paper/' + $scope.paper.id + '/free/' + $scope.s_token).then(res => {
+    $http.post('/paper/' + $scope.paper.id + '/free/' + $scope.s_token).then(res => {
       $scope.highlight.active = false
       $scope.rews = []
     })
@@ -240,7 +240,7 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
       data.text.push($scope.rews[i].review)
       data.type.push($scope.rews[i].type)
     }
-    $http.post('/paper/' + $scope.paper.id + '/review/create', data).then(res => {
+    $http.put('/paper/' + $scope.paper.id + '/review/create', data).then(res => {
       $scope.highlight.active = false
       $scope.rews = []
       $scope.free()
@@ -264,7 +264,7 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
       data.text.push($scope.rews[i].review)
       data.type.push($scope.rews[i].type)
     }
-    $http.post('/paper/' + $scope.paper.id + '/review/create', data).then(res => {
+    $http.put('/paper/' + $scope.paper.id + '/review/create', data).then(res => {
       $scope.highlight.active = false
       $scope.rews = []
       $scope.free()

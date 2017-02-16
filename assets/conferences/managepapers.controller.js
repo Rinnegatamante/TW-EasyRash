@@ -1,7 +1,7 @@
 // Controller for managepapers template
 app.controller('managepapersController', ($scope, $http, $rootScope, $location, $routeParams) => {
 	// Check if the user is logged, instead redirect to welcome page
-  $http.post('/user/getdata').then(res => {}, function errorCallback (response) {
+  $http.get('/user/getdata').then(res => {}, function errorCallback (response) {
     $location.path('/') // Redirect to welcome page if not logged
   })
 
@@ -11,12 +11,12 @@ app.controller('managepapersController', ($scope, $http, $rootScope, $location, 
   }
 
 	// Request conference data
-  $http.post('/conference/getData', $scope.conf).then(res => {
+  $http.get('/conference/' + $scope.conf.id + '/getData').then(res => {
     $scope.conf = res.data.conference
     $scope.conf.paperstate = '' + res.data.conference.status
 
 		// Request conference papers
-    $http.post('/conference/papers', $scope.conf).then(res => {
+    $http.get('/conference/'+$scope.conf.id+'/papers').then(res => {
       $scope.conf.papers = {
         accepted: [],
         pending: [],

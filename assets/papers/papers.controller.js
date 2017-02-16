@@ -13,7 +13,7 @@ app.controller('papersController', ($scope, $http, $rootScope, $location) => {
 
 	// Get logged user data
   $scope.getdata = () => {
-    $http.post('/user/getdata').then(res => {
+    $http.get('/user/getdata').then(res => {
       $scope.user = res.data.user
       for (i in $scope.user.papers) {
         $http.get('/paper/' + $scope.user.papers[i].id).then(res => {
@@ -31,7 +31,7 @@ app.controller('papersController', ($scope, $http, $rootScope, $location) => {
 	// deletePaper function, deletes a paper
   $scope.deletePaper = (pid) => {
     if (!confirm('Are you sure?')) return
-    $http.post('/paper/' + pid + '/delete').then(res => {
+    $http.delete('/paper/' + pid + '/delete').then(res => {
       for (i in $scope.user.papers) {
         if ($scope.user.papers[i].id == pid) $scope.user.papers.splice(i, 1)
       }

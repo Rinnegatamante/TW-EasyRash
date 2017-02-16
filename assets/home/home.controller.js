@@ -2,7 +2,7 @@
 app.controller('homeController',($scope, $http, $routeParams, $location) => {
 	
 	// Get logged user data
-	$http.post('/user/getdata').then(res => {
+	$http.get('/user/getdata').then(res => {
 		$scope.user = res.data.user
 		$scope.user.conf_memberships = res.data.user.reviewer_conferences.length + res.data.user.chair_conferences.length
 		$scope.user.conf_papers = []

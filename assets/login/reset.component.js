@@ -2,7 +2,7 @@
 app.controller('resetController',($rootScope, $scope, $http, $location) => {
 	
 	// Check if the user is logged, if so redirect to dashboard
-	$http.post('/user/getdata').then(res => {
+	$http.get('/user/getdata').then(res => {
 		$location.path('/home')
 	});
 	

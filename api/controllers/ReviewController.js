@@ -11,17 +11,6 @@ module.exports = {
     return res.views('paper_up')
   },
 
-  find: function (req, res) {
-    Review.findOne(req.param('rid')).populate('author').populate('paper').exec(function (err, review) {
-      if (err) {
-        console.log(err)
-      }
-      return res.json({
-        review: review
-      })
-    })
-  },
-
   ofPaper: function (req, res) {
     Review.find({
       'paper': req.param('pid')

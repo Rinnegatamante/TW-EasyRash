@@ -2,7 +2,7 @@
 app.controller('logoutController',($rootScope, $scope, $http, $location) => {
 	
 	// Check if the user is not logged, if so redirect to login page
-	$http.post('/user/getdata').then(res => {},function errorCallback(response) {
+	$http.get('/user/getdata').then(res => {},function errorCallback(response) {
 		$location.path('/login') // Redirect to welcome page if not logged
 	});
 	

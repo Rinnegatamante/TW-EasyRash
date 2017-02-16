@@ -5,7 +5,7 @@ app.controller('addpapersController', ($scope, $http, $routeParams, $location, $
 
 	// Get logged user data
   $scope.getdata = () => {
-    $http.post('/user/getdata').then(res => {
+    $http.get('/user/getdata').then(res => {
       $scope.user = res.data.user
     }, function errorCallback (response) {
       $location.path('/') // Redirect to welcome page if not logged
@@ -16,7 +16,7 @@ app.controller('addpapersController', ($scope, $http, $routeParams, $location, $
 	// Watching search field
   $scope.$watch('user.field', function (newVal, oldVal) {
     if (newVal != oldVal) { // Modification detected, executing an user research by name
-      $http.post('/user/searchByName', $scope.user).then(res => {
+      $http.get('/user/searchByName/' + $scope.user.field).then(res => {
         $scope.users = res.data.users
       })
     }

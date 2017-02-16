@@ -11,7 +11,7 @@ app.controller('profileController', ($scope, $http, $routeParams, $location) => 
 	}
 	
 	// Get logged user data
-	$http.post('/user/getdata').then(res => {
+	$http.get('/user/getdata').then(res => {
 		$scope.user = res.data.user
 		$scope.user.oldemail = res.data.user.email
 	},function errorCallback(response) {

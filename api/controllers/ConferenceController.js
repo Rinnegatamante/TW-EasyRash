@@ -240,25 +240,6 @@ module.exports = {
         })
       })
     })
-  },
-
-	// addPaper: Adds a paper to a conference
-  addPaper: function (req, res) {
-    if (!req.param('pid')) { return res.json(400, {
-      message: 'Paper field is empty.'
-    }) }
-    if (!req.param('cid')) { return res.json(400, {
-      message: 'Conference field is empty.'
-    }) }
-    Paper.findOne(req.param('pid')).exec(function (err, paper) {
-      if (err) { return res.json(500, {
-        message: 'Paper not committed.'
-      }) }
-      return res.json({
-        message: 'Paper committed successfully!',
-        paper: paper
-      })
-    })
   }
 
 }

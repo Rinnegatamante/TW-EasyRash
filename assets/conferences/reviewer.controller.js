@@ -2,7 +2,7 @@
 app.controller('reviewerController',($scope, $http, $routeParams, $location) => {
 	
 	// Get logged user data
-	$http.post('/user/getdata').then(res => {
+	$http.get('/user/getdata').then(res => {
 		$scope.user = res.data.user
 	},function errorCallback(response) {
 		$location.path('/') // Redirect to welcome page if not logged
