@@ -45,7 +45,6 @@ module.exports.policies = {
 
   ConferenceController: {
     create: 'sessionAuth',
-    addPaper: ['sessionAuth', 'isPaperMine'],
     addChair: ['sessionAuth', 'isChair'],
   	deleteChair: ['sessionAuth', 'isChair'],
     addReviewer: ['sessionAuth', 'isChair'],
@@ -72,7 +71,6 @@ module.exports.policies = {
   },
 
   ReviewController: {
-    find: true,
     ofPaper: true,
     create: 'sessionAuth',
     update: ['sessionAuth', 'isMine'],
