@@ -134,6 +134,28 @@ module.exports = {
     })
   },
 
+  isLockValid: function (req, res) {
+    // POLICIES : [paperIsLock]
+    var u = AuthService.user()
+    Paper.findOne({
+      id: req.param('pid')
+    }).populate('reviews').exec(function (err, paper) {
+      if (err) {
+        return res.json(500, {
+          error: err
+        })
+      }
+      if (!paper) {
+        return res.json(400, {
+          message: 'Paper not found'
+        })
+      }
+      if (paper.token == req.param('token')) return res.json(200)
+
+      return res.json(403)
+    })
+  },
+
   freePaper: function (req, res) {
     // POLICIES : [paperIsLock]
     var u = AuthService.user()

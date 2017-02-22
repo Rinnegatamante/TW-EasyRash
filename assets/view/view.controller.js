@@ -146,6 +146,17 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
       })
       $http.get('/paper/' + $scope.paper.id + '/imReviewer/').then(res => { // check if user can review this paper
         if (res.data.response == 1) $scope.isaReviewer = true
+        var s_token = localStorage.getItem('s_token')
+        if (s_token && s_token != '') {
+          console.log(s_token)
+          $http.get('/paper/' + $scope.paper.id + '/islockvalid/' + s_token).then(res => {
+            console.log(res.status)
+            if (res.status == 200) {
+              $scope.s_token = s_token
+              $scope.highlight.active = true
+            }
+          })
+        }
       })
       $scope.getview()
       $('#tooltip_content').click(function () {
@@ -205,6 +216,7 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
       if (res.data.s_token) {
         $scope.highlight.active = true
         $scope.s_token = res.data.s_token
+        localStorage.setItem('s_token', res.data.s_token)
         if (cb) cb($scope.s_token)
       }
     })
@@ -212,6 +224,7 @@ app.controller('viewController', ($scope, $http, $rootScope, $routeParams, $anim
   $scope.free = () => { // set free access to the paper
     $http.post('/paper/' + $scope.paper.id + '/free/' + $scope.s_token).then(res => {
       $scope.highlight.active = false
+      localStorage.removeItem('s_token')
       $scope.rews = []
     })
   }

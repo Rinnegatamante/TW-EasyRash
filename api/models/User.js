@@ -83,21 +83,13 @@ module.exports = {
     },
 
     encryptPassword: function () {
-      var ha1 = md5(this.email + this.password) // encrypt to digest password
+      var ha1 = md5(this.email.toString() + this.password.toString()) // encrypt to digest password
       this.password = ha1
     },
 
     verifyPassword: function (digest) {
-      ha1 = this.password // digest password
-      ha2 = 'asdfasdf'
-      var d = new Date()
-      var nonce_pre = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDay(), d.getUTCHours(), d.getUTCMinutes() - 1).toString()
-      var nonce = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDay(), d.getUTCHours(), d.getUTCMinutes()).toString()
-      console.log(ha1, ha2, nonce)
-
-      console.log(md5(ha1 + nonce + ha2))
-      console.log('pre', md5(ha1 + nonce_pre + ha2))
-      return (digest == md5(ha1 + nonce + ha2) || digest == md5(ha1 + nonce_pre + ha2))
+      ha1 = this.password // digest password  = md5(email+password)
+      return (digest.toString() == md5(ha1))
     },
 
     generateToken: function () {

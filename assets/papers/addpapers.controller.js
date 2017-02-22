@@ -65,6 +65,7 @@ app.controller('addpapersController', ($scope, $http, $routeParams, $location, $
     fn: function (item /* {File|FileLikeObject} */, options) {
       if (!$scope.title) {
         alertify.log('Insert title, please...')
+        document.getElementById('file-upload').value = ''
         return false
       }
       return (this.queue.length <= 1 && item.type == 'text/html')

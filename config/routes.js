@@ -79,6 +79,7 @@ module.exports.routes = {
   'post /paper/:pid/review/update': 'ReviewController.update',
   'post /paper/:pid/lock': 'ReviewController.lockPaper',
   'post /paper/:pid/free/:token': 'ReviewController.freePaper',
+  'get /paper/:pid/islockvalid/:token': 'ReviewController.isLockValid',
   // RATING
   'post /rating/create': 'RatingController.create',
   'post /rating/update': 'RatingController.update'

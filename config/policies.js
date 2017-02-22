@@ -76,6 +76,7 @@ module.exports.policies = {
     update: ['sessionAuth', 'isMine'],
     lockPaper: [ 'sessionAuth', 'isReviewerPaper', 'paperIsLock' ],
     freePaper: [ 'sessionAuth', 'paperIsLock' ],
+    isLockValid: [ 'sessionAuth', 'isReviewerPaper'],
     destroy: ['sessionAuth', 'isMine']
   },
 
