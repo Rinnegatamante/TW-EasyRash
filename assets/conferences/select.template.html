@@ -28,8 +28,8 @@
 						</div>
 					</a>
 					<div class="col-sm-10">
-						<a href="#/conference/{{conference.id}}">
-							<h4>{{conference.title | limitTo: 20}} ({{ conference.acronym }})</h4>
+						<a title="{{conference.title}}" href="#/conference/{{conference.id}}">
+							<h4>{{conference.title}} ({{ conference.acronym }})</h4>
 						</a>
 						<p ng-if="conference.status < 1"><a href="#/conferences/{{conference.id}}/addpaper">Send papers to this conference</a></p>
 					</div>

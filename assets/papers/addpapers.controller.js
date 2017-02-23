@@ -21,7 +21,7 @@ app.controller('addpapersController', ($scope, $http, $routeParams, $location, $
         $scope.users = []
         for (var i in res.data.users) {
           if (res.data.users[i].id != $rootScope.user.id) {
-            $scope.users.push(res.data.users)
+            $scope.users.push(res.data.users[i])
           }
         }
       })

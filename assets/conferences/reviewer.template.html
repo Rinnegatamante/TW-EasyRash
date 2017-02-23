@@ -22,8 +22,8 @@
 						</div>
 					</a>
 					<div class="col-sm-10">
-						<a href="#/conference/{{conference.id}}">
-							<h4>{{conference.title | limitTo: 20}} ({{ conference.acronym }})</h4>
+						<a title="{{conference.title}}" href="#/conference/{{conference.id}}">
+							<h4>{{conference.title}} ({{ conference.acronym }})</h4>
 						</a>
 						<h5>Papers to review:
 							<span ng-repeat="paper in user.reviewer_papers|filter:filterPapers(conference.id) as rev_papers">

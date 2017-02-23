@@ -224,7 +224,7 @@ module.exports = {
         to: user.email,
         subject: 'Password Recovery',
         text: '',
-        html: 'Click the link below to reset your password:<br>http://localhost:1337/#reset?t=' + user.tempToken
+        html: 'Click the link below to reset your password:<br>http://annina.cs.unibo.it:1337/#reset?t=' + user.tempToken
       }
 
       transporter.sendMail(mailOptions, function (err, info) {
